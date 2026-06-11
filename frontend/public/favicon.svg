@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFDE21"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  
+  <!-- Smartphone Outline -->
+  <path d="M336 80H176c-26.5 0-48 21.5-48 48v256c0 26.5 21.5 48 48 48h160c26.5 0 48-21.5 48-48V128c0-26.5-21.5-48-48-48z" fill="none" stroke="url(#accent)" stroke-width="36" stroke-linejoin="round"/>
+  
+  <!-- Screen Area -->
+  <path d="M128 144h256v192H128z" fill="#0B0F19"/>
+  
+  <!-- Top Speaker -->
+  <path d="M224 112h64" stroke="url(#accent)" stroke-width="24" stroke-linecap="round"/>
+  
+  <!-- Bottom Button -->
+  <circle cx="256" cy="392" r="16" fill="url(#accent)"/>
+
+  <!-- Wrench Tool overlapping phone -->
+  <path d="M380.6 156.6c11.3 11.3 11.3 29.5 0 40.8l-156 156c-11.3 11.3-29.5 11.3-40.8 0l-28.3-28.3c-11.3-11.3-11.3-29.5 0-40.8l156-156c11.3-11.3 29.5-11.3 40.8 0l28.3 28.3z" fill="#E2E8F0"/>
+  <path d="M410 130c-15.5-15.5-39.2-18.4-57.8-8.7l-18.4 18.4 46.7 46.7 18.4-18.4C408.5 149.3 405.5 145.5 410 130z" fill="#CBD5E1"/>
+  <path d="M380.6 156.6l-28.3-28.3M183.8 353.4l-28.3-28.3" stroke="#94A3B8" stroke-width="12" stroke-linecap="round"/>
+</svg>

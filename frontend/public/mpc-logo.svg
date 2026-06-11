@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" width="100%" height="100%">
+  <!-- Background is transparent -->
+  <text x="200" y="90" font-family="'Inter', 'Arial', sans-serif" font-weight="900" font-size="80" text-anchor="middle" fill="#FFDE21" letter-spacing="-2">MPC</text>
+  <text x="200" y="145" font-family="'Inter', 'Arial', sans-serif" font-weight="800" font-size="48" text-anchor="middle" fill="#ffffff" letter-spacing="1">REPAIRS</text>
+  <text x="200" y="175" font-family="'Inter', 'Arial', sans-serif" font-weight="600" font-size="16" text-anchor="middle" fill="#ffffff" letter-spacing="2">PHONES | LAPTOPS | TABLETS</text>
+</svg>
