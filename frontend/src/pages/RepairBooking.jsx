@@ -233,35 +233,6 @@ const getScreenOptions = (priceStr, modelName, brandName, repairName = '') => {
 
 const getAppleiPhoneRepairPrice = (modelName, repairName, dbPrice) => {
   const modelLower = modelName.toLowerCase();
-  
-  const bypassedMacBooks = [
-    'macbook air 13" (m3)',
-    'macbook air 15.3" (m3)',
-    'macbook pro 14" (m3)',
-    'macbook pro 14" (m3 pro/max)',
-    'macbook air 15.3" (m2)',
-    'macbook pro 16" (m2 pro/max)',
-    'macbook pro 16" (m3 pro/max)',
-    'macbook pro 14" (m2 pro)',
-    'macbook air 13" (m2)',
-    'macbook pro 14" (m1 pro)',
-    'macbook pro 16" (m1 pro)',
-    'macbook pro 13" (m1)',
-    'macbook pro 13"',
-    'macbook air 13"',
-    'macbook pro 13" sun 2020',
-    'macbook air 13" sun 2020',
-    'macbook pro 13" sun 2019',
-    'macbook pro 15" sun 2016',
-    'macbook air 13" sun 2015',
-    'macbook pro 15" sun 2012',
-    'macbook air 11" sun 2012',
-    'macbook pro 13" sun 2012'
-  ];
-  if (bypassedMacBooks.includes(modelLower)) {
-    return dbPrice;
-  }
-
   const repairLower = repairName.toLowerCase();
 
   if (modelLower === 'iphone 13 mini') {
@@ -425,6 +396,9 @@ const getAppleiPhoneRepairPrice = (modelName, repairName, dbPrice) => {
 
   const match = dbPrice.match(/\d+/);
   if (match) {
+    if (modelLower.includes('macbook air 13') && modelLower.includes('m3')) {
+      return dbPrice;
+    }
     const numericPrice = parseInt(match[0]);
     const adjusted = numericPrice + 20;
     return dbPrice.replace(/\d+/, adjusted);

@@ -776,69 +776,90 @@ for (const [brandName, brandData] of Object.entries(brandDeviceMapping)) {
         }
       } else if (brandName === 'Apple' && displayDeviceType === 'iPad') {
         const m = model.name;
-        if (m === 'iPad Mini 4') {
-          repairsForModel = [
-            { name: 'Screen Repair & Replacement', price: calculatePrice('Tablet', 'Screen Repair', 'Apple', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: false },
-            { name: 'Battery Replacement', price: calculatePrice('Tablet', 'Battery Replacement', 'Apple', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: false },
-            { name: 'Charging Port Replacement', price: calculatePrice('Tablet', 'Charging Port Replacement', 'Apple', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: false }
-          ];
-        } else if (m === 'iPad Pro 12.9-inch (1st gen)') {
-          repairsForModel = [
-            { name: 'Battery Replacement', price: calculatePrice('Tablet', 'Battery Replacement', 'Apple', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: false },
-            { name: 'Charging Port Replacement', price: calculatePrice('Tablet', 'Charging Port Replacement', 'Apple', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: false }
-          ];
-        } else if (m === 'iPad Pro 9.7-inch (1st gen)') {
-          repairsForModel = [
-            { name: 'Screen Repair & Replacement', price: calculatePrice('Tablet', 'Screen Repair', 'Apple', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: false },
-            { name: 'Battery Replacement', price: calculatePrice('Tablet', 'Battery Replacement', 'Apple', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: false },
-            { name: 'Charging Port Replacement', price: calculatePrice('Tablet', 'Charging Port Replacement', 'Apple', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: false }
-          ];
-        } else if ([
-          'iPad Pro 11-inch (M5)', 'iPad Pro 11-inch (M4)',
-          'iPad Pro 13-inch (M4)', 'iPad Air 11-inch (M2)',
-          'iPad Pro 11-inch (4th gen)', 'iPad 10th Generation', 'iPad Pro 12.9-inch (6th gen)',
-          'iPad Air (5th generation)', 'iPad mini 6', 'iPad Pro 12.9-inch (5th gen)',
-          'iPad Pro 11-inch (3rd gen)', 'iPad (9th generation)', 'iPad Pro 12.9-inch (4th gen)',
-          'iPad (8th generation)', 'iPad Air (4th generation)', 'iPad Pro 11-inch (2nd gen)',
-          'iPad (7th generation)', 'iPad Air (3rd generation)', 'iPad Mini (5th generation)',
-          'iPad (6th generation)'
-        ].includes(m)) {
-          repairsForModel = [
-            { name: 'Front Glass Repair', price: calculatePrice('Tablet', 'Screen Repair', 'Apple', mTier), duration: '2 hours', warranty: '12 mo warranty', popular: false },
-            { name: 'Main Lcd Repair', price: calculatePrice('Tablet', 'Screen Replacement', 'Apple', mTier), duration: '2 hours', warranty: '12 mo warranty', popular: false },
-            { name: 'Battery Replacement', price: calculatePrice('Tablet', 'Battery Replacement', 'Apple', mTier), duration: '2 hours', warranty: '12 mo warranty', popular: false },
-            { name: 'Charging Port Replacement', price: calculatePrice('Tablet', 'Charging Port Replacement', 'Apple', mTier), duration: '2 hours', warranty: '12 mo warranty', popular: false },
-            { name: 'Front Camera Replacement', price: calculatePrice('Tablet', 'Front Camera Replacement', 'Apple', mTier), duration: '2 hours', warranty: '12 mo warranty', popular: false },
-            { name: 'Rear Camera Replacement', price: calculatePrice('Tablet', 'Rear Camera Replacement', 'Apple', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: false },
-            { name: 'Power / Volume Button', price: calculatePrice('Tablet', 'Power / Volume Button', 'Apple', mTier), duration: '2 hours', warranty: '12 mo warranty', popular: false },
-            { name: 'Microphone Replacement', price: calculatePrice('Tablet', 'Microphone Replacement', 'Apple', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: false },
-            { name: 'Speaker Repair', price: calculatePrice('Tablet', 'Speaker Repair', 'Apple', mTier), duration: '2 hours', warranty: '12 mo warranty', popular: false },
-            { name: 'Water / Liquid Damage Repair', price: calculatePrice('Tablet', 'Water Damage Repair', 'Apple', mTier), duration: '1 day', warranty: '12 mo warranty', popular: false },
-            { name: 'Motherboard / Logicboard Repair', price: calculatePrice('Tablet', 'Motherboard Repair', 'Apple', mTier), duration: '1 day', warranty: '12 mo warranty', popular: false },
-            { name: 'Not Turning On', price: calculatePrice('Tablet', 'Not Turning On', 'Apple', mTier), duration: '1 day', warranty: '12 mo warranty', popular: false },
-            { name: 'Free Diagnostic', price: 'Free', duration: '2 hours', warranty: '12 mo warranty', popular: false }
-          ];
-        } else if (m === 'iPad 11th Gen (A16)') {
-          repairsForModel = [
-            { name: 'Front Glass Repair', price: calculatePrice('Tablet', 'Screen Repair', 'Apple', mTier), duration: '2 hours', warranty: '12 mo warranty', popular: false },
-            { name: 'Main Lcd Repair', price: calculatePrice('Tablet', 'Screen Replacement', 'Apple', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: false },
-            { name: 'Battery Replacement', price: calculatePrice('Tablet', 'Battery Replacement', 'Apple', mTier), duration: '2 hours', warranty: '12 mo warranty', popular: false },
-            { name: 'Charging Port Replacement', price: calculatePrice('Tablet', 'Charging Port Replacement', 'Apple', mTier), duration: '2 hours', warranty: '12 mo warranty', popular: false },
-            { name: 'Front Camera Replacement', price: calculatePrice('Tablet', 'Front Camera Replacement', 'Apple', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: false },
-            { name: 'Rear Camera Replacement', price: calculatePrice('Tablet', 'Rear Camera Replacement', 'Apple', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: false },
-            { name: 'Speaker Repair', price: calculatePrice('Tablet', 'Speaker Repair', 'Apple', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: false },
-            { name: 'Water / Liquid Damage Repair', price: calculatePrice('Tablet', 'Water Damage Repair', 'Apple', mTier), duration: '1 day', warranty: '12 mo warranty', popular: false },
-            { name: 'Motherboard / Logicboard Repair', price: calculatePrice('Tablet', 'Motherboard Repair', 'Apple', mTier), duration: '1 day', warranty: '12 mo warranty', popular: false },
-            { name: 'Not Turning On', price: calculatePrice('Tablet', 'Not Turning On', 'Apple', mTier), duration: '1 day', warranty: '12 mo warranty', popular: false },
-            { name: 'Free Diagnostic', price: 'Free', duration: '1 hour', warranty: '12 mo warranty', popular: false }
-          ];
-        } else if (m === 'iPad Air 13-inch (M2)') {
-          repairsForModel = [
-            { name: 'Screen Repair / Replacement', price: calculatePrice('Tablet', 'Screen Replacement', 'Apple', mTier), duration: '3 hours', warranty: '12 mo warranty', popular: false, partOption: true },
-            { name: 'Charging Port Replacement', price: calculatePrice('Tablet', 'Charging Port Replacement', 'Apple', mTier), duration: '2 hours', warranty: '12 mo warranty', popular: false },
-            { name: 'Free Diagnostic', price: 'Free', duration: '1 hour', warranty: '12 mo warranty', popular: false }
-          ];
+        const ipadTxtPath = path.join(__dirname, '../../../iPad_Repairs_Prices_Plus20_With_Spacing.txt');
+        if (!global.ipadRepairsParsed) {
+          global.ipadRepairsParsed = {};
+          if (fs.existsSync(ipadTxtPath)) {
+            const content = fs.readFileSync(ipadTxtPath, 'utf8');
+            const lines = content.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+            
+            const knownModels = [
+              'iPad 11th Gen (A16)', 'iPad Pro 11-inch (M5)', 'iPad Pro 11-inch (M4)', 'iPad Pro 13-inch (M4)',
+              'iPad Air 13-inch (M2)', 'iPad Air 11-inch (M2)', 'iPad Pro 11-inch (4th gen)', 'iPad 10th Generation',
+              'iPad Pro 12.9-inch (6th gen)', 'iPad Air (5th generation)', 'iPad mini 6', 'iPad Pro 12.9-inch (5th gen)',
+              'iPad Pro 11-inch (3rd gen)', 'iPad (9th generation)', 'iPad Pro 12.9-inch (4th gen)', 'iPad (8th generation)',
+              'iPad Air (4th generation)', 'iPad Pro 11-inch (2nd gen)', 'iPad (7th generation)', 'iPad Air (3rd generation)',
+              'iPad Mini (5th generation)', 'iPad (6th generation)', 'iPad Pro 12.9-inch (3rd gen)', 'iPad Pro 11-inch (1st gen)',
+              'iPad Pro 10.5-inch (1st gen)', 'iPad (5th generation)', 'iPad Pro 9.7-inch (1st gen)', 'iPad Pro 12.9-inch (1st gen)',
+              'iPad Mini 4', 'iPad Mini 3'
+            ];
+            
+            let currentModel = null;
+            let i = 0;
+            while (i < lines.length) {
+              const line = lines[i];
+              const normalized = line.replace(/^Repairs for\s+/i, '').trim();
+              
+              if (knownModels.includes(normalized)) {
+                currentModel = normalized;
+                global.ipadRepairsParsed[currentModel] = [];
+                i++;
+                continue;
+              }
+              
+              if (line === 'No repair services available yet.') {
+                i++;
+                continue;
+              }
+              
+              if (line === 'Common issues' || line === 'View details' || line === 'From') {
+                i++;
+                continue;
+              }
+              
+              if (currentModel) {
+                const repairName = line;
+                const durationLine = lines[i + 1];
+                if (durationLine && (durationLine.includes('hour') || durationLine.includes('min') || durationLine.includes('day'))) {
+                  let duration = durationLine.replace('12mo', '').trim();
+                  let priceLine = null;
+                  let nextIdx = i + 2;
+                  if (lines[nextIdx] === 'View details') {
+                    nextIdx++;
+                  }
+                  if (lines[nextIdx] === 'From') {
+                    nextIdx++;
+                  }
+                  priceLine = lines[nextIdx];
+                  if (priceLine && priceLine.startsWith('$')) {
+                    const priceVal = parseFloat(priceLine.replace('$', ''));
+                    let finalPriceStr = '';
+                    if (priceVal === 0) {
+                      finalPriceStr = 'Free';
+                    } else {
+                      const adjustedPrice = Math.floor(priceVal);
+                      finalPriceStr = `A$${adjustedPrice}`;
+                    }
+                    
+                    global.ipadRepairsParsed[currentModel].push({
+                      name: repairName,
+                      price: finalPriceStr,
+                      duration: duration,
+                      warranty: '12 mo warranty',
+                      popular: false
+                    });
+                    
+                    i = nextIdx + 1;
+                    continue;
+                  }
+                }
+              }
+              i++;
+            }
+          }
         }
+        
+        repairsForModel = global.ipadRepairsParsed[m] || [];
       } else if (brandName === 'Apple' && displayDeviceType === 'Laptop') {
         const m = model.name;
         if (m === 'MacBook Pro 14" (M2 Pro)') {
