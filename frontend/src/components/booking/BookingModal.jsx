@@ -239,6 +239,10 @@ const getAppleiPhoneRepairPrice = (modelName, repairName, dbPrice) => {
   const modelLower = modelName.toLowerCase();
   const repairLower = repairName.toLowerCase();
 
+  if (modelLower.includes('ipad')) {
+    return dbPrice;
+  }
+
   if (modelLower === 'iphone 13 mini') {
     if (repairLower.includes('back glass')) {
       return 'A$170.00';
