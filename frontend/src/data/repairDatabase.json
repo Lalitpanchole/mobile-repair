@@ -2953,22 +2953,24 @@
         "iPhone XS Max": [
           {
             "name": "Screen Repair",
-            "price": "A$539",
+            "price": "A$119.00",
             "duration": "1 hour",
             "warranty": "12 months",
-            "popular": true
+            "popular": true,
+            "partOption": false
           },
           {
-            "name": "Motherboard / Logicboard Repair",
-            "price": "A$789",
-            "duration": "1 day",
+            "name": "Back Glass Replacement",
+            "price": "A$120.00",
+            "duration": "2 hours",
             "warranty": "12 months",
-            "popular": false
+            "popular": false,
+            "partOption": false
           },
           {
-            "name": "Water / Liquid Damage Repair",
-            "price": "A$539",
-            "duration": "1 day",
+            "name": "Battery Replacement",
+            "price": "A$120",
+            "duration": "1 hour",
             "warranty": "12 months",
             "popular": false
           },
@@ -2981,14 +2983,14 @@
           },
           {
             "name": "Front Camera Replacement",
-            "price": "A$359",
+            "price": "A$120",
             "duration": "1 hour",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Rear Camera Replacement",
-            "price": "A$349",
+            "price": "A$220",
             "duration": "1 hour",
             "warranty": "12 months",
             "popular": false
@@ -2998,7 +3000,8 @@
             "price": "A$279",
             "duration": "1 hour",
             "warranty": "12 months",
-            "popular": false
+            "popular": false,
+            "partOption": false
           },
           {
             "name": "Battery Replacement",
@@ -3008,15 +3011,15 @@
             "popular": false
           },
           {
-            "name": "Not Turning On",
-            "price": "A$239",
-            "duration": "1 day",
+            "name": "Microphone Replacement",
+            "price": "A$120",
+            "duration": "1 hour",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "Microphone Replacement",
-            "price": "A$169",
+            "name": "Speaker Repair",
+            "price": "A$120",
             "duration": "1 hour",
             "warranty": "12 months",
             "popular": false
@@ -3036,8 +3039,15 @@
             "popular": false
           },
           {
-            "name": "Camera Glass Broken",
-            "price": "A$139",
+            "name": "Not Turning On",
+            "price": "A$220",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Software Update / Restore",
+            "price": "A$70",
             "duration": "1 hour",
             "warranty": "12 months",
             "popular": false
@@ -3053,22 +3063,24 @@
         "iPhone XS": [
           {
             "name": "Screen Repair",
-            "price": "A$529",
+            "price": "A$119.00",
             "duration": "1 hour",
             "warranty": "12 months",
-            "popular": true
+            "popular": true,
+            "partOption": false
           },
           {
-            "name": "Motherboard / Logicboard Repair",
-            "price": "A$769",
-            "duration": "1 day",
+            "name": "Back Glass Replacement",
+            "price": "A$120.00",
+            "duration": "2 hours",
             "warranty": "12 months",
-            "popular": false
+            "popular": false,
+            "partOption": false
           },
           {
-            "name": "Water / Liquid Damage Repair",
-            "price": "A$529",
-            "duration": "1 day",
+            "name": "Battery Replacement",
+            "price": "A$120",
+            "duration": "1 hour",
             "warranty": "12 months",
             "popular": false
           },
@@ -3081,14 +3093,14 @@
           },
           {
             "name": "Front Camera Replacement",
-            "price": "A$349",
+            "price": "A$120",
             "duration": "1 hour",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Rear Camera Replacement",
-            "price": "A$349",
+            "price": "A$220",
             "duration": "1 hour",
             "warranty": "12 months",
             "popular": false
@@ -3098,46 +3110,62 @@
             "price": "A$269",
             "duration": "1 hour",
             "warranty": "12 months",
-            "popular": false
+            "popular": false,
+            "partOption": false
           },
           {
             "name": "Not Turning On",
             "price": "A$239",
             "duration": "1 day",
             "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Battery Replacement",
-            "price": "A$229",
-            "duration": "1 hour",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Speaker Repair",
-            "price": "A$169",
-            "duration": "1 hour",
-            "warranty": "12 months",
-            "popular": false
+            "popular": false,
+            "partOption": false
           },
           {
             "name": "Power / Volume Button",
-            "price": "A$159",
+            "price": "A$120",
             "duration": "1 hour",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Microphone Replacement",
-            "price": "A$159",
+            "price": "A$120",
             "duration": "1 hour",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "Camera Glass Broken",
-            "price": "A$139",
+            "name": "Speaker Repair",
+            "price": "A$120",
+            "duration": "1 hour",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Water / Liquid Damage Repair",
+            "price": "A$220",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Motherboard / Logicboard Repair",
+            "price": "A$220",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Not Turning On",
+            "price": "A$220",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Software Update / Restore",
+            "price": "A$70",
             "duration": "1 hour",
             "warranty": "12 months",
             "popular": false
@@ -3153,22 +3181,24 @@
         "iPhone X": [
           {
             "name": "Screen Repair",
-            "price": "A$509",
+            "price": "A$119.00",
             "duration": "1 hour",
             "warranty": "12 months",
-            "popular": true
+            "popular": true,
+            "partOption": false
           },
           {
-            "name": "Motherboard / Logicboard Repair",
-            "price": "A$749",
-            "duration": "1 day",
+            "name": "Back Glass Replacement",
+            "price": "A$120.00",
+            "duration": "2 hours",
             "warranty": "12 months",
-            "popular": false
+            "popular": false,
+            "partOption": false
           },
           {
-            "name": "Water / Liquid Damage Repair",
-            "price": "A$509",
-            "duration": "1 day",
+            "name": "Battery Replacement",
+            "price": "A$120",
+            "duration": "1 hour",
             "warranty": "12 months",
             "popular": false
           },
@@ -3181,14 +3211,14 @@
           },
           {
             "name": "Front Camera Replacement",
-            "price": "A$339",
+            "price": "A$120",
             "duration": "1 hour",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Rear Camera Replacement",
-            "price": "A$339",
+            "price": "A$220",
             "duration": "1 hour",
             "warranty": "12 months",
             "popular": false
@@ -3198,46 +3228,54 @@
             "price": "A$259",
             "duration": "1 hour",
             "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Not Turning On",
-            "price": "A$239",
-            "duration": "1 day",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Battery Replacement",
-            "price": "A$219",
-            "duration": "1 hour",
-            "warranty": "12 months",
-            "popular": false
+            "popular": false,
+            "partOption": false
           },
           {
             "name": "Power / Volume Button",
-            "price": "A$159",
+            "price": "A$120",
             "duration": "1 hour",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Microphone Replacement",
-            "price": "A$159",
+            "price": "A$120",
             "duration": "1 hour",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Speaker Repair",
-            "price": "A$149",
+            "price": "A$120",
             "duration": "1 hour",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "Camera Glass Broken",
-            "price": "A$129",
+            "name": "Water / Liquid Damage Repair",
+            "price": "A$220",
+            "duration": "1 day",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Motherboard / Logicboard Repair",
+            "price": "A$220",
+            "duration": "1 day",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Not Turning On",
+            "price": "A$220",
+            "duration": "1 day",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Software Update / Restore",
+            "price": "A$70",
             "duration": "1 hour",
             "warranty": "12 months",
             "popular": false
@@ -3253,110 +3291,21 @@
         "iPhone 8 Plus": [
           {
             "name": "Screen Repair",
-            "price": "A$499",
+            "price": "A$119.00",
             "duration": "1 hour",
             "warranty": "12 months",
-            "popular": true
-          },
-          {
-            "name": "Motherboard / Logicboard Repair",
-            "price": "A$739",
-            "duration": "1 day",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Water / Liquid Damage Repair",
-            "price": "A$499",
-            "duration": "1 day",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Back Glass Replacement",
-            "price": "A$359",
-            "duration": "1 hour",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Front Camera Replacement",
-            "price": "A$329",
-            "duration": "1 hour",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Rear Camera Replacement",
-            "price": "A$329",
-            "duration": "1 hour",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Charging Port Replacement",
-            "price": "A$259",
-            "duration": "1 hour",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Not Turning On",
-            "price": "A$229",
-            "duration": "1 day",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Battery Replacement",
-            "price": "A$219",
-            "duration": "1 hour",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Microphone Replacement",
-            "price": "A$159",
-            "duration": "1 hour",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Speaker Repair",
-            "price": "A$159",
-            "duration": "1 hour",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Power / Volume Button",
-            "price": "A$149",
-            "duration": "1 hour",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Camera Glass Broken",
-            "price": "A$129",
-            "duration": "1 hour",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Free Diagnostic",
-            "price": "Free",
-            "duration": "1 hour",
-            "warranty": "12 months",
-            "popular": false
+            "popular": true,
+            "partOption": false
           }
         ],
         "iPhone 8": [
           {
             "name": "Screen Repair",
-            "price": "A$479",
+            "price": "A$119.00",
             "duration": "1 hour",
-            "warranty": "12 mo warranty",
-            "popular": true
+            "warranty": "12 months",
+            "popular": true,
+            "partOption": false
           }
         ]
       }
@@ -5404,85 +5353,57 @@
         "MacBook Air 15.3\" (M3)": [
           {
             "name": "Screen Repair & Replacement",
-            "price": "A$879",
+            "price": "A$719.00",
             "duration": "3 hours",
             "warranty": "12 months",
             "popular": true
           },
           {
-            "name": "Motherboard / Logicboard Repair",
-            "price": "A$1179",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Water / Liquid Damage Repair",
-            "price": "A$889",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Not Turning On",
-            "price": "A$489",
-            "duration": "2 days",
+            "name": "Battery Replacement",
+            "price": "A$270.00",
+            "duration": "1 day",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Charging Port Replacement",
-            "price": "A$349",
+            "price": "A$320.00",
             "duration": "1 day",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Keyboard Replacement",
-            "price": "A$349",
+            "price": "A$420.00",
             "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Battery Replacement",
-            "price": "A$339",
-            "duration": "1 day",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Trackpad Not Working",
-            "price": "A$289",
+            "price": "A$320.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "Microphone Replacement",
-            "price": "A$249",
+            "name": "Water / Liquid Damage Repair",
+            "price": "A$420.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "Speaker Repair",
-            "price": "A$249",
+            "name": "Motherboard / Logicboard Repair",
+            "price": "A$420.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "macOS Update / Restore",
-            "price": "A$149",
-            "duration": "3 hours",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "macOS Installation",
-            "price": "A$149",
-            "duration": "2 hours",
+            "name": "Not Turning On",
+            "price": "A$420.00",
+            "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
@@ -5497,85 +5418,78 @@
         "MacBook Air 13\" (M3)": [
           {
             "name": "Screen Repair & Replacement",
-            "price": "A$859",
+            "price": "A$719.00",
             "duration": "3 hours",
             "warranty": "12 months",
             "popular": true
           },
           {
-            "name": "Motherboard / Logicboard Repair",
-            "price": "A$1159",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Water / Liquid Damage Repair",
-            "price": "A$869",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Not Turning On",
-            "price": "A$479",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
             "name": "Battery Replacement",
-            "price": "A$339",
+            "price": "A$320.00",
             "duration": "1 day",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Charging Port Replacement",
-            "price": "A$339",
+            "price": "A$270.00",
             "duration": "1 day",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Keyboard Replacement",
-            "price": "A$339",
+            "price": "A$370.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Trackpad Not Working",
-            "price": "A$289",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Speaker Repair",
-            "price": "A$249",
+            "price": "A$270.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Microphone Replacement",
-            "price": "A$239",
+            "price": "A$220.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "macOS Update / Restore",
-            "price": "A$149",
-            "duration": "3 hours",
+            "name": "Speaker Repair",
+            "price": "A$220.00",
+            "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "macOS Installation",
-            "price": "A$149",
-            "duration": "2 hours",
+            "name": "Water / Liquid Damage Repair",
+            "price": "A$370.00",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Motherboard / Logicboard Repair",
+            "price": "A$370.00",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Not Turning On",
+            "price": "A$370.00",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Software Update / Restore",
+            "price": "A$120.00",
+            "duration": "3 hours",
             "warranty": "12 months",
             "popular": false
           },
@@ -5590,85 +5504,71 @@
         "MacBook Pro 14\" (M3)": [
           {
             "name": "Screen Repair & Replacement",
-            "price": "A$869",
+            "price": "A$1119.00",
             "duration": "3 hours",
             "warranty": "12 months",
             "popular": true
           },
           {
-            "name": "Motherboard / Logicboard Repair",
-            "price": "A$1159",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Water / Liquid Damage Repair",
-            "price": "A$869",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Not Turning On",
-            "price": "A$479",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
             "name": "Battery Replacement",
-            "price": "A$339",
+            "price": "A$320.00",
             "duration": "1 day",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Charging Port Replacement",
-            "price": "A$339",
+            "price": "A$270.00",
             "duration": "1 day",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Keyboard Replacement",
-            "price": "A$329",
+            "price": "A$420.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Trackpad Not Working",
-            "price": "A$289",
+            "price": "A$320.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Speaker Repair",
-            "price": "A$249",
+            "price": "A$220.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "Microphone Replacement",
-            "price": "A$239",
+            "name": "Water / Liquid Damage Repair",
+            "price": "A$420.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "macOS Update / Restore",
-            "price": "A$149",
+            "name": "Motherboard / Logicboard Repair",
+            "price": "A$420.00",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Not Turning On",
+            "price": "A$420.00",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Software Update / Restore",
+            "price": "A$120.00",
             "duration": "3 hours",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "macOS Installation",
-            "price": "A$149",
-            "duration": "2 hours",
             "warranty": "12 months",
             "popular": false
           },
@@ -5682,86 +5582,72 @@
         ],
         "MacBook Pro 14\" (M3 Pro/Max)": [
           {
-            "name": "Screen Repair & Replacement",
-            "price": "A$899",
+            "name": "Screen Repair",
+            "price": "A$1119.99",
             "duration": "3 hours",
             "warranty": "12 months",
             "popular": true
           },
           {
-            "name": "Motherboard / Logicboard Repair",
-            "price": "A$1199",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Water / Liquid Damage Repair",
-            "price": "A$899",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Not Turning On",
-            "price": "A$499",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
             "name": "Battery Replacement",
-            "price": "A$349",
+            "price": "A$320.00",
             "duration": "1 day",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Charging Port Replacement",
-            "price": "A$349",
+            "price": "A$270.00",
             "duration": "1 day",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Keyboard Replacement",
-            "price": "A$349",
+            "price": "A$370.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Trackpad Not Working",
-            "price": "A$299",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Microphone Replacement",
-            "price": "A$249",
+            "price": "A$270.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Speaker Repair",
-            "price": "A$249",
+            "price": "A$220.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "macOS Update / Restore",
-            "price": "A$149",
-            "duration": "3 hours",
+            "name": "Water / Liquid Damage Repair",
+            "price": "A$420.00",
+            "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "macOS Installation",
-            "price": "A$149",
-            "duration": "2 hours",
+            "name": "Motherboard / Logicboard Repair",
+            "price": "A$420.00",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Not Turning On",
+            "price": "A$420.00",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Software Update / Restore",
+            "price": "A$120.00",
+            "duration": "3 hours",
             "warranty": "12 months",
             "popular": false
           },
@@ -5776,85 +5662,50 @@
         "MacBook Pro 16\" (M3 Pro/Max)": [
           {
             "name": "Screen Repair & Replacement",
-            "price": "A$899",
+            "price": "A$1219.00",
             "duration": "3 hours",
             "warranty": "12 months",
             "popular": true
           },
           {
-            "name": "Motherboard / Logicboard Repair",
-            "price": "A$1199",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Water / Liquid Damage Repair",
-            "price": "A$899",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Not Turning On",
-            "price": "A$499",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Battery Replacement",
-            "price": "A$349",
-            "duration": "1 day",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Charging Port Replacement",
-            "price": "A$349",
-            "duration": "1 day",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
             "name": "Keyboard Replacement",
-            "price": "A$349",
+            "price": "A$420.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Trackpad Not Working",
-            "price": "A$299",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Microphone Replacement",
-            "price": "A$249",
+            "price": "A$270.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Speaker Repair",
-            "price": "A$249",
+            "price": "A$220.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "macOS Update / Restore",
-            "price": "A$149",
-            "duration": "3 hours",
+            "name": "Water / Liquid Damage Repair",
+            "price": "A$420.00",
+            "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "macOS Installation",
-            "price": "A$149",
-            "duration": "2 hours",
+            "name": "Motherboard / Logicboard Repair",
+            "price": "A$420.00",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Not Turning On",
+            "price": "A$420.00",
+            "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
@@ -5869,85 +5720,71 @@
         "Macbook Air 15.3\" (M2)": [
           {
             "name": "Screen Repair & Replacement",
-            "price": "A$839",
+            "price": "A$719.00",
             "duration": "3 hours",
             "warranty": "12 months",
             "popular": true
           },
           {
-            "name": "Motherboard / Logicboard Repair",
-            "price": "A$1139",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Water / Liquid Damage Repair",
-            "price": "A$859",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Not Turning On",
-            "price": "A$469",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
             "name": "Battery Replacement",
-            "price": "A$329",
+            "price": "A$320.00",
             "duration": "1 day",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Charging Port Replacement",
-            "price": "A$329",
+            "price": "A$220.00",
             "duration": "1 day",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Keyboard Replacement",
-            "price": "A$329",
+            "price": "A$420.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Trackpad Not Working",
-            "price": "A$289",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Microphone Replacement",
-            "price": "A$239",
+            "price": "A$270.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Speaker Repair",
-            "price": "A$239",
+            "price": "A$220.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "macOS Update / Restore",
-            "price": "A$149",
-            "duration": "3 hours",
+            "name": "Water / Liquid Damage Repair",
+            "price": "A$420.00",
+            "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "macOS Installation",
-            "price": "A$139",
-            "duration": "2 hours",
+            "name": "Motherboard / Logicboard Repair",
+            "price": "A$420.00",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Not Turning On",
+            "price": "A$420.00",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Software Update / Restore",
+            "price": "A$120.00",
+            "duration": "3 hours",
             "warranty": "12 months",
             "popular": false
           },
@@ -5962,85 +5799,57 @@
         "MacBook Pro 16\" (M2 Pro/Max)": [
           {
             "name": "Screen Repair & Replacement",
-            "price": "A$879",
+            "price": "A$1219.00",
             "duration": "3 hours",
             "warranty": "12 months",
             "popular": true
           },
           {
-            "name": "Motherboard / Logicboard Repair",
-            "price": "A$1179",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Water / Liquid Damage Repair",
-            "price": "A$889",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Not Turning On",
-            "price": "A$489",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
             "name": "Battery Replacement",
-            "price": "A$349",
+            "price": "A$270.00",
             "duration": "1 day",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Charging Port Replacement",
-            "price": "A$339",
+            "price": "A$270.00",
             "duration": "1 day",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Keyboard Replacement",
-            "price": "A$339",
+            "price": "A$420.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Trackpad Not Working",
-            "price": "A$299",
+            "price": "A$270.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "Microphone Replacement",
-            "price": "A$249",
+            "name": "Water / Liquid Damage Repair",
+            "price": "A$420.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "Speaker Repair",
-            "price": "A$249",
+            "name": "Motherboard / Logicboard Repair",
+            "price": "A$420.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "macOS Update / Restore",
-            "price": "A$149",
-            "duration": "3 hours",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "macOS Installation",
-            "price": "A$149",
-            "duration": "2 hours",
+            "name": "Not Turning On",
+            "price": "A$420.00",
+            "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
@@ -6055,178 +5864,94 @@
         "MacBook Pro 14\" (M2 Pro)": [
           {
             "name": "Screen Repair & Replacement",
-            "price": "A$859",
+            "price": "A$1119.00",
             "duration": "3 hours",
             "warranty": "12 months",
             "popular": true
-          },
-          {
-            "name": "Motherboard / Logicboard Repair",
-            "price": "A$1149",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Water / Liquid Damage Repair",
-            "price": "A$869",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Not Turning On",
-            "price": "A$479",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Battery Replacement",
-            "price": "A$339",
-            "duration": "1 day",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Charging Port Replacement",
-            "price": "A$339",
-            "duration": "1 day",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Keyboard Replacement",
-            "price": "A$339",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Trackpad Not Working",
-            "price": "A$299",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Speaker Repair",
-            "price": "A$249",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Microphone Replacement",
-            "price": "A$239",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "macOS Update / Restore",
-            "price": "A$149",
-            "duration": "3 hours",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "macOS Installation",
-            "price": "A$149",
-            "duration": "2 hours",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Free Diagnostic",
-            "price": "Free",
-            "duration": "3 hours",
-            "warranty": "12 months",
-            "popular": false
           }
         ],
         "MacBook Air 13\" (M2)": [
           {
             "name": "Screen Repair & Replacement",
-            "price": "A$829",
+            "price": "A$619.00",
             "duration": "3 hours",
             "warranty": "12 months",
             "popular": true
           },
           {
-            "name": "Motherboard / Logicboard Repair",
-            "price": "A$1109",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Water / Liquid Damage Repair",
-            "price": "A$829",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Not Turning On",
-            "price": "A$459",
-            "duration": "2 days",
+            "name": "Screen Repair",
+            "price": "A$319.99",
+            "duration": "3 hours",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Battery Replacement",
-            "price": "A$329",
+            "price": "A$270.00",
             "duration": "1 day",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Charging Port Replacement",
-            "price": "A$329",
+            "price": "A$220.00",
             "duration": "1 day",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Keyboard Replacement",
-            "price": "A$329",
+            "price": "A$370.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Trackpad Not Working",
-            "price": "A$289",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Speaker Repair",
-            "price": "A$239",
+            "price": "A$220.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Microphone Replacement",
-            "price": "A$229",
+            "price": "A$220.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "macOS Update / Restore",
-            "price": "A$149",
-            "duration": "3 hours",
+            "name": "Speaker Repair",
+            "price": "A$220.00",
+            "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "macOS Installation",
-            "price": "A$139",
-            "duration": "2 hours",
+            "name": "Water / Liquid Damage Repair",
+            "price": "A$320.00",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Motherboard / Logicboard Repair",
+            "price": "A$320.00",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Not Turning On",
+            "price": "A$320.00",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Software Update / Restore",
+            "price": "A$120.00",
+            "duration": "3 hours",
             "warranty": "12 months",
             "popular": false
           },
@@ -6241,85 +5966,57 @@
         "MacBook Pro 14\" (M1 Pro)": [
           {
             "name": "Screen Repair & Replacement",
-            "price": "A$839",
+            "price": "A$1119.00",
             "duration": "3 hours",
             "warranty": "12 months",
             "popular": true
           },
           {
-            "name": "Motherboard / Logicboard Repair",
-            "price": "A$1129",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Water / Liquid Damage Repair",
-            "price": "A$859",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Not Turning On",
-            "price": "A$469",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
             "name": "Battery Replacement",
-            "price": "A$329",
+            "price": "A$270.00",
             "duration": "1 day",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Charging Port Replacement",
-            "price": "A$329",
+            "price": "A$270.00",
             "duration": "1 day",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "Keyboard Replacement",
-            "price": "A$329",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Trackpad Not Working",
-            "price": "A$289",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Microphone Replacement",
-            "price": "A$239",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
             "name": "Speaker Repair",
-            "price": "A$239",
+            "price": "A$220.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "macOS Update / Restore",
-            "price": "A$149",
-            "duration": "3 hours",
+            "name": "Water / Liquid Damage Repair",
+            "price": "A$370.00",
+            "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "macOS Installation",
-            "price": "A$149",
-            "duration": "2 hours",
+            "name": "Motherboard / Logicboard Repair",
+            "price": "A$370.00",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Not Turning On",
+            "price": "A$370.00",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Software Update / Restore",
+            "price": "A$120.00",
+            "duration": "3 hours",
             "warranty": "12 months",
             "popular": false
           },
@@ -6334,85 +6031,64 @@
         "MacBook Pro 16\" (M1 Pro)": [
           {
             "name": "Screen Repair & Replacement",
-            "price": "A$869",
+            "price": "A$1219.00",
             "duration": "3 hours",
             "warranty": "12 months",
             "popular": true
           },
           {
-            "name": "Motherboard / Logicboard Repair",
-            "price": "A$1149",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Water / Liquid Damage Repair",
-            "price": "A$869",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Not Turning On",
-            "price": "A$489",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
             "name": "Battery Replacement",
-            "price": "A$339",
+            "price": "A$270.00",
             "duration": "1 day",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Charging Port Replacement",
-            "price": "A$339",
+            "price": "A$270.00",
             "duration": "1 day",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "Keyboard Replacement",
-            "price": "A$329",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Trackpad Not Working",
-            "price": "A$289",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
             "name": "Microphone Replacement",
-            "price": "A$249",
+            "price": "A$220.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Speaker Repair",
-            "price": "A$239",
+            "price": "A$270.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "macOS Update / Restore",
-            "price": "A$149",
-            "duration": "3 hours",
+            "name": "Water / Liquid Damage Repair",
+            "price": "A$420.00",
+            "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "macOS Installation",
-            "price": "A$149",
-            "duration": "2 hours",
+            "name": "Motherboard / Logicboard Repair",
+            "price": "A$420.00",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Not Turning On",
+            "price": "A$420.00",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Software Update / Restore",
+            "price": "A$120.00",
+            "duration": "3 hours",
             "warranty": "12 months",
             "popular": false
           },
@@ -6427,85 +6103,78 @@
         "MacBook Pro 13\" (M1)": [
           {
             "name": "Screen Repair & Replacement",
-            "price": "A$809",
+            "price": "A$619.00",
             "duration": "3 hours",
             "warranty": "12 months",
             "popular": true
           },
           {
-            "name": "Motherboard / Logicboard Repair",
-            "price": "A$1089",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Water / Liquid Damage Repair",
-            "price": "A$819",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Not Turning On",
-            "price": "A$459",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
             "name": "Battery Replacement",
-            "price": "A$329",
+            "price": "A$220.00",
             "duration": "1 day",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Charging Port Replacement",
-            "price": "A$319",
+            "price": "A$220.00",
             "duration": "1 day",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Keyboard Replacement",
-            "price": "A$319",
+            "price": "A$370.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Trackpad Not Working",
-            "price": "A$279",
+            "price": "A$220.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Microphone Replacement",
-            "price": "A$229",
+            "price": "A$220.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Speaker Repair",
-            "price": "A$229",
+            "price": "A$170.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "macOS Update / Restore",
-            "price": "A$149",
-            "duration": "3 hours",
+            "name": "Water / Liquid Damage Repair",
+            "price": "A$320.00",
+            "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "macOS Installation",
-            "price": "A$149",
-            "duration": "2 hours",
+            "name": "Motherboard / Logicboard Repair",
+            "price": "A$320.00",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Not Turning On",
+            "price": "A$320.00",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Software Update / Restore",
+            "price": "A$120.00",
+            "duration": "3 hours",
             "warranty": "12 months",
             "popular": false
           },
@@ -6613,85 +6282,71 @@
         "MacBook Pro 13\"": [
           {
             "name": "Screen Repair & Replacement",
-            "price": "A$679",
+            "price": "A$619.00",
             "duration": "3 hours",
             "warranty": "12 months",
             "popular": true
           },
           {
-            "name": "Motherboard / Logicboard Repair",
-            "price": "A$949",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Water / Liquid Damage Repair",
-            "price": "A$719",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Not Turning On",
-            "price": "A$409",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
             "name": "Battery Replacement",
-            "price": "A$299",
+            "price": "A$220.00",
             "duration": "1 day",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Charging Port Replacement",
-            "price": "A$289",
+            "price": "A$220.00",
             "duration": "1 day",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Keyboard Replacement",
-            "price": "A$289",
+            "price": "A$370.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Trackpad Not Working",
-            "price": "A$249",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Microphone Replacement",
-            "price": "A$209",
+            "price": "A$220.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Speaker Repair",
-            "price": "A$209",
+            "price": "A$170.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "macOS Update / Restore",
-            "price": "A$139",
-            "duration": "3 hours",
+            "name": "Water / Liquid Damage Repair",
+            "price": "A$320.00",
+            "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "macOS Installation",
-            "price": "A$139",
-            "duration": "2 hours",
+            "name": "Motherboard / Logicboard Repair",
+            "price": "A$270.00",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Not Turning On",
+            "price": "A$270.00",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Software Update / Restore",
+            "price": "A$120.00",
+            "duration": "3 hours",
             "warranty": "12 months",
             "popular": false
           },
@@ -6706,85 +6361,78 @@
         "MacBook Air 13\"": [
           {
             "name": "Screen Repair & Replacement",
-            "price": "A$719",
+            "price": "A$569.00",
             "duration": "3 hours",
             "warranty": "12 months",
             "popular": true
           },
           {
-            "name": "Motherboard / Logicboard Repair",
-            "price": "A$989",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Water / Liquid Damage Repair",
-            "price": "A$759",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
-            "name": "Not Turning On",
-            "price": "A$419",
-            "duration": "2 days",
-            "warranty": "12 months",
-            "popular": false
-          },
-          {
             "name": "Battery Replacement",
-            "price": "A$299",
+            "price": "A$220.00",
             "duration": "1 day",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Charging Port Replacement",
-            "price": "A$289",
+            "price": "A$220.00",
             "duration": "1 day",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Keyboard Replacement",
-            "price": "A$289",
+            "price": "A$370.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Trackpad Not Working",
-            "price": "A$259",
+            "price": "A$220.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Microphone Replacement",
-            "price": "A$219",
+            "price": "A$170.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
             "name": "Speaker Repair",
-            "price": "A$219",
+            "price": "A$170.00",
             "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "macOS Update / Restore",
-            "price": "A$149",
-            "duration": "3 hours",
+            "name": "Water / Liquid Damage Repair",
+            "price": "A$270.00",
+            "duration": "2 days",
             "warranty": "12 months",
             "popular": false
           },
           {
-            "name": "macOS Installation",
-            "price": "A$139",
-            "duration": "2 hours",
+            "name": "Motherboard / Logicboard Repair",
+            "price": "A$270.00",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Not Turning On",
+            "price": "A$270.00",
+            "duration": "2 days",
+            "warranty": "12 months",
+            "popular": false
+          },
+          {
+            "name": "Software Update / Restore",
+            "price": "A$120.00",
+            "duration": "3 hours",
             "warranty": "12 months",
             "popular": false
           },
