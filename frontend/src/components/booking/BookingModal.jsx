@@ -237,6 +237,27 @@ const getScreenOptions = (priceStr, modelName, brandName, repairName = '') => {
 
 const getAppleiPhoneRepairPrice = (modelName, repairName, dbPrice) => {
   const modelLower = modelName.toLowerCase();
+  
+  const bypassedMacBooks = [
+    'macbook air 13" (m3)',
+    'macbook air 15.3" (m3)',
+    'macbook pro 14" (m3)',
+    'macbook pro 14" (m3 pro/max)',
+    'macbook air 15.3" (m2)',
+    'macbook pro 16" (m2 pro/max)',
+    'macbook pro 16" (m3 pro/max)',
+    'macbook pro 14" (m2 pro)',
+    'macbook air 13" (m2)',
+    'macbook pro 14" (m1 pro)',
+    'macbook pro 16" (m1 pro)',
+    'macbook pro 13" (m1)',
+    'macbook pro 13"',
+    'macbook air 13"'
+  ];
+  if (bypassedMacBooks.includes(modelLower)) {
+    return dbPrice;
+  }
+
   const repairLower = repairName.toLowerCase();
 
   if (modelLower === 'iphone 13 mini') {
@@ -254,7 +275,7 @@ const getAppleiPhoneRepairPrice = (modelName, repairName, dbPrice) => {
     }
   }
 
-  if (modelLower === 'iphone 11 pro max' || modelLower === 'iphone 11 pro' || modelLower === 'iphone 11') {
+  if (modelLower === 'iphone 11 pro max' || modelLower === 'iphone 11 pro' || modelLower === 'iphone 11' || modelLower === 'iphone xs max' || modelLower === 'iphone xs' || modelLower === 'iphone x' || modelLower === 'iphone 8 plus' || modelLower === 'iphone 8') {
     return dbPrice;
   }
   if (modelLower === 'iphone 17e' || modelLower === 'iphone 17 pro max' || modelLower === 'iphone 17 pro' || modelLower === 'iphone 17' || modelLower === 'iphone 16e' || modelLower === 'iphone 16 pro max' || modelLower === 'iphone 16promax' || modelLower === 'iphone 16 pro' || modelLower === 'iphone 16pro' || modelLower.includes('16 plus') || modelLower.includes('16plus') || modelLower === 'iphone 16' || modelLower.includes('15 pro max') || modelLower.includes('15promax') || modelLower === 'iphone 15' || modelLower.includes('14 pro max') || modelLower.includes('14promax') || modelLower === 'iphone 14 pro' || modelLower === 'iphone 14pro' || modelLower.includes('14 plus') || modelLower.includes('14plus') || modelLower === 'iphone 14' || modelLower.includes('13 pro max') || modelLower.includes('13promax') || modelLower === 'iphone 13 pro' || modelLower === 'iphone 13pro' || modelLower === 'iphone 13') {
