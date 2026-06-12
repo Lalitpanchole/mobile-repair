@@ -632,7 +632,7 @@ const normalizeLineForMatching = (cleanLine) => {
 const isDurationLine = (line) => {
   const l = line.toLowerCase();
   if (l.includes('gaming')) return false;
-  return l.includes('hour') || l.includes('min') || l.includes('day');
+  return l.includes('hour') || (l.includes('min') && !l.includes('mini')) || l.includes('day');
 };
 
 const parseGenericFile = (filePath, brand, dbModels) => {

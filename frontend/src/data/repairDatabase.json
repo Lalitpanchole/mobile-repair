@@ -3873,6 +3873,10 @@
           "year": "2022"
         },
         {
+          "name": "iPad mini 6",
+          "year": "2021"
+        },
+        {
           "name": "iPad Pro 12.9-inch (5th gen)",
           "year": "2021"
         },
@@ -3909,6 +3913,10 @@
           "year": "2019"
         },
         {
+          "name": "iPad Mini (5th generation)",
+          "year": "2019"
+        },
+        {
           "name": "iPad (6th generation)",
           "year": "2018"
         },
@@ -3935,6 +3943,14 @@
         {
           "name": "iPad Pro 12.9-inch (1st gen)",
           "year": "2015"
+        },
+        {
+          "name": "iPad Mini 4",
+          "year": "2015"
+        },
+        {
+          "name": "iPad Mini 3",
+          "year": "2014"
         }
       ],
       "repairs": {
@@ -4361,20 +4377,6 @@
             "popular": true
           },
           {
-            "name": "Screen Repair / Replacement",
-            "price": "A$370",
-            "duration": "2 hours",
-            "warranty": "12 mo warranty",
-            "popular": true
-          },
-          {
-            "name": "Water / Liquid Damage Repair",
-            "price": "A$270",
-            "duration": "1 day",
-            "warranty": "12 mo warranty",
-            "popular": false
-          },
-          {
             "name": "Water / Liquid Damage Repair",
             "price": "A$270",
             "duration": "1 day",
@@ -4412,6 +4414,57 @@
           {
             "name": "Not Turning On",
             "price": "A$220",
+            "duration": "1 day",
+            "warranty": "12 mo warranty",
+            "popular": false
+          },
+          {
+            "name": "Power / Volume Button",
+            "price": "A$170",
+            "duration": "2 hours",
+            "warranty": "12 mo warranty",
+            "popular": false
+          },
+          {
+            "name": "Microphone Replacement",
+            "price": "A$170",
+            "duration": "2 hours",
+            "warranty": "12 mo warranty",
+            "popular": false
+          },
+          {
+            "name": "Speaker Repair",
+            "price": "A$170",
+            "duration": "2 hours",
+            "warranty": "12 mo warranty",
+            "popular": false
+          },
+          {
+            "name": "Software Update / Restore",
+            "price": "A$70",
+            "duration": "2 hours",
+            "warranty": "12 mo warranty",
+            "popular": false
+          },
+          {
+            "name": "Free Diagnostic",
+            "price": "Free",
+            "duration": "2 hours",
+            "warranty": "12 mo warranty",
+            "popular": false
+          }
+        ],
+        "iPad mini 6": [
+          {
+            "name": "Screen Repair / Replacement",
+            "price": "A$370",
+            "duration": "2 hours",
+            "warranty": "12 mo warranty",
+            "popular": true
+          },
+          {
+            "name": "Water / Liquid Damage Repair",
+            "price": "A$270",
             "duration": "1 day",
             "warranty": "12 mo warranty",
             "popular": false
@@ -4452,27 +4505,6 @@
             "popular": false
           },
           {
-            "name": "Power / Volume Button",
-            "price": "A$170",
-            "duration": "2 hours",
-            "warranty": "12 mo warranty",
-            "popular": false
-          },
-          {
-            "name": "Microphone Replacement",
-            "price": "A$170",
-            "duration": "2 hours",
-            "warranty": "12 mo warranty",
-            "popular": false
-          },
-          {
-            "name": "Speaker Repair",
-            "price": "A$170",
-            "duration": "2 hours",
-            "warranty": "12 mo warranty",
-            "popular": false
-          },
-          {
             "name": "Battery Replacement",
             "price": "A$170",
             "duration": "45 min",
@@ -4496,21 +4528,7 @@
           {
             "name": "Software Update / Restore",
             "price": "A$70",
-            "duration": "2 hours",
-            "warranty": "12 mo warranty",
-            "popular": false
-          },
-          {
-            "name": "Software Update / Restore",
-            "price": "A$70",
             "duration": "1 hour",
-            "warranty": "12 mo warranty",
-            "popular": false
-          },
-          {
-            "name": "Free Diagnostic",
-            "price": "Free",
-            "duration": "2 hours",
             "warranty": "12 mo warranty",
             "popular": false
           },
@@ -5212,34 +5230,6 @@
             "popular": true
           },
           {
-            "name": "Screen Repair & Replacement",
-            "price": "A$270",
-            "duration": "1 hour",
-            "warranty": "12 mo warranty",
-            "popular": true
-          },
-          {
-            "name": "Water / Liquid Damage Repair",
-            "price": "A$220",
-            "duration": "1 day",
-            "warranty": "12 mo warranty",
-            "popular": false
-          },
-          {
-            "name": "Motherboard / Logicboard Repair",
-            "price": "A$220",
-            "duration": "1 day",
-            "warranty": "12 mo warranty",
-            "popular": false
-          },
-          {
-            "name": "Not Turning On",
-            "price": "A$220",
-            "duration": "1 day",
-            "warranty": "12 mo warranty",
-            "popular": false
-          },
-          {
             "name": "Water / Liquid Damage Repair",
             "price": "A$220",
             "duration": "1 day",
@@ -5303,6 +5293,43 @@
             "popular": false
           },
           {
+            "name": "Free Diagnostic",
+            "price": "Free",
+            "duration": "1 hour",
+            "warranty": "12 mo warranty",
+            "popular": false
+          }
+        ],
+        "iPad Mini (5th generation)": [
+          {
+            "name": "Screen Repair & Replacement",
+            "price": "A$270",
+            "duration": "1 hour",
+            "warranty": "12 mo warranty",
+            "popular": true
+          },
+          {
+            "name": "Water / Liquid Damage Repair",
+            "price": "A$220",
+            "duration": "1 day",
+            "warranty": "12 mo warranty",
+            "popular": false
+          },
+          {
+            "name": "Motherboard / Logicboard Repair",
+            "price": "A$220",
+            "duration": "1 day",
+            "warranty": "12 mo warranty",
+            "popular": false
+          },
+          {
+            "name": "Not Turning On",
+            "price": "A$220",
+            "duration": "1 day",
+            "warranty": "12 mo warranty",
+            "popular": false
+          },
+          {
             "name": "Battery Replacement",
             "price": "A$170",
             "duration": "1 hour",
@@ -5333,13 +5360,6 @@
           {
             "name": "Speaker Repair",
             "price": "A$120",
-            "duration": "1 hour",
-            "warranty": "12 mo warranty",
-            "popular": false
-          },
-          {
-            "name": "Free Diagnostic",
-            "price": "Free",
             "duration": "1 hour",
             "warranty": "12 mo warranty",
             "popular": false
@@ -5702,13 +5722,6 @@
         ],
         "iPad Pro 12.9-inch (1st gen)": [
           {
-            "name": "Screen Repair & Replacement",
-            "price": "A$270",
-            "duration": "1 hour",
-            "warranty": "12 mo warranty",
-            "popular": true
-          },
-          {
             "name": "Battery Replacement",
             "price": "A$220",
             "duration": "1 hour",
@@ -5721,6 +5734,15 @@
             "duration": "1 hour",
             "warranty": "12 mo warranty",
             "popular": false
+          }
+        ],
+        "iPad Mini 4": [
+          {
+            "name": "Screen Repair & Replacement",
+            "price": "A$270",
+            "duration": "1 hour",
+            "warranty": "12 mo warranty",
+            "popular": true
           },
           {
             "name": "Battery Replacement",
@@ -5736,7 +5758,8 @@
             "warranty": "12 mo warranty",
             "popular": false
           }
-        ]
+        ],
+        "iPad Mini 3": []
       }
     },
     "MacBook": {

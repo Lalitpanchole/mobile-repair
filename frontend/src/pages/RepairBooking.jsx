@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Check, Star, ShieldCheck, Clock, MapPin, ChevronLeft, ChevronRight, Calendar as CalendarIcon, MessageSquare, Building2
 } from 'lucide-react';
 import { useBooking } from '../context/BookingContext';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const getScreenOptions = (priceStr, modelName, brandName, repairName = '', repair = null) => {
   if (repair && repair.options && repair.options.length > 0) {
@@ -220,14 +220,34 @@ const getScreenOptions = (priceStr, modelName, brandName, repairName = '', repai
 };
 
 export default function RepairBooking() {
-  const { bookingData, addBooking, openBookingModal } = useBooking();
+  const { bookingData, addBooking, openBookingModal, resetBookingData } = useBooking();
+  const navigate = useNavigate();
 
-  // If user navigates directly without selecting device, we could redirect or show a fallback.
-  // For now, we will use fallback mock data if bookingData is empty.
-  const brand = bookingData?.brand || 'Apple';
-  const model = bookingData?.model || 'iPhone 13 Pro';
+  // Form states
+  const [fullName, setFullName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState('Westfield Expert Kotara');
+  const [selectedDateDay, setSelectedDateDay] = useState(12); // June 12, 2026
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState('10:30 AM');
+  const [notes, setNotes] = useState('');
+  const [isSuccessOpen, setIsSuccessOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    if (!bookingData?.model || !bookingData?.repair) {
+      openBookingModal();
+    }
+  }, [bookingData, openBookingModal]);
+
+  if (!bookingData?.model || !bookingData?.repair) {
+    return <Navigate to="/" replace />;
+  }
+
+  const brand = bookingData.brand;
+  const model = bookingData.model;
   const displayModel = model.replace(/\s*\(\d{4}\)/g, '');
-  const repair = bookingData?.repair || { name: 'Screen Repair', price: '20$', duration: '1 hour' };
+  const repair = bookingData.repair;
   const selectedScreenOption = bookingData?.repair?.selectedQualityId || 'soft_oled';
 
   const isScreenRepair = repair.name.toLowerCase().includes('screen') || repair.name.toLowerCase().includes('display') || repair.name.toLowerCase().includes('glass');
@@ -240,17 +260,6 @@ export default function RepairBooking() {
   const adjustedRepairPrice = repair.price;
 
   const currentPrice = showOptions ? activeOption.price : adjustedRepairPrice;
-
-  // Form states
-  const [fullName, setFullName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [selectedLocation, setSelectedLocation] = useState('Westfield Expert Kotara');
-  const [selectedDateDay, setSelectedDateDay] = useState(12); // June 12, 2026
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState('10:30 AM');
-  const [notes, setNotes] = useState('');
-  const [isSuccessOpen, setIsSuccessOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
 
   // Generate calendar days for mock UI (June 2026 starting on Monday June 1st)
   const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
@@ -286,7 +295,7 @@ export default function RepairBooking() {
   };
 
   return (
-    <div className="bg-[#F8FAFC] min-h-screen pt-32 pb-24">
+    <div className="bg-[#F8FAFC] min-h-screen pt-10 pb-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Back Button Selection Link */}
@@ -615,6 +624,8 @@ export default function RepairBooking() {
                     setEmail('');
                     setSelectedDateDay(12);
                     setSelectedTimeSlot('10:30 AM');
+                    resetBookingData();
+                    navigate('/', { replace: true });
                   }}
                   className="w-full premium-button bg-[#0F172A] text-white font-bold py-3 rounded-xl shadow-lg cursor-pointer border-0"
                 >

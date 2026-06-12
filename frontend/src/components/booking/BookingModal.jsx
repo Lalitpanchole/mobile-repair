@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   X, Search, Smartphone, Laptop, Watch, Tablet,
   ArrowRight, ShieldCheck, Clock, Check,
@@ -226,6 +226,7 @@ const getScreenOptions = (priceStr, modelName, brandName, repairName = '', repai
 export default function BookingModal() {
   const { isBookingModalOpen, closeBookingModal, updateBookingData, resetBookingData, bookingData } = useBooking();
   const navigate = useNavigate();
+  const location = useLocation();
   // Force HMR refresh
   const [step, setStep] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
@@ -244,12 +245,14 @@ export default function BookingModal() {
   useEffect(() => {
     if (isBookingModalOpen) {
       setStep(1);
-      resetBookingData();
+      if (location.pathname !== '/book-repair') {
+        resetBookingData();
+      }
       setSearchQuery('');
       setSelectedBaseRepair(null);
       setSelectedQualityOption('soft_oled');
     }
-  }, [isBookingModalOpen]);
+  }, [isBookingModalOpen, location.pathname]);
 
   if (!isBookingModalOpen) return null;
 
