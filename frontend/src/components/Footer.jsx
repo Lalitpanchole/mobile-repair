@@ -73,11 +73,11 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-4 group">
                 <div className="p-2 bg-[#111827] rounded-lg border border-[#334155] text-green-500 shrink-0 group-hover:scale-110 transition-transform"><Phone className="w-5 h-5" /></div>
-                <span className="text-gray-400 group-hover:text-gray-300 transition-colors">+61 2 4016 2570</span>
+                <span className="text-gray-400 group-hover:text-gray-300 transition-colors">+61 426 186 212</span>
               </li>
               <li className="flex items-center gap-4 group">
                 <div className="p-2 bg-[#111827] rounded-lg border border-[#334155] text-purple-500 shrink-0 group-hover:scale-110 transition-transform"><Mail className="w-5 h-5" /></div>
-                <span className="text-gray-400 group-hover:text-gray-300 transition-colors">support@irepair.com</span>
+                <span className="text-gray-400 group-hover:text-gray-300 transition-colors">mpcrepairskotara@gmail.com</span>
               </li>
             </ul>
           </div>

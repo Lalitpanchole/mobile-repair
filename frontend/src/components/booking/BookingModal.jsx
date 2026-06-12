@@ -251,8 +251,16 @@ export default function BookingModal() {
       setSearchQuery('');
       setSelectedBaseRepair(null);
       setSelectedQualityOption('soft_oled');
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
     }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
   }, [isBookingModalOpen, location.pathname]);
+
 
   if (!isBookingModalOpen) return null;
 
