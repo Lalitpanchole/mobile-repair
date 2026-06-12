@@ -652,7 +652,7 @@ export default function AdminDashboard() {
                             </div>
                             <div className="flex flex-wrap items-center gap-2">
                               <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-[11px] font-bold border border-gray-200 dark:border-gray-700 shadow-sm">
-                                {ev.device || (ev.title && ev.title.includes(' with ') ? ev.title.split(' with ')[1] : 'Unknown Device')}
+                                {(ev.device || (ev.title && ev.title.includes(' with ') ? ev.title.split(' with ')[1] : 'Unknown Device')).replace(/\s*\(\d{4}\)/g, '')}
                               </span>
                               {ev.price && (
                                 <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-[11px] font-extrabold border border-emerald-200/60 dark:border-emerald-500/20 shadow-sm">
@@ -793,7 +793,7 @@ export default function AdminDashboard() {
                       </div>
                       <div className="flex justify-between items-start gap-4">
                         <span className="text-gray-500 dark:text-gray-400 font-bold">Model</span>
-                        <span className="font-extrabold text-gray-900 dark:text-white text-right">{activeEvent.device || 'N/A'}</span>
+                        <span className="font-extrabold text-gray-900 dark:text-white text-right">{activeEvent.device ? activeEvent.device.replace(/\s*\(\d{4}\)/g, '') : 'N/A'}</span>
                       </div>
                       <div className="flex justify-between items-start gap-4">
                         <span className="text-gray-500 dark:text-gray-400 font-bold">Selected Repair(s)</span>

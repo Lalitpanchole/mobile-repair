@@ -236,7 +236,7 @@ export default function AdminBookings() {
                       </div>
                       <div className="flex items-center gap-2 mt-2 flex-wrap">
                         <span className="inline-flex px-2 py-0.5 rounded-md bg-gray-100 text-gray-700 text-[11px] font-bold border border-gray-200 shadow-sm">
-                          {booking.device}
+                          {booking.device.replace(/\s*\(\d{4}\)/g, '')}
                         </span>
                         <span className="text-sm font-bold text-gray-400">•</span>
                         <span className="text-sm font-bold text-gray-600">{booking.issue}</span>
@@ -523,7 +523,7 @@ export default function AdminBookings() {
                   <span className="bg-amber-100 dark:bg-amber-900/20 text-[#FFDE21] dark:text-[#FFDE21] px-2.5 py-0.5 rounded-full text-[10px] font-bold">
                     Booking Detail
                   </span>
-                  <h3 className="text-lg font-black text-gray-900 dark:text-white mt-2">{selectedBookingDetails.title || `${selectedBookingDetails.customer} with ${selectedBookingDetails.device}`}</h3>
+                  <h3 className="text-lg font-black text-gray-900 dark:text-white mt-2">{selectedBookingDetails.title || `${selectedBookingDetails.customer} with ${selectedBookingDetails.device.replace(/\s*\(\d{4}\)/g, '')}`}</h3>
                 </div>
 
                 <div className="max-h-[60vh] overflow-y-auto pr-2 space-y-5 custom-scrollbar">
@@ -564,7 +564,7 @@ export default function AdminBookings() {
                       </div>
                       <div className="flex justify-between items-start gap-4">
                         <span className="text-gray-500 dark:text-gray-400 font-bold">Model</span>
-                        <span className="font-extrabold text-gray-900 dark:text-white text-right">{selectedBookingDetails.device || 'N/A'}</span>
+                        <span className="font-extrabold text-gray-900 dark:text-white text-right">{selectedBookingDetails.device ? selectedBookingDetails.device.replace(/\s*\(\d{4}\)/g, '') : 'N/A'}</span>
                       </div>
                       <div className="flex justify-between items-start gap-4">
                         <span className="text-gray-500 dark:text-gray-400 font-bold">Selected Repair(s)</span>

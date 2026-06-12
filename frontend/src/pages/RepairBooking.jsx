@@ -6,7 +6,13 @@ import {
 import { useBooking } from '../context/BookingContext';
 import { Navigate } from 'react-router-dom';
 
-const getScreenOptions = (priceStr, modelName, brandName, repairName = '') => {
+const getScreenOptions = (priceStr, modelName, brandName, repairName = '', repair = null) => {
+  if (repair && repair.options && repair.options.length > 0) {
+    return repair.options;
+  }
+  if (brandName !== 'Apple' || !modelName.toLowerCase().startsWith('iphone')) {
+    return [];
+  }
   const basePriceMatch = priceStr.match(/[\d.]+/);
   const basePrice = basePriceMatch ? Math.floor(parseFloat(basePriceMatch[0])) : 199;
   
@@ -83,7 +89,7 @@ const getScreenOptions = (priceStr, modelName, brandName, repairName = '') => {
       }
     ];
   }
-  
+
   // Explicit reference prices + $20 premium mapping
   if (modelLower.includes('16 pro max') || modelLower.includes('16promax')) {
     refIncell = 249 + 20; // 269
@@ -92,319 +98,125 @@ const getScreenOptions = (priceStr, modelName, brandName, repairName = '') => {
   } else if (modelLower.includes('16 pro') || modelLower.includes('16pro')) {
     refIncell = 199 + 20; // 219
     refSoftOLED = 299 + 20; // 319
-    refGenuine = 639 + 20; // 659
+    refGenuine = 579 + 20; // 599
   } else if (modelLower.includes('16 plus') || modelLower.includes('16plus')) {
-    refIncell = 179 + 20; // 199
-    refSoftOLED = 249 + 20; // 269
-    refGenuine = 369 + 20; // 389
-  } else if (modelLower.includes('16')) {
-    refIncell = 159 + 20; // 179
-    refSoftOLED = 229 + 20; // 249
-    refGenuine = 349 + 20; // 369
+    refIncell = 169 + 20; // 189
+    refSoftOLED = 219 + 20; // 239
+    refGenuine = 429 + 20; // 449
+  } else if (modelLower === 'iphone 16') {
+    refIncell = 169 + 20; // 189
+    refSoftOLED = 219 + 20; // 239
+    refGenuine = 429 + 20; // 449
   } else if (modelLower.includes('15 pro max') || modelLower.includes('15promax')) {
     refIncell = 199 + 20; // 219
-    refSoftOLED = 299 + 20; // 319
-    refGenuine = 549 + 20; // 569
+    refSoftOLED = 269 + 20; // 289
+    refGenuine = 469 + 20; // 489
   } else if (modelLower.includes('15 pro') || modelLower.includes('15pro')) {
     refIncell = 149 + 20; // 169
-    refSoftOLED = 279 + 20; // 299
-    refGenuine = 549 + 20; // 569
-  } else if (modelLower.includes('15 plus') || modelLower.includes('15plus')) {
-    refIncell = 149 + 20; // 169
     refSoftOLED = 219 + 20; // 239
-    refGenuine = 319 + 20; // 339
-  } else if (modelLower.includes('15') && !modelLower.includes('pro') && !modelLower.includes('plus')) {
-    refIncell = 149 + 20; // 169
-    refSoftOLED = 249 + 20; // 269
-    refGenuine = 399 + 20; // 419
+    refGenuine = 369 + 20; // 389
+  } else if (modelLower.includes('15 plus') || modelLower.includes('15plus')) {
+    refIncell = 129 + 20; // 149
+    refSoftOLED = 179 + 20; // 199
+    refGenuine = 299 + 20; // 319
+  } else if (modelLower === 'iphone 15') {
+    refIncell = 119 + 20; // 139
+    refSoftOLED = 169 + 20; // 189
+    refGenuine = 269 + 20; // 289
   } else if (modelLower.includes('14 pro max') || modelLower.includes('14promax')) {
     refIncell = 169 + 20; // 189
-    refSoftOLED = 249 + 20; // 269
-    refGenuine = 449 + 20; // 469
+    refSoftOLED = 219 + 20; // 239
+    refGenuine = 369 + 20; // 389
   } else if (modelLower.includes('14 pro') || modelLower.includes('14pro')) {
     refIncell = 149 + 20; // 169
-    refSoftOLED = 259 + 20; // 279
-    refGenuine = 399 + 20; // 419
+    refSoftOLED = 199 + 20; // 219
+    refGenuine = 319 + 20; // 339
   } else if (modelLower.includes('14 plus') || modelLower.includes('14plus')) {
-    refIncell = 149 + 20; // 169
-    refSoftOLED = 199 + 20; // 219
-    refGenuine = 399 + 20; // 419
-  } else if (modelLower.includes('14') && !modelLower.includes('pro') && !modelLower.includes('plus')) {
-    refIncell = 150 + 20; // 170
-    refSoftOLED = 199 + 20; // 219
-    refGenuine = 349 + 20; // 369
+    refIncell = 119 + 20; // 139
+    refSoftOLED = 169 + 20; // 189
+    refGenuine = 269 + 20; // 289
+  } else if (modelLower === 'iphone 14') {
+    refIncell = 109 + 20; // 129
+    refSoftOLED = 149 + 20; // 169
+    refGenuine = 229 + 20; // 249
   } else if (modelLower.includes('13 pro max') || modelLower.includes('13promax')) {
     refIncell = 149 + 20; // 169
     refSoftOLED = 199 + 20; // 219
-    refGenuine = 349 + 20; // 369
+    refGenuine = 299 + 20; // 319
   } else if (modelLower.includes('13 pro') || modelLower.includes('13pro')) {
-    refIncell = 149 + 20; // 169
-    refSoftOLED = 199 + 20; // 219
-    refGenuine = 299 + 20; // 319
-  } else if (modelLower.includes('13 mini') || modelLower.includes('13mini')) {
-    refIncell = 109 + 20; // 129
-    refSoftOLED = 169 + 20; // 189
-    refGenuine = 249 + 20; // 269
-  } else if (modelLower.includes('13') && !modelLower.includes('pro') && !modelLower.includes('mini')) {
     refIncell = 129 + 20; // 149
-    refSoftOLED = 199 + 20; // 219
-    refGenuine = 299 + 20; // 319
+    refSoftOLED = 179 + 20; // 199
+    refGenuine = 269 + 20; // 289
+  } else if (modelLower === 'iphone 13' || modelLower === 'iphone 13 mini') {
+    refIncell = 99 + 20; // 119
+    refSoftOLED = 139 + 20; // 159
+    refGenuine = 199 + 20; // 219
   } else if (modelLower.includes('12 pro max') || modelLower.includes('12promax')) {
-    refIncell = 129 + 20; // 149
-    refSoftOLED = 199 + 20; // 219
-    refGenuine = 349 + 20; // 369
-  } else if (modelLower.includes('12 pro') || modelLower.includes('12pro')) {
-    refIncell = 139; // 139
-    refSoftOLED = 219; // 219
-    refGenuine = 349 + 20; // 369
-  } else if (modelLower.includes('12 mini') || modelLower.includes('12mini')) {
-    refIncell = 99 + 20; // 119
-    refSoftOLED = 159 + 20; // 179
-    refGenuine = 229 + 20; // 249
-  } else if (modelLower.includes('12')) {
-    refIncell = 139; // 139
-    refSoftOLED = 219; // 219
-    refGenuine = 229 + 20; // 249
-  } else if (modelLower.includes('11 pro max') || modelLower.includes('11promax')) {
     refIncell = 119 + 20; // 139
-    refSoftOLED = 179 + 20; // 199
-    refGenuine = 299 + 20; // 319
-  } else if (modelLower.includes('11 pro') || modelLower.includes('11pro')) {
-    refIncell = 119 + 20; // 139
-    refSoftOLED = 179 + 20; // 199
-    refGenuine = 299 + 20; // 319
-  } else if (modelLower.includes('11') || modelLower.includes('xr')) {
-    refIncell = 99 + 20; // 119
     refSoftOLED = 149 + 20; // 169
-    refGenuine = 249 + 20; // 269
-  } else {
-    refGenuine = basePrice;
-    if (basePrice > 400) {
-      refSoftOLED = basePrice - 200;
-      refIncell = basePrice - 300;
-    } else if (basePrice > 250) {
-      refSoftOLED = basePrice - 80;
-      refIncell = basePrice - 130;
-    } else {
-      refSoftOLED = basePrice - 50;
-      refIncell = basePrice - 90;
-    }
+    refGenuine = 219 + 20; // 239
+  } else if (modelLower.includes('12 pro') || modelLower.includes('12pro')) {
+    refIncell = 109 + 20; // 129
+    refSoftOLED = 139 + 20; // 159
+    refGenuine = 199 + 20; // 219
+  } else if (modelLower === 'iphone 12' || modelLower === 'iphone 12 mini') {
+    refIncell = 99 + 20; // 119
+    refSoftOLED = 129 + 20; // 149
+    refGenuine = 179 + 20; // 199
+  } else if (modelLower.includes('11 pro max') || modelLower.includes('11promax')) {
+    refIncell = 89 + 20; // 109
+    refSoftOLED = 119 + 20; // 139
+    refGenuine = 169 + 20; // 189
+  } else if (modelLower.includes('11 pro') || modelLower.includes('11pro')) {
+    refIncell = 79 + 20; // 99
+    refSoftOLED = 109 + 20; // 129
+    refGenuine = 149 + 20; // 169
+  } else if (modelLower === 'iphone 11') {
+    refIncell = 69 + 20; // 89
+    refSoftOLED = 99 + 20; // 119
+    refGenuine = 129 + 20; // 149
+  } else if (modelLower.includes('xs max') || modelLower.includes('xsmax')) {
+    refIncell = 79 + 20; // 99
+    refSoftOLED = 109 + 20; // 129
+    refGenuine = 149 + 20; // 169
+  } else if (modelLower === 'iphone xs' || modelLower === 'iphone x') {
+    refIncell = 69 + 20; // 89
+    refSoftOLED = 89 + 20; // 109
+    refGenuine = 129 + 20; // 149
+  } else if (modelLower === 'iphone xr') {
+    refIncell = 59 + 20; // 79
+    refSoftOLED = 79 + 20; // 99
+    refGenuine = 109 + 20; // 129
+  } else if (modelLower === 'iphone 8 plus') {
+    refIncell = 49 + 20; // 69
+    refSoftOLED = 69 + 20; // 89
+    refGenuine = 89 + 20; // 109
+  } else if (modelLower === 'iphone 8') {
+    refIncell = 39 + 20; // 59
+    refSoftOLED = 59 + 20; // 79
+    refGenuine = 79 + 20; // 99
   }
 
-  const finalIncell = refIncell;
-  const finalSoftOLED = refSoftOLED;
-  const finalGenuine = refGenuine;
-
-  const options = [
+  return [
     {
       id: 'incell',
-      name: 'Aftermarket In-Cell LCD 120Hz',
-      price: `A$${finalIncell.toFixed(2)}`,
-      description: 'A cost-effective choice for screen replacement. This in-cell LCD screen offers smooth daily performance. Note: It is slightly thicker than the OLED display and may cause slightly higher battery usage, backed by our 12-month warranty.'
+      name: 'Aftermarket In-Cell LCD',
+      price: `A$${refIncell.toFixed(2)}`,
+      description: 'A budget-friendly choice that utilizes standard LCD technology. While functional, it has thicker bezels, lower contrast/brightness, and higher power usage than original screen types. Backed by our 12-month warranty.'
     },
     {
       id: 'soft_oled',
-      name: 'Aftermarket Soft OLED 120Hz',
-      price: `A$${finalSoftOLED.toFixed(2)}`,
-      description: 'Our most popular selection. This high-grade Soft OLED display mimics original performance with a 120Hz refresh rate, vibrant colors, deep black contrast, and optimal battery efficiency.'
+      name: 'Aftermarket Soft OLED',
+      price: `A$${refSoftOLED.toFixed(2)}`,
+      description: 'A premium aftermarket display matching original specifications. Uses flexible Soft OLED substrate for true black contrast, sharp color vibrancy, exact bezel fit, and factory-standard power usage. Highly recommended.'
+    },
+    {
+      id: 'genuine',
+      name: 'Genuine Apple OLED',
+      price: `A$${refGenuine.toFixed(2)}`,
+      description: 'The premium factory-grade screen replacement. Restores original brightness, full HDR color accuracy, perfect touch response, and official True Tone functionality with maximal durability.'
     }
   ];
-
-  if (!(modelLower === 'iphone 16 pro' || modelLower === 'iphone 16pro' || modelLower.includes('16 plus') || modelLower.includes('16plus') || modelLower === 'iphone 16')) {
-    options.push({
-      id: 'genuine',
-      name: `Genuine ${brandName} OLED`,
-      price: `A$${finalGenuine.toFixed(2)}`,
-      description: 'The premium factory-grade screen replacement. Restores original brightness, full HDR color accuracy, perfect touch response, and official True Tone functionality with maximal durability.'
-    });
-  }
-
-  if (modelLower.includes('16 plus') || modelLower.includes('16plus')) {
-    options[0].price = 'A$219.00';
-  }
-
-  if (modelLower === 'iphone 16') {
-    options[0].price = 'A$219.00';
-    options[1].price = 'A$269.00';
-  }
-
-  return options;
-};
-
-const getAppleiPhoneRepairPrice = (modelName, repairName, dbPrice) => {
-  const modelLower = modelName.toLowerCase();
-  const repairLower = repairName.toLowerCase();
-
-  if (modelLower === 'iphone 13 mini') {
-    if (repairLower.includes('back glass')) {
-      return 'A$170.00';
-    }
-    if (repairLower.includes('screen') || repairLower.includes('display')) {
-      return 'A$139.00';
-    }
-  }
-
-  if (modelLower === 'iphone 12 pro' || modelLower === 'iphone 12' || modelLower === 'iphone 12 mini') {
-    if (!repairLower.includes('screen') && !repairLower.includes('display')) {
-      return dbPrice;
-    }
-  }
-
-  if (modelLower === 'iphone 11 pro max' || modelLower === 'iphone 11 pro' || modelLower === 'iphone 11' || modelLower === 'iphone xs max' || modelLower === 'iphone xs' || modelLower === 'iphone x' || modelLower === 'iphone 8 plus' || modelLower === 'iphone 8') {
-    return dbPrice;
-  }
-  if (modelLower === 'iphone 17e' || modelLower === 'iphone 17 pro max' || modelLower === 'iphone 17 pro' || modelLower === 'iphone 17' || modelLower === 'iphone 16e' || modelLower === 'iphone 16 pro max' || modelLower === 'iphone 16promax' || modelLower === 'iphone 16 pro' || modelLower === 'iphone 16pro' || modelLower.includes('16 plus') || modelLower.includes('16plus') || modelLower === 'iphone 16' || modelLower.includes('15 pro max') || modelLower.includes('15promax') || modelLower === 'iphone 15' || modelLower.includes('14 pro max') || modelLower.includes('14promax') || modelLower === 'iphone 14 pro' || modelLower === 'iphone 14pro' || modelLower.includes('14 plus') || modelLower.includes('14plus') || modelLower === 'iphone 14' || modelLower.includes('13 pro max') || modelLower.includes('13promax') || modelLower === 'iphone 13 pro' || modelLower === 'iphone 13pro' || modelLower === 'iphone 13') {
-    return dbPrice;
-  }
-
-  // If it's a diagnostic or free
-  if (repairLower.includes('diagnostic') || dbPrice === 'Free' || dbPrice === '0') {
-    return 'Free';
-  }
-
-  const is16Series = modelLower.includes('16');
-  const is15Series = modelLower.includes('15');
-  const is14Series = modelLower.includes('14');
-  const is13Series = modelLower.includes('13');
-  const is12Series = modelLower.includes('12');
-  const is11Series = modelLower.includes('11');
-  const isXrXsX = modelLower.includes('xr') || modelLower.includes('xs') || modelLower.includes('x') || modelLower.includes('se');
-
-  // 1. Screen Repair starting price
-  if (repairLower.includes('screen') || repairLower.includes('display') || (repairLower.includes('glass') && !repairLower.includes('back') && !repairLower.includes('rear') && !repairLower.includes('camera'))) {
-    if (is16Series) {
-      if (modelLower.includes('pro max') || modelLower.includes('promax')) return 'A$269';
-      if (modelLower.includes('pro')) return 'A$219';
-      if (modelLower.includes('plus')) return 'A$199';
-      return 'A$179';
-    }
-    if (is15Series) {
-      if (modelLower.includes('pro max') || modelLower.includes('promax')) return 'A$219';
-      if (modelLower.includes('pro')) return 'A$199';
-      if (modelLower.includes('plus')) return 'A$169';
-      return 'A$149';
-    }
-    if (is14Series) {
-      if (modelLower.includes('pro max') || modelLower.includes('promax')) return 'A$199';
-      if (modelLower.includes('pro')) return 'A$179';
-      if (modelLower.includes('plus')) return 'A$149';
-      return 'A$129';
-    }
-    if (is13Series) {
-      if (modelLower.includes('pro max') || modelLower.includes('promax')) return 'A$189';
-      if (modelLower.includes('pro')) return 'A$169';
-      return 'A$129';
-    }
-    if (is12Series) {
-      if (modelLower.includes('pro max') || modelLower.includes('promax')) return 'A$149';
-      if (modelLower.includes('pro')) return 'A$149';
-      if (modelLower === 'iphone 12') return 'A$139';
-      return 'A$119';
-    }
-    if (is11Series || isXrXsX) {
-      if (modelLower.includes('pro max') || modelLower.includes('promax')) return 'A$139';
-      if (modelLower.includes('pro')) return 'A$139';
-      return 'A$119';
-    }
-    return 'A$119';
-  }
-
-  // 2. Battery Replacement
-  if (repairLower.includes('battery')) {
-    if (is16Series) return 'A$170';
-    if (is15Series) return 'A$159';
-    if (is14Series) return 'A$170';
-    if (is13Series) return 'A$140';
-    if (is12Series) return 'A$130';
-    if (is11Series) return 'A$119';
-    return 'A$100';
-  }
-
-  // 3. Back Glass Replacement
-  if (repairLower.includes('back glass') || repairLower.includes('rear glass') || repairLower.includes('back cover')) {
-    if (is16Series || is15Series || is14Series) return 'A$170';
-    if (is13Series) return 'A$150';
-    if (is12Series) return 'A$140';
-    if (is11Series) return 'A$130';
-    return 'A$110';
-  }
-
-  // 4. Charging Port Replacement
-  if (repairLower.includes('charging') || repairLower.includes('port') || repairLower.includes('usb')) {
-    if (is16Series || is15Series) return 'A$170';
-    if (is14Series || is13Series || is12Series || is11Series) return 'A$120';
-    return 'A$100';
-  }
-
-  // 5. Front Camera
-  if (repairLower.includes('front camera')) {
-    if (is16Series || is15Series) return 'A$170';
-    if (is14Series || is13Series || is12Series || is11Series) return 'A$120';
-    return 'A$100';
-  }
-
-  // 6. Rear Camera
-  if (repairLower.includes('rear camera') || (repairLower.includes('camera') && !repairLower.includes('glass') && !repairLower.includes('front'))) {
-    if (is16Series) return 'A$270';
-    if (is15Series || is14Series) return 'A$220';
-    if (is13Series) return 'A$200';
-    if (is12Series) return 'A$170';
-    if (is11Series) return 'A$150';
-    return 'A$120';
-  }
-
-  // 7. Camera Glass Broken
-  if (repairLower.includes('camera glass')) {
-    return 'A$70';
-  }
-
-  // 8. Speaker Repair
-  if (repairLower.includes('speaker')) {
-    if (modelLower.includes('16 pro max') || modelLower.includes('16promax')) return 'A$87';
-    if (is16Series || is15Series || is14Series || is13Series || is12Series) return 'A$120';
-    if (is11Series) return 'A$110';
-    return 'A$100';
-  }
-
-  // 9. Microphone Replacement
-  if (repairLower.includes('microphone') || repairLower.includes('mic')) {
-    if (is16Series) return 'A$170';
-    if (is15Series || is14Series || is13Series || is12Series || is11Series) return 'A$120';
-    return 'A$100';
-  }
-
-  // 10. Power / Volume Buttons
-  if (repairLower.includes('power') || repairLower.includes('volume') || repairLower.includes('button')) {
-    if (is16Series || is15Series || is14Series || is13Series || is12Series || is11Series) return 'A$170';
-    return 'A$120';
-  }
-
-  // 11. Motherboard / Not Turning On / Water Damage
-  if (repairLower.includes('motherboard') || repairLower.includes('logic') || repairLower.includes('turning on') || repairLower.includes('water') || repairLower.includes('liquid')) {
-    if (is16Series) return 'A$320';
-    if (is15Series) return 'A$270';
-    if (is14Series || is13Series) return 'A$220';
-    if (is12Series) return 'A$200';
-    if (is11Series) return 'A$170';
-    return 'A$150';
-  }
-
-  // 12. Software Update / Restore
-  if (repairLower.includes('software')) {
-    return 'A$70';
-  }
-
-  const match = dbPrice.match(/\d+/);
-  if (match) {
-    if (modelLower.includes('macbook air 13') && modelLower.includes('m3')) {
-      return dbPrice;
-    }
-    const numericPrice = parseInt(match[0]);
-    const adjusted = numericPrice + 20;
-    return dbPrice.replace(/\d+/, adjusted);
-  }
-
-  return dbPrice;
 };
 
 export default function RepairBooking() {
@@ -414,20 +226,18 @@ export default function RepairBooking() {
   // For now, we will use fallback mock data if bookingData is empty.
   const brand = bookingData?.brand || 'Apple';
   const model = bookingData?.model || 'iPhone 13 Pro';
+  const displayModel = model.replace(/\s*\(\d{4}\)/g, '');
   const repair = bookingData?.repair || { name: 'Screen Repair', price: '20$', duration: '1 hour' };
   const selectedScreenOption = bookingData?.repair?.selectedQualityId || 'soft_oled';
 
   const isScreenRepair = repair.name.toLowerCase().includes('screen') || repair.name.toLowerCase().includes('display') || repair.name.toLowerCase().includes('glass');
   const isPhone = !bookingData?.deviceType || bookingData.deviceType.toLowerCase().includes('phone') || bookingData.deviceType.toLowerCase() === 'iphone' || model.toLowerCase().includes('iphone');
-  const showOptions = repair.partOption !== undefined ? repair.partOption : (isScreenRepair && isPhone);
+  const showOptions = repair.partOption === true;
 
-  const screenOptions = showOptions ? getScreenOptions(repair.price, model, brand, repair.name) : [];
-  const activeOption = showOptions ? screenOptions.find(opt => opt.id === selectedScreenOption) || screenOptions[1] : null;
+  const screenOptions = showOptions ? getScreenOptions(repair.price, model, brand, repair.name, repair) : [];
+  const activeOption = showOptions ? screenOptions.find(opt => opt.id === selectedScreenOption) || screenOptions.find(opt => opt.recommended) || screenOptions[1] || screenOptions[0] : null;
 
-  const isApple = brand.toLowerCase() === 'apple';
-  const adjustedRepairPrice = (isApple && isPhone && !isScreenRepair) 
-    ? getAppleiPhoneRepairPrice(model, repair.name, repair.price) 
-    : repair.price;
+  const adjustedRepairPrice = repair.price;
 
   const currentPrice = showOptions ? activeOption.price : adjustedRepairPrice;
 
@@ -493,13 +303,13 @@ export default function RepairBooking() {
         {/* Breadcrumb / Title */}
         <div className="mb-10">
           <p className="text-[#FFDE21] text-sm font-bold uppercase tracking-wider mb-2 flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#FFDE21]"></span> {brand} {model}
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FFDE21]"></span> {brand} {displayModel}
           </p>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#0F172A] tracking-tight mb-4">
             {repair.name}.
           </h1>
           <p className="text-[#64748B] text-lg font-medium max-w-2xl">
-            Fast, professional repair for your {model} — most jobs done same day, walk-ins welcome.
+            Fast, professional repair for your {displayModel} — most jobs done same day, walk-ins welcome.
           </p>
 
           <div className="flex flex-wrap items-center gap-6 mt-6 text-sm font-bold text-[#0F172A]">
@@ -538,16 +348,16 @@ export default function RepairBooking() {
             <div>
               <p className="text-[#64748B] font-bold text-xs uppercase tracking-wider mb-3">Service Details</p>
               <h2 className="text-2xl font-bold text-[#0F172A] mb-4">
-                About {model} {showOptions ? `${repair.name} (${activeOption.name})` : repair.name}
+                About {displayModel} {showOptions ? `${repair.name} (${activeOption.name})` : repair.name}
               </h2>
               <p className="text-[#64748B] font-medium leading-relaxed">
                 {showOptions ? (
                   <>
-                    Is your {model} broken or damaged? Get it fixed at our repair center. We offer a professional screen replacement utilizing our high-quality <strong>{activeOption.name}</strong>. {activeOption.description} This service is priced at <strong>{currentPrice}</strong> and includes a 12-month warranty with same-day completion.
+                    Is your {displayModel} broken or damaged? Get it fixed at our repair center. We offer a professional screen replacement utilizing our high-quality <strong>{activeOption.name}</strong>. {activeOption.description} This service is priced at <strong>{currentPrice}</strong> and includes a 12-month warranty with same-day completion.
                   </>
                 ) : (
                   <>
-                    Is your {model} broken or damaged? Get it fixed at our repair center. Professional {repair.name.toLowerCase()} service with transparent pricing from {repair.price}. Our skilled specialists use premium quality parts to fix your device fast. Whether it needs repair or full replacement, we'll restore it to perfect working condition.
+                    Is your {displayModel} broken or damaged? Get it fixed at our repair center. Professional {repair.name.toLowerCase()} service with transparent pricing from {repair.price}. Our skilled specialists use premium quality parts to fix your device fast. Whether it needs repair or full replacement, we'll restore it to perfect working condition.
                   </>
                 )}
               </p>
@@ -792,7 +602,7 @@ export default function RepairBooking() {
 
               <h3 className="text-2xl font-black text-[#0F172A] tracking-tight mb-2">Appointment Booked!</h3>
               <p className="text-gray-500 text-sm font-semibold mb-6">
-                Your booking for <strong>{model} {repair.name}</strong> has been successfully registered. We will see you at <strong>{selectedLocation}</strong> on <strong>June {selectedDateDay}, 2026 at {selectedTimeSlot}</strong>.
+                Your booking for <strong>{displayModel} {repair.name}</strong> has been successfully registered. We will see you at <strong>{selectedLocation}</strong> on <strong>June {selectedDateDay}, 2026 at {selectedTimeSlot}</strong>.
               </p>
 
               <div className="space-y-3">

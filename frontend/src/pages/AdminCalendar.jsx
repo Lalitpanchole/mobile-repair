@@ -272,7 +272,7 @@ export default function AdminCalendar() {
                             className={`px-2 py-1.5 rounded-lg border text-[11px] font-bold flex flex-col justify-between gap-1 shadow-sm cursor-grab active:cursor-grabbing transition-colors ${getTypeColor(ev.type)}`}
                           >
                             <div className="flex justify-between items-center">
-                              <span className="truncate pr-1">{ev.device}</span>
+                              <span className="truncate pr-1">{ev.device.replace(/\s*\(\d{4}\)/g, '')}</span>
                               <Move className="w-3 h-3 text-gray-400 opacity-0 group-hover/day:opacity-100 transition-opacity" />
                             </div>
                             <span className="text-[9px] font-semibold opacity-75">{ev.time}</span>
@@ -319,7 +319,7 @@ export default function AdminCalendar() {
                         className={`p-3 rounded-xl border text-xs font-bold space-y-2 cursor-pointer hover:shadow-md transition-shadow ${getTypeColor(ev.type)}`}
                       >
                         <p className="text-gray-850 dark:text-gray-250 truncate">{ev.customer}</p>
-                        <p className="text-[10px] font-medium opacity-80">{ev.device}</p>
+                        <p className="text-[10px] font-medium opacity-80">{ev.device.replace(/\s*\(\d{4}\)/g, '')}</p>
                         <div className="flex justify-between items-center text-[10px]">
                           <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {ev.time}</span>
                         </div>
@@ -365,7 +365,7 @@ export default function AdminCalendar() {
                     </div>
                     <div>
                       <h3 className="font-extrabold text-sm text-gray-800 dark:text-white">{ev.customer}</h3>
-                      <p className="text-xs font-medium opacity-75 mt-0.5">{ev.device} - {ev.issue}</p>
+                      <p className="text-xs font-medium opacity-75 mt-0.5">{ev.device.replace(/\s*\(\d{4}\)/g, '')} - {ev.issue}</p>
                     </div>
                   </div>
                   
@@ -422,7 +422,7 @@ export default function AdminCalendar() {
                 <div className="space-y-3.5 border-t border-b border-gray-100 dark:border-[#1F2937] py-4 text-sm font-medium">
                   <div className="flex justify-between">
                     <span className="text-gray-400">Device</span>
-                    <span className="font-bold text-gray-850 dark:text-white">{activeEvent.device}</span>
+                    <span className="font-bold text-gray-850 dark:text-white">{activeEvent.device.replace(/\s*\(\d{4}\)/g, '')}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-400">Problem</span>

@@ -8,7 +8,6 @@ const brandHierarchy = {
   Google: 0.8,
   Huawei: 0.8,
   OnePlus: 0.5,
-  Xiaomi: 0.5,
   Oppo: 0.5,
   Motorola: 0.5,
   Dell: 0.3,
@@ -24,7 +23,6 @@ const brandDeviceMapping = {
   Microsoft: ['Surface Tablet', 'Surface Laptop'],
   Google: ['Pixel'],
   Oppo: ['Find', 'Reno'],
-  Xiaomi: ['Xiaomi'],
   OnePlus: ['OnePlus'],
   Motorola: ['Moto'],
   Huawei: ['P Series', 'Mate Series'],
@@ -36,7 +34,7 @@ const brandDeviceMapping = {
 };
 
 const getGenericType = (deviceType) => {
-  if (deviceType.includes('Phone') || deviceType.includes('Galaxy') || deviceType === 'iPhone' || deviceType === 'Find' || deviceType === 'Reno' || deviceType.includes('Moto') || deviceType.includes('Pixel') || deviceType.includes('P Series') || deviceType.includes('Mate Series') || deviceType === 'Xiaomi' || deviceType === 'OnePlus' || deviceType === 'Asus') return 'Phone';
+  if (deviceType.includes('Phone') || deviceType.includes('Galaxy') || deviceType === 'iPhone' || deviceType === 'Find' || deviceType === 'Reno' || deviceType.includes('Moto') || deviceType.includes('Pixel') || deviceType.includes('P Series') || deviceType.includes('Mate Series') || deviceType === 'OnePlus' || deviceType === 'Asus') return 'Phone';
   const t = deviceType.toLowerCase();
   if (t.includes('thinkpad') || t.includes('ideapad') || t.includes('macbook') || t.includes('laptop') || t.includes('chromebook') || t.includes('acer')) return 'Laptop';
   if (t.includes('pad') || t.includes('tablet') || t.includes('surface pro') || t.includes('surface go')) return 'Tablet';
@@ -269,7 +267,7 @@ const modelsDB = {
       { name: 'MacBook Pro 16" (M1 Pro)', year: 2021, tier: 0.9 },
       { name: 'MacBook Pro 13" (M1)', year: 2020, tier: 0.75 },
       { name: 'MacBook Air 13" (M1)', year: 2020, tier: 0.7 },
-      { name: 'MacBook Pro 13"', year: 2020, tier: 0.65 },
+      { name: 'MacBook Pro 13" (2020)', year: 2020, tier: 0.65 },
       { name: 'MacBook Air 13"', year: 2020, tier: 0.6 },
       { name: 'MacBook Pro 13" (A2289)', year: 2020, tier: 0.65 },
       { name: 'MacBook Air 13"', year: 2019, tier: 0.55 },
@@ -278,8 +276,8 @@ const modelsDB = {
       { name: 'MacBook Pro 13"', year: 2017, tier: 0.5 },
       { name: 'MacBook Pro 13"', year: 2016, tier: 0.45 },
       { name: 'MacBook Pro 15"', year: 2016, tier: 0.5 },
-      { name: 'Macbook Air 13"', year: 2015, tier: 0.4 },
-      { name: 'MacBook Pro 15"', year: 2012, tier: 0.3 },
+      { name: 'Macbook Air 13" (2015)', year: 2015, tier: 0.4 },
+      { name: 'MacBook Pro 15" (2012)', year: 2012, tier: 0.3 },
       { name: 'MacBook Air 11"', year: 2012, tier: 0.2 },
       { name: 'Macbook Pro 13"', year: 2012, tier: 0.25 }
     ]),
@@ -372,9 +370,6 @@ const modelsDB = {
       { name: 'Oppo Reno 9', year: 2024, tier: 0.5 },
       { name: 'Oppo Reno 8', year: 2024, tier: 0.4 }
     ])
-  },
-  Xiaomi: {
-    Xiaomi: generateModels('Xiaomi', ['14 Ultra', '14 Pro', '14', '13 Ultra', '13 Pro', '13', '12 Pro', '12', '11T Pro', '11T'], [1.0, 0.9, 0.85, 0.9, 0.8, 0.75, 0.7, 0.6, 0.5, 0.4])
   },
   OnePlus: {
     OnePlus: generateCustomModels([
@@ -563,339 +558,514 @@ function calculatePrice(deviceType, repairName, brandName, modelTier) {
 
 const database = {};
 
-for (const [brandName, brandData] of Object.entries(brandDeviceMapping)) {
-  database[brandName] = {};
+const brandFileMapping = {
+  Apple: {
+    iPhone: 'iPhone_Master_Updated_Plus20_With_Spacing.txt',
+    iPad: 'iPad_Repairs_Prices_Plus20_With_Spacing.txt',
+    MacBook: 'MackBook_Plus20_With_Spacing.txt',
+    'Apple Watch': 'Apple_Watch_Repairs_Plus20_With_Spacing.txt'
+  },
+  Samsung: {
+    'Galaxy S Series': 'Samsung_Galaxy_S_Series_Plus20_With_Spacing.txt',
+    'Galaxy A Series': 'samsung galaxy a series.txt'
+  },
+  Google: {
+    Pixel: 'goglePixel_Plus20_With_Spacing.txt'
+  },
+  Microsoft: {
+    'Surface Tablet': 'Microsoft_Repairs_Plus20_With_Spacing.txt',
+    'Surface Laptop': 'Microsoft_Repairs_Plus20_With_Spacing.txt'
+  },
+  Oppo: {
+    Find: 'Oppo_Find_Repair_Plus20_With_Spacing.txt',
+    Reno: 'Oppo_Find_Repair_Plus20_With_Spacing.txt'
+  },
+  OnePlus: {
+    OnePlus: 'OnePlus_repairs_Plus20_With_Spacing.txt'
+  },
+  Motorola: {
+    Moto: 'Motorola_repairs_Plus20_With_Spacing.txt'
+  },
+  Huawei: {
+    'P Series': 'Huawei_repairs_Plus20_With_Spacing.txt',
+    'Mate Series': 'Huawei_repairs_Plus20_With_Spacing.txt'
+  },
+  Dell: {
+    Laptop: 'Dell_Repairs_Plus20_With_Spacing.txt'
+  },
+  HP: {
+    Laptop: 'HP_Laptop_Repair_Plus20_With_Spacing.txt'
+  },
+  Lenovo: {
+    ThinkPad: 'Lenovo__Repair_Plus20_With_Spacing.txt',
+    IdeaPad: 'Lenovo__Repair_Plus20_With_Spacing.txt',
+    'Lenovo Tablet': 'Lenovo__Repair_Plus20_With_Spacing.txt'
+  },
+  Asus: {
+    Asus: 'Asus_Repair_Plus20_With_Spacing.txt'
+  },
+  Acer: {
+    Acer: 'Acer_Repairs_Plus20_With_Spacing.txt'
+  }
+};
+
+const getCleanName = (name, brand) => {
+  let clean = name.toLowerCase().replace(/[.\"-]/g, '').replace(/\s+/g, ' ').trim();
+  if (brand) {
+    const brandLower = brand.toLowerCase();
+    clean = clean.replace(new RegExp('^' + brandLower), '').trim();
+  }
+  clean = clean.replace(/^repairs for/i, '').trim();
+  clean = clean.replace(/laptop repair/i, '').trim();
+  clean = clean.replace(/repairs/i, '').trim();
+  clean = clean.replace(/repair/i, '').trim();
+  return clean;
+};
+
+const normalizeLineForMatching = (cleanLine) => {
+  if (cleanLine === 'piel 6') return 'pixel 6';
+  if (cleanLine === 'macbook air 13 (m1)') return 'macbook air 13" (m1)';
+  if (cleanLine === 'macbook air 13') return 'macbook air 13"';
+  return cleanLine;
+};
+
+const isDurationLine = (line) => {
+  const l = line.toLowerCase();
+  if (l.includes('gaming')) return false;
+  return l.includes('hour') || l.includes('min') || l.includes('day');
+};
+
+const parseGenericFile = (filePath, brand, dbModels) => {
+  const repairsByModel = {};
+  if (!fs.existsSync(filePath)) {
+    console.warn(`File not found: ${filePath}`);
+    return repairsByModel;
+  }
   
+  const content = fs.readFileSync(filePath, 'utf8');
+  const lines = content.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+  
+  let currentModelName = null;
+  let dbModelIdx = 0;
+  
+  const knownRepairs = [
+    'screen repair', 'screen repair & replacement', 'screen repair / replacement', 'battery replacement',
+    'back glass replacement', 'charging port replacement', 'charging port repair', 'keyboard replacement',
+    'trackpad not working', 'water / liquid damage repair', 'motherboard / logicboard repair',
+    'not turning on', 'free diagnostic', 'microphone replacement', 'speaker repair',
+    'software update / restore', 'no repair services available yet', 'diagnostic service',
+    'ssd upgrade', 'ram upgrade', 'virus removal', 'liquid damage repair', 'data recovery',
+    'touchpad repair', 'fan replacement', 'overheating fix', 'hinge repair', 'camera repair',
+    'power supply replacement', 'screen panel replacement', 'power board repair',
+    'front glass repair', 'main lcd repair', 'front camera replacement', 'rear camera replacement',
+    'camera glass broken', 'power / volume button'
+  ];
+  
+  for (let idx = 0; idx < lines.length; idx++) {
+    const line = lines[idx];
+    const normLine = line.toLowerCase().replace(/[.\']/g, '').trim();
+    
+    // Check if this line is a header by verifying it's not a known repair line, duration line, price line, etc.
+    const isHeader = !knownRepairs.includes(normLine) && 
+                     !line.startsWith('$') && 
+                     !isDurationLine(line) &&
+                     line !== 'View details' &&
+                     line !== 'From' &&
+                     normLine !== 'common issues' &&
+                     !normLine.includes('repairs.') &&
+                     !normLine.includes('laptop repairs');
+                     
+    if (isHeader) {
+      const cleanLine = getCleanName(line, brand);
+      const cleanLineNorm = normalizeLineForMatching(cleanLine);
+      
+      let foundMatchIdx = -1;
+      for (let k = dbModelIdx; k < dbModels.length; k++) {
+        const cleanDb = getCleanName(dbModels[k].name, brand);
+        const cleanDbNorm = cleanDb.replace(/\"/g, '');
+        if (cleanDbNorm === cleanLineNorm || cleanDb === cleanLineNorm || cleanDbNorm === cleanLine || cleanDb.replace(/\"/g, '') === cleanLine) {
+          if (cleanLineNorm === 'macbook pro 13') {
+            const lineHasLowercaseB = line.includes('Macbook');
+            const dbHasLowercaseB = dbModels[k].name.includes('Macbook');
+            if (lineHasLowercaseB !== dbHasLowercaseB) {
+              continue;
+            }
+          }
+          foundMatchIdx = k;
+          break;
+        }
+      }
+      
+      if (foundMatchIdx !== -1) {
+        currentModelName = dbModels[foundMatchIdx].name;
+        dbModelIdx = foundMatchIdx + 1;
+        repairsByModel[currentModelName] = [];
+      } else {
+        // Fallback search over the entire list in case order is different
+        for (let k = 0; k < dbModels.length; k++) {
+          const cleanDb = getCleanName(dbModels[k].name, brand);
+          const cleanDbNorm = cleanDb.replace(/\"/g, '');
+          if (cleanDbNorm === cleanLineNorm || cleanDb === cleanLineNorm || cleanDbNorm === cleanLine || cleanDb.replace(/\"/g, '') === cleanLine) {
+            if (cleanLineNorm === 'macbook pro 13') {
+              const lineHasLowercaseB = line.includes('Macbook');
+              const dbHasLowercaseB = dbModels[k].name.includes('Macbook');
+              if (lineHasLowercaseB !== dbHasLowercaseB) {
+                continue;
+              }
+            }
+            foundMatchIdx = k;
+            break;
+          }
+        }
+        if (foundMatchIdx !== -1) {
+          currentModelName = dbModels[foundMatchIdx].name;
+          repairsByModel[currentModelName] = [];
+        } else {
+          currentModelName = null;
+        }
+      }
+      continue;
+    }
+    
+    if (!currentModelName) continue;
+    
+    if (normLine.includes('no repair services available yet') || normLine.includes('no repair service available')) {
+      continue;
+    }
+    
+    // Parse repair details
+    if (line && !line.startsWith('$') && !isDurationLine(line) && line !== 'View details' && line !== 'From') {
+      let price = null;
+      let duration = '1 hour';
+      let priceIdx = -1;
+      
+      for (let k = 1; k <= 5; k++) {
+        if (idx + k >= lines.length) break;
+        const nextLine = lines[idx + k];
+        const nextNorm = nextLine.toLowerCase().replace(/[.\']/g, '').trim();
+        
+        // Stop if we hit a new header line
+        const isNextHeader = !knownRepairs.includes(nextNorm) && 
+                             !nextLine.startsWith('$') && 
+                             !isDurationLine(nextLine) &&
+                             nextLine !== 'View details' &&
+                             nextLine !== 'From' &&
+                             nextNorm !== 'common issues' &&
+                             !nextNorm.includes('repairs.') &&
+                             !nextNorm.includes('laptop repairs');
+        if (isNextHeader) break;
+        
+        if (nextLine.startsWith('$')) {
+          price = nextLine;
+          priceIdx = idx + k;
+          break;
+        }
+        if (isDurationLine(nextLine)) {
+          duration = nextLine.replace('12mo', '').trim();
+        }
+      }
+      
+      if (price) {
+        const priceVal = parseFloat(price.replace('$', ''));
+        const priceStr = priceVal === 0 ? 'Free' : `A$${Math.floor(priceVal)}`;
+        const isScreen = line.toLowerCase().includes('screen') || line.toLowerCase().includes('display') || line.toLowerCase().includes('lcd') || line.toLowerCase().includes('oled');
+        
+        repairsByModel[currentModelName].push({
+          name: line,
+          price: priceStr,
+          duration: duration,
+          warranty: '12 mo warranty',
+          popular: isScreen
+        });
+        
+        idx = priceIdx;
+      }
+    }
+  }
+  
+  return repairsByModel;
+};
+
+// Global parsed iPhone repairs container
+const iphoneRepairsParsed = {};
+const matchedIPhones = new Set();
+
+const parseIPhoneFile = (filePath) => {
+  if (!fs.existsSync(filePath)) return;
+  const content = fs.readFileSync(filePath, 'utf8');
+  const lines = content.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+  
+  const dbModels = modelsDB.Apple.Phone;
+  dbModels.forEach(modelObj => {
+    iphoneRepairsParsed[modelObj.name] = [];
+  });
+  
+  let currentModel = null;
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i];
+    
+    // 1. Check for model header
+    const normLine = line.replace(/^Repairs for\s+/i, '').trim();
+    const matchedModel = dbModels.find(mObj => mObj.name.toLowerCase() === normLine.toLowerCase());
+    
+    if (matchedModel) {
+      currentModel = matchedModel.name;
+      matchedIPhones.add(currentModel);
+      i++;
+      continue;
+    }
+    
+    if (currentModel) {
+      if (line === 'No repair services available yet.') {
+        i++;
+        continue;
+      }
+      
+      // 2. Check for Select Part Quality block
+      if (line === 'Select Part Quality') {
+        let repairName = 'Screen Repair';
+        let prevLines = [];
+        let backIdx = i - 1;
+        
+        while (backIdx >= 0) {
+          const prevLine = lines[backIdx];
+          if (dbModels.some(mObj => prevLine.replace(/^Repairs for\s+/i, '').trim().toLowerCase() === mObj.name.toLowerCase())) {
+            break;
+          }
+          if (prevLine === 'Select This Quality') {
+            break;
+          }
+          prevLines.unshift(prevLine);
+          backIdx--;
+        }
+        
+        const possibleRepairHeaders = ['Back Glass Replacement', 'Back Glass resh planed', 'Back Glass reshpland', 'Back glass reshplament', 'Back glass', 'Screen Repair', 'Screen repairs'];
+        const foundHeader = prevLines.find(pl => possibleRepairHeaders.some(h => pl.toLowerCase().includes(h.toLowerCase())));
+        if (foundHeader) {
+          if (foundHeader.toLowerCase().includes('back glass') || foundHeader.toLowerCase().includes('back grall') || foundHeader.toLowerCase().includes('back cover') || foundHeader.toLowerCase().includes('backglas') || foundHeader.toLowerCase().includes('back cover')) {
+            repairName = 'Back Glass Replacement';
+          } else {
+            repairName = 'Screen Repair';
+          }
+        }
+        
+        i++; // skip 'Select Part Quality'
+        
+        while (i < lines.length && (lines[i].includes('Affects fit') || lines[i] === 'Warranty')) {
+          i++;
+        }
+        
+        let options = [];
+        let currentOptionLines = [];
+        
+        const parseAndAddOption = () => {
+          let name = '';
+          let price = '';
+          let description = '';
+          let recommended = false;
+          
+          const cleanOLines = currentOptionLines.filter(l => l !== 'Select This Quality' && l !== 'Warranty' && !l.includes('Affects fit'));
+          
+          cleanOLines.forEach(l => {
+            if (l.startsWith('$')) {
+              price = l;
+            } else if (l.length > 55) {
+              description = l;
+            } else if (l.toUpperCase() === 'RECOMMENDED') {
+              recommended = true;
+            } else if (l.length > 0) {
+              name = l;
+            }
+          });
+          
+          if (name.toUpperCase().includes('RECOMMENDED')) {
+            recommended = true;
+            name = name.replace(/RECOMMENDED/i, '').trim();
+          }
+          
+          if (name) {
+            let id = 'incell';
+            if (name.toLowerCase().includes('genuine')) {
+              id = 'genuine';
+            } else if (name.toLowerCase().includes('soft oled') || name.toLowerCase().includes('oled')) {
+              id = 'soft_oled';
+            } else if (name.toLowerCase().includes('premium')) {
+              id = 'premium_glass';
+            } else if (name.toLowerCase().includes('standard')) {
+              id = 'standard_glass';
+            }
+            
+            options.push({
+              id,
+              name,
+              price: price ? `A$${Math.floor(parseFloat(price.replace('$', '')))}` : 'A$0',
+              description,
+              recommended
+            });
+          }
+          currentOptionLines = [];
+        };
+
+        while (i < lines.length) {
+          const oLine = lines[i];
+          const normOLine = oLine.replace(/^Repairs for\s+/i, '').trim();
+          if (dbModels.some(mObj => mObj.name.toLowerCase() === normOLine.toLowerCase())) {
+            break;
+          }
+          if (oLine === 'Select Part Quality') {
+            break;
+          }
+          
+          // Check if it's a new repair header
+          const possibleHeaders = ['Back Glass Replacement', 'Back Glass resh planed', 'Back Glass reshpland', 'Back glass reshplament', 'Back glass', 'Screen Repair', 'Screen repairs', 'Battery Replacement', 'Charging Port Replacement', 'Front Camera Replacement', 'Rear Camera Replacement', 'Camera Glass Broken', 'Power / Volume Button', 'Microphone Replacement', 'Speaker Repair', 'Water / Liquid Damage Repair', 'Motherboard / Logicboard Repair', 'Not Turning On', 'Software Update / Restore', 'Free Diagnostic'];
+          if (possibleHeaders.some(h => oLine.toLowerCase() === h.toLowerCase())) {
+            break;
+          }
+          
+          currentOptionLines.push(oLine);
+          
+          if (oLine === 'Select This Quality') {
+            parseAndAddOption();
+          }
+          i++;
+        }
+        
+        if (currentOptionLines.length > 0) {
+          parseAndAddOption();
+        }
+        
+        let existingRepair = iphoneRepairsParsed[currentModel].find(r => r.name === repairName);
+        if (!existingRepair) {
+          existingRepair = {
+            name: repairName,
+            price: options[0] ? options[0].price : 'A$0',
+            duration: repairName === 'Screen Repair' ? '1 hour' : '2 hours',
+            warranty: '12 mo warranty',
+            popular: repairName === 'Screen Repair',
+            partOption: true,
+            options: options
+          };
+          iphoneRepairsParsed[currentModel].push(existingRepair);
+        } else {
+          existingRepair.options = options;
+          existingRepair.partOption = true;
+          if (options[0]) {
+            existingRepair.price = options[0].price;
+          }
+        }
+        continue;
+      }
+      
+      // Regular repair line
+      const durationLine = lines[i + 1];
+      if (durationLine && (durationLine.includes('hour') || durationLine.includes('min') || durationLine.includes('day'))) {
+        const duration = durationLine.replace('12mo', '').trim();
+        let priceLine = null;
+        let nextIdx = i + 2;
+        if (lines[nextIdx] === 'View details') {
+          nextIdx++;
+        }
+        if (lines[nextIdx] === 'From') {
+          nextIdx++;
+        }
+        priceLine = lines[nextIdx];
+        if (priceLine && priceLine.startsWith('$')) {
+          const priceVal = parseFloat(priceLine.replace('$', ''));
+          const priceStr = priceVal === 0 ? 'Free' : `A$${Math.floor(priceVal)}`;
+          
+          const repairName = line;
+          const normName = repairName.toLowerCase();
+          let canonicalName = repairName;
+          if (normName.includes('screen') || normName.includes('display')) {
+            canonicalName = 'Screen Repair';
+          } else if (normName.includes('back glass') || normName.includes('rear glass') || normName.includes('back cover')) {
+            canonicalName = 'Back Glass Replacement';
+          }
+          
+          let existingRepair = iphoneRepairsParsed[currentModel].find(r => r.name === canonicalName);
+          if (!existingRepair) {
+            iphoneRepairsParsed[currentModel].push({
+              name: canonicalName,
+              price: priceStr,
+              duration: duration,
+              warranty: '12 mo warranty',
+              popular: canonicalName === 'Screen Repair'
+            });
+          }
+          
+          i = nextIdx + 1;
+          continue;
+        }
+      }
+    }
+    i++;
+  }
+};
+
+// Pre-parse iPhone file
+const iphoneTxtPath = path.join(__dirname, '../../../iPhone_Master_Updated_Plus20_With_Spacing.txt');
+parseIPhoneFile(iphoneTxtPath);
+
+for (const [brandName, brandData] of Object.entries(brandDeviceMapping)) {
   for (const displayDeviceType of brandData) {
     const genericType = getGenericType(displayDeviceType);
+    const fileName = brandFileMapping[brandName]?.[displayDeviceType];
     
-    // Check if the specific displayDeviceType exists in modelsDB, else fallback to genericType
-    const modelsList = modelsDB[brandName][displayDeviceType] || modelsDB[brandName][genericType];
+    if (!fileName) {
+      // Not in text files, so pruned
+      continue;
+    }
     
-    if (!modelsDB[brandName] || !modelsList) continue;
+    // Ensure structure exists in database
+    if (!database[brandName]) {
+      database[brandName] = {};
+    }
     
     database[brandName][displayDeviceType] = {
       models: [],
       repairs: {}
     };
-
-    let availableRepairs = repairsList[genericType] || [];
-    if (displayDeviceType === 'iPhone') {
-      availableRepairs = repairsList['iPhone'];
-    } else if (displayDeviceType === 'iPad') {
-      availableRepairs = repairsList['iPad'];
-    } else if (displayDeviceType === 'MacBook') {
-      availableRepairs = repairsList['MacBook'];
-    } else if (displayDeviceType === 'Apple Watch') {
-      availableRepairs = repairsList['Apple Watch'];
+    
+    const dbModels = modelsDB[brandName][displayDeviceType] || modelsDB[brandName][genericType];
+    if (!dbModels) continue;
+    
+    let parsedRepairsForType = {};
+    
+    if (brandName === 'Apple' && displayDeviceType === 'iPhone') {
+      parsedRepairsForType = iphoneRepairsParsed;
+    } else {
+      const filePath = path.join(__dirname, `../../../${fileName}`);
+      parsedRepairsForType = parseGenericFile(filePath, brandName, dbModels);
     }
     
-    for (const model of modelsList) {
+    const matchedModelsList = dbModels.filter(m => {
+      if (brandName === 'Apple' && displayDeviceType === 'iPhone') {
+        return matchedIPhones.has(m.name);
+      }
+      return parsedRepairsForType[m.name] !== undefined;
+    });
+    
+    for (const model of matchedModelsList) {
       database[brandName][displayDeviceType].models.push({
         name: model.name,
         year: model.year
       });
-
-      const isMacBook = brandName === 'Apple' && genericType === 'Laptop';
-      const mTier = model.tier;
-
-      let repairsForModel = availableRepairs.map(r => {
-        let repName = r.name;
-        if (repName === 'Software Update / Restore' && isMacBook) repName = 'macOS Update / Restore';
-        
-        const priceStr = calculatePrice(genericType, r.name, brandName, mTier);
-        
-        return {
-          name: repName,
-          price: priceStr,
-          duration: r.dur,
-          warranty: '12 months',
-          popular: r.pop
-        };
-      });
-
-      // Optional additional OS repairs
-      if (isMacBook) {
-        repairsForModel.push({
-          name: 'macOS Installation',
-          price: calculatePrice('Laptop', 'Software', brandName, mTier),
-          duration: '2 hours',
-          warranty: '12 months',
-          popular: false
-        });
-      } else if (genericType === 'Laptop') {
-        repairsForModel.push({
-          name: 'Windows Installation',
-          price: calculatePrice('Laptop', 'Software', brandName, mTier),
-          duration: '2 hours',
-          warranty: '12 months',
-          popular: false
-        });
-      }
       
-      if (brandName === 'Acer') {
-        const m = model.name;
-        if (['Swift 3', 'Acer Swift Go 14 AI', 'Acer Aspire Go 15', 'Acer Swift Go 14'].includes(m)) {
-          repairsForModel = [
-            { name: 'Screen Repair & Replacement', price: calculatePrice('Laptop', 'Screen Replacement', 'Acer', mTier), duration: '4 days', warranty: '12 mo warranty', popular: true },
-            { name: 'Battery Replacement', price: calculatePrice('Laptop', 'Battery Replacement', 'Acer', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: false },
-            { name: 'Software Update / Restore', price: calculatePrice('Laptop', 'Software', 'Acer', mTier), duration: '1 day', warranty: '12 mo warranty', popular: false },
-            { name: 'Free Diagnostic', price: 'Free', duration: '1 day', warranty: '12 mo warranty', popular: false }
-          ];
-        } else if (m === 'Aspire 5') {
-          repairsForModel = [
-            { name: 'Screen Repair & Replacement', price: calculatePrice('Laptop', 'Screen Replacement', 'Acer', mTier), duration: '4 days', warranty: '12 mo warranty', popular: true },
-            { name: 'Battery Replacement', price: calculatePrice('Laptop', 'Battery Replacement', 'Acer', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: false }
-          ];
-        } else {
-          repairsForModel = [
-            { name: 'Screen Repair & Replacement', price: calculatePrice('Laptop', 'Screen Replacement', 'Acer', mTier), duration: '4 days', warranty: '12 mo warranty', popular: true }
-          ];
-        }
-      } else if (brandName === 'Asus') {
-        repairsForModel = [
-          { name: 'Screen Repair', price: calculatePrice('Phone', 'Screen Repair', 'Asus', mTier), duration: '2 days', warranty: '12 mo warranty', popular: true },
-          { name: 'Battery Replacement', price: calculatePrice('Phone', 'Battery Replacement', 'Asus', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: false }
-        ];
-      } else if (brandName === 'HP' || (brandName === 'Lenovo' && (displayDeviceType === 'ThinkPad' || displayDeviceType === 'IdeaPad' || displayDeviceType === 'Lenovo Tablet'))) {
-        repairsForModel = [
-          { name: 'Battery Replacement', price: calculatePrice('Laptop', 'Battery Replacement', 'Lenovo', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: true },
-          { name: 'Software Update / Restore', price: calculatePrice('Laptop', 'Software', 'Lenovo', mTier), duration: '3 hours', warranty: '12 mo warranty', popular: false },
-          { name: 'Free Diagnostic', price: 'Free', duration: '3 hours', warranty: '12 mo warranty', popular: false }
-        ];
-      } else if (brandName === 'Huawei' && (displayDeviceType === 'P Series' || displayDeviceType === 'Mate Series')) {
-        const m = model.name;
-        repairsForModel = [
-          { name: 'Screen Repair', price: calculatePrice('Phone', 'Screen Repair', 'Huawei', mTier), duration: '45 min', warranty: '12 mo warranty', popular: m === 'Mate 50 Pro' || m.includes('P60') },
-          { name: 'Battery Replacement', price: calculatePrice('Phone', 'Battery Replacement', 'Huawei', mTier), duration: '30 min', warranty: '12 mo warranty', popular: false },
-          { name: 'Speaker Repair', price: calculatePrice('Phone', 'Speaker Repair', 'Huawei', mTier), duration: '30 min', warranty: '12 mo warranty', popular: false }
-        ];
-      } else if (brandName === 'Dell' && displayDeviceType === 'Laptop') {
-        const m = model.name;
-        if (['XPS 13', 'Inspiron 15', 'Inspiron 14'].includes(m)) {
-          repairsForModel = [
-            { name: 'Screen Repair', price: calculatePrice('Laptop', 'Screen Replacement', 'Dell', mTier), duration: '2 hours', warranty: '12 mo warranty', popular: m === 'Inspiron 14' },
-            { name: 'Battery Replacement', price: calculatePrice('Laptop', 'Battery Replacement', 'Dell', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: false },
-            { name: 'Software Update / Restore', price: calculatePrice('Laptop', 'Software', 'Dell', mTier), duration: '3 hours', warranty: '12 mo warranty', popular: false },
-            { name: 'Free Diagnostic', price: 'Free', duration: '3 hours', warranty: '12 mo warranty', popular: false }
-          ];
-        } else if (m === 'XPS 15') {
-          repairsForModel = [
-            { name: 'Battery Replacement', price: calculatePrice('Laptop', 'Battery Replacement', 'Dell', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: false },
-            { name: 'Software Update / Restore', price: calculatePrice('Laptop', 'Software', 'Dell', mTier), duration: '3 hours', warranty: '12 mo warranty', popular: false },
-            { name: 'Free Diagnostic', price: 'Free', duration: '3 hours', warranty: '12 mo warranty', popular: false }
-          ];
-        }
-      } else if (brandName === 'Motorola') {
-        repairsForModel = [
-          { name: 'Screen Repair', price: calculatePrice('Phone', 'Screen Repair', 'Motorola', mTier), duration: '1 day', warranty: '12 mo warranty', popular: true },
-          { name: 'Speaker Repair', price: calculatePrice('Phone', 'Speaker Repair', 'Motorola', mTier), duration: '30 min', warranty: '12 mo warranty', popular: false }
-        ];
-      } else if (brandName === 'OnePlus') {
-        const m = model.name;
-        if (m === 'OnePlus 11R' || m === '11R') {
-          repairsForModel = [
-            { name: 'Screen Repair', price: calculatePrice('Phone', 'Screen Repair', 'OnePlus', mTier), duration: '1 day', warranty: '12 mo warranty', popular: true },
-            { name: 'Speaker Repair', price: calculatePrice('Phone', 'Speaker Repair', 'OnePlus', mTier), duration: '30 min', warranty: '12 mo warranty', popular: false }
-          ];
-        } else {
-          repairsForModel = [
-            { name: 'Screen Repair', price: calculatePrice('Phone', 'Screen Repair', 'OnePlus', mTier), duration: '2 days', warranty: '12 mo warranty', popular: true },
-            { name: 'Battery Replacement', price: calculatePrice('Phone', 'Battery Replacement', 'OnePlus', mTier), duration: '30 min', warranty: '12 mo warranty', popular: false },
-            { name: 'Speaker Repair', price: calculatePrice('Phone', 'Speaker Repair', 'OnePlus', mTier), duration: '30 min', warranty: '12 mo warranty', popular: false },
-            { name: 'Free Diagnostic', price: 'Free', duration: '1 hour', warranty: '12 mo warranty', popular: false }
-          ];
-        }
-      } else if (brandName === 'Oppo' && displayDeviceType === 'Find') {
-        repairsForModel = [
-          { name: 'Screen Repair', price: calculatePrice('Phone', 'Screen Repair', 'Oppo', mTier), duration: '2 hours', warranty: '12 mo warranty', popular: true },
-          { name: 'Battery Replacement', price: calculatePrice('Phone', 'Battery Replacement', 'Oppo', mTier), duration: '30 min', warranty: '12 mo warranty', popular: false },
-          { name: 'Speaker Repair', price: calculatePrice('Phone', 'Speaker Repair', 'Oppo', mTier), duration: '30 min', warranty: '12 mo warranty', popular: false }
-        ];
-      } else if (brandName === 'Oppo' && displayDeviceType === 'Reno') {
-        const m = model.name;
-        if (m === 'Oppo Reno 10') {
-          repairsForModel = [
-            { name: 'Screen Repair', price: calculatePrice('Phone', 'Screen Repair', 'Oppo', mTier), duration: '2 hours', warranty: '12 mo warranty', popular: true }
-          ];
-        } else {
-          repairsForModel = [
-            { name: 'Screen Repair', price: calculatePrice('Phone', 'Screen Repair', 'Oppo', mTier), duration: '2 hours', warranty: '12 mo warranty', popular: false },
-            { name: 'Speaker Repair', price: calculatePrice('Phone', 'Speaker Repair', 'Oppo', mTier), duration: '30 min', warranty: '12 mo warranty', popular: false }
-          ];
-        }
-      } else if (brandName === 'Microsoft' && displayDeviceType === 'Surface Tablet') {
-        const m = model.name;
-        if (m === 'Surface Pro 8') {
-          repairsForModel = [
-            { name: 'Screen Repair & Replacement', price: calculatePrice('Tablet', 'Screen Replacement', 'Microsoft', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: false },
-            { name: 'Screen Repair', price: calculatePrice('Tablet', 'Screen Repair', 'Microsoft', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: true },
-            { name: 'Battery Replacement', price: calculatePrice('Tablet', 'Battery Replacement', 'Microsoft', mTier), duration: '45 min', warranty: '12 mo warranty', popular: false }
-          ];
-        } else if (m === 'Surface Pro 9' || m === 'Surface Go 3') {
-          repairsForModel = [
-            { name: 'Screen Repair / Replacement', price: calculatePrice('Tablet', 'Screen Replacement', 'Microsoft', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: false },
-            { name: 'Battery Replacement', price: calculatePrice('Tablet', 'Battery Replacement', 'Microsoft', mTier), duration: '45 min', warranty: '12 mo warranty', popular: false }
-          ];
-        }
-      } else if (brandName === 'Microsoft' && displayDeviceType === 'Surface Laptop') {
-        repairsForModel = [
-          { name: 'Battery Replacement', price: calculatePrice('Laptop', 'Battery Replacement', 'Microsoft', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: false },
-          { name: 'Software Update / Restore', price: calculatePrice('Laptop', 'Software', 'Microsoft', mTier), duration: '3 hours', warranty: '12 mo warranty', popular: false },
-          { name: 'Free Diagnostic', price: 'Free', duration: '3 hours', warranty: '12 mo warranty', popular: false }
-        ];
-      } else if (brandName === 'Google' && displayDeviceType === 'Pixel') {
-        repairsForModel = [
-          { name: 'Screen Repair', price: calculatePrice('Phone', 'Screen Repair', 'Google', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: true }
-        ];
-      } else if (brandName === 'Samsung' && displayDeviceType === 'Galaxy S Series') {
-        const m = model.name;
-        if (m === 'Samsung Galaxy S20 FE') {
-          repairsForModel = [
-            { name: 'Screen Repair', price: calculatePrice('Phone', 'Screen Repair', 'Samsung', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: true },
-            { name: 'Battery Replacement', price: calculatePrice('Phone', 'Battery Replacement', 'Samsung', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: false }
-          ];
-        }
-      } else if (brandName === 'Samsung' && displayDeviceType === 'Galaxy A Series') {
-        const m = model.name;
-        if (m === 'Samsung Galaxy A25 5G') {
-          repairsForModel = [
-            { name: 'Screen Repair', price: calculatePrice('Phone', 'Screen Repair', 'Samsung', mTier), duration: '2 hours', warranty: '12 mo warranty', popular: true }
-          ];
-        }
-      } else if (brandName === 'Apple' && displayDeviceType === 'iPhone') {
-        const m = model.name;
-        if (m === 'iPhone 17e') {
-          repairsForModel = [
-            { name: 'Screen Repair', price: calculatePrice('Phone', 'Screen Repair', 'Apple', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: true, partOption: true }
-          ];
-        } else if (m === 'iPhone 8') {
-          repairsForModel = [
-            { name: 'Screen Repair', price: calculatePrice('Phone', 'Screen Repair', 'Apple', mTier), duration: '1 hour', warranty: '12 mo warranty', popular: true }
-          ];
-        }
-      } else if (brandName === 'Apple' && displayDeviceType === 'iPad') {
-        const m = model.name;
-        const ipadTxtPath = path.join(__dirname, '../../../iPad_Repairs_Prices_Plus20_With_Spacing.txt');
-        if (!global.ipadRepairsParsed) {
-          global.ipadRepairsParsed = {};
-          if (fs.existsSync(ipadTxtPath)) {
-            const content = fs.readFileSync(ipadTxtPath, 'utf8');
-            const lines = content.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
-            
-            const knownModels = [
-              'iPad 11th Gen (A16)', 'iPad Pro 11-inch (M5)', 'iPad Pro 11-inch (M4)', 'iPad Pro 13-inch (M4)',
-              'iPad Air 13-inch (M2)', 'iPad Air 11-inch (M2)', 'iPad Pro 11-inch (4th gen)', 'iPad 10th Generation',
-              'iPad Pro 12.9-inch (6th gen)', 'iPad Air (5th generation)', 'iPad mini 6', 'iPad Pro 12.9-inch (5th gen)',
-              'iPad Pro 11-inch (3rd gen)', 'iPad (9th generation)', 'iPad Pro 12.9-inch (4th gen)', 'iPad (8th generation)',
-              'iPad Air (4th generation)', 'iPad Pro 11-inch (2nd gen)', 'iPad (7th generation)', 'iPad Air (3rd generation)',
-              'iPad Mini (5th generation)', 'iPad (6th generation)', 'iPad Pro 12.9-inch (3rd gen)', 'iPad Pro 11-inch (1st gen)',
-              'iPad Pro 10.5-inch (1st gen)', 'iPad (5th generation)', 'iPad Pro 9.7-inch (1st gen)', 'iPad Pro 12.9-inch (1st gen)',
-              'iPad Mini 4', 'iPad Mini 3'
-            ];
-            
-            let currentModel = null;
-            let i = 0;
-            while (i < lines.length) {
-              const line = lines[i];
-              const normalized = line.replace(/^Repairs for\s+/i, '').trim();
-              
-              if (knownModels.includes(normalized)) {
-                currentModel = normalized;
-                global.ipadRepairsParsed[currentModel] = [];
-                i++;
-                continue;
-              }
-              
-              if (line === 'No repair services available yet.') {
-                i++;
-                continue;
-              }
-              
-              if (line === 'Common issues' || line === 'View details' || line === 'From') {
-                i++;
-                continue;
-              }
-              
-              if (currentModel) {
-                const repairName = line;
-                const durationLine = lines[i + 1];
-                if (durationLine && (durationLine.includes('hour') || durationLine.includes('min') || durationLine.includes('day'))) {
-                  let duration = durationLine.replace('12mo', '').trim();
-                  let priceLine = null;
-                  let nextIdx = i + 2;
-                  if (lines[nextIdx] === 'View details') {
-                    nextIdx++;
-                  }
-                  if (lines[nextIdx] === 'From') {
-                    nextIdx++;
-                  }
-                  priceLine = lines[nextIdx];
-                  if (priceLine && priceLine.startsWith('$')) {
-                    const priceVal = parseFloat(priceLine.replace('$', ''));
-                    let finalPriceStr = '';
-                    if (priceVal === 0) {
-                      finalPriceStr = 'Free';
-                    } else {
-                      const adjustedPrice = Math.floor(priceVal);
-                      finalPriceStr = `A$${adjustedPrice}`;
-                    }
-                    
-                    global.ipadRepairsParsed[currentModel].push({
-                      name: repairName,
-                      price: finalPriceStr,
-                      duration: duration,
-                      warranty: '12 mo warranty',
-                      popular: false
-                    });
-                    
-                    i = nextIdx + 1;
-                    continue;
-                  }
-                }
-              }
-              i++;
-            }
-          }
-        }
-        
-        repairsForModel = global.ipadRepairsParsed[m] || [];
-      } else if (brandName === 'Apple' && displayDeviceType === 'Laptop') {
-        const m = model.name;
-        if (m === 'MacBook Pro 14" (M2 Pro)') {
-          repairsForModel = [
-            { name: 'Screen Repair & Replacement', price: calculatePrice('Laptop', 'Screen Replacement', 'Apple', mTier), duration: '1 day', warranty: '12 mo warranty', popular: false }
-          ];
-        } else if (m === 'MacBook Pro 15"') {
-          repairsForModel = [
-            { name: 'Battery Replacement', price: calculatePrice('Laptop', 'Battery Replacement', 'Apple', mTier), duration: '3 hours', warranty: '12 mo warranty', popular: false },
-            { name: 'Charging Port Replacement', price: calculatePrice('Laptop', 'Charging Port Replacement', 'Apple', mTier), duration: '2 hours', warranty: '12 mo warranty', popular: false }
-          ];
-        } else if (m === 'MacBook Pro 16" (M3 Pro/Max)') {
-          repairsForModel = [
-            { name: 'Screen Repair & Replacement', price: calculatePrice('Laptop', 'Screen Replacement', 'Apple', mTier), duration: '4 hours', warranty: '12 mo warranty', popular: false },
-            { name: 'Keyboard Replacement', price: calculatePrice('Laptop', 'Keyboard Replacement', 'Apple', mTier), duration: '2 days', warranty: '12 mo warranty', popular: false },
-            { name: 'Trackpad Not Working', price: calculatePrice('Laptop', 'Trackpad Replacement', 'Apple', mTier), duration: '2 days', warranty: '12 mo warranty', popular: false },
-            { name: 'Speaker Repair', price: calculatePrice('Laptop', 'Speaker Repair', 'Apple', mTier), duration: '1 day', warranty: '12 mo warranty', popular: false },
-            { name: 'Water / Liquid Damage Repair', price: calculatePrice('Laptop', 'Water Damage Repair', 'Apple', mTier), duration: '2 days', warranty: '12 mo warranty', popular: false },
-            { name: 'Motherboard / Logicboard Repair', price: calculatePrice('Laptop', 'Motherboard Repair', 'Apple', mTier), duration: '2 days', warranty: '12 mo warranty', popular: false },
-            { name: 'Not Turning On', price: calculatePrice('Laptop', 'Not Turning On', 'Apple', mTier), duration: '2 days', warranty: '12 mo warranty', popular: false },
-            { name: 'Free Diagnostic', price: 'Free', duration: '1 hour', warranty: '12 mo warranty', popular: false }
-          ];
-        }
-      } else if (brandName === 'Apple' && displayDeviceType === 'Apple Watch') {
-        repairsForModel = [
-          { name: 'Screen Repair', price: calculatePrice('Watch', 'Screen Repair', 'Apple', mTier), duration: '1 day', warranty: '12 months', popular: true }
-        ];
-      }
-
+      const repairsForModel = parsedRepairsForType[model.name] || [];
+      
+      // Sort repairs: Screens first, then by descending price
       repairsForModel.sort((a, b) => {
-        const aIsScreen = a.name.toLowerCase().includes('screen');
-        const bIsScreen = b.name.toLowerCase().includes('screen');
+        const aIsScreen = a.name.toLowerCase().includes('screen') || a.name.toLowerCase().includes('display');
+        const bIsScreen = b.name.toLowerCase().includes('screen') || b.name.toLowerCase().includes('display');
         if (aIsScreen && !bIsScreen) return -1;
         if (!aIsScreen && bIsScreen) return 1;
-        return (parseInt(b.price.replace('A$', '')) || 0) - (parseInt(a.price.replace('A$', '')) || 0);
+        
+        const aPrice = parseInt(a.price.replace('A$', '')) || 0;
+        const bPrice = parseInt(b.price.replace('A$', '')) || 0;
+        return bPrice - aPrice;
       });
+      
       database[brandName][displayDeviceType].repairs[model.name] = repairsForModel;
     }
   }
@@ -905,3 +1075,4 @@ const outPath = path.join(__dirname, 'repairDatabase.json');
 fs.writeFileSync(outPath, JSON.stringify(database, null, 2));
 
 console.log(`Successfully generated bound-restricted dynamic repair database at: ${outPath}`);
+
