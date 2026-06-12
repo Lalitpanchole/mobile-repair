@@ -10,9 +10,9 @@ export default function AdminSettings() {
   
   // Store Details states
   const [storeName, setStoreName] = useState('MPC Repairs');
-  const [contactEmail, setContactEmail] = useState('support@irepairexperts.com.au');
+  const [contactEmail, setContactEmail] = useState('mpcrepairskotara@gmail.com');
   const [storeAddress, setStoreAddress] = useState('168 Cavendish Road, Coorparoo, QLD 4151');
-  const [storePhone, setStorePhone] = useState('+61 1300 473 724');
+  const [storePhone, setStorePhone] = useState('+61 426 186 212');
   const [currency, setCurrency] = useState('AUD ($)');
 
   // Operating Hours states
@@ -110,9 +110,6 @@ export default function AdminSettings() {
         <div className="lg:col-span-1 space-y-2">
             {[
               { name: 'Store Details', icon: Store },
-              { name: 'Notifications', icon: Bell },
-              { name: 'Security', icon: Shield },
-              { name: 'Billing', icon: CreditCard },
             ].map((item) => (
               <button
                 key={item.name}

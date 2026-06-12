@@ -11,12 +11,12 @@ export default function AdminStore() {
   const showOnlyBranches = location.pathname.endsWith('/branches');
 
   const [storeName, setStoreName] = useState('MPC Repairs');
-  const [storeEmail, setStoreEmail] = useState('support@irepairexperts.com.au');
-  const [storePhone, setStorePhone] = useState('+61 1300 473 724');
+  const [storeEmail, setStoreEmail] = useState('mpcrepairskotara@gmail.com');
+  const [storePhone, setStorePhone] = useState('+61 426 186 212');
   const [storeAddr, setStoreAddr] = useState('Westfield Kotara, K230, Level 2/89 Northcott Dr, Kotara NSW 2289');
 
   const [branches, setBranches] = useState([
-    { id: '1', name: 'Westfield Kotara', address: 'K230, Level 2/89 Northcott Dr, Kotara NSW 2289', phone: '+61 7 3123 4567', manager: 'Sarah Jenkins', active: true },
+    { id: '1', name: 'Westfield Kotara', address: 'K230, Level 2/89 Northcott Dr, Kotara NSW 2289', phone: '+61 426 186 212', manager: 'Sarah Jenkins', active: true },
   ]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
