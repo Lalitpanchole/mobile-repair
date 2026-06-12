@@ -247,7 +247,10 @@ export default function AdminDashboard() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         
         {/* Card 1: New Booking */}
-        <div className="bg-white dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#1F2937] rounded-2xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between h-40 group relative overflow-hidden">
+        <div 
+          onClick={() => navigate('/admin/new-bookings')}
+          className="bg-white dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#1F2937] rounded-2xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between h-40 group relative overflow-hidden cursor-pointer"
+        >
           <div className="flex justify-between items-start">
             <div>
               <p className="text-4xl font-extrabold text-[#FFDE21] tracking-tight">
@@ -260,7 +263,7 @@ export default function AdminDashboard() {
             </div>
           </div>
           <button 
-            onClick={() => navigate('/admin/bookings', { state: { defaultTab: 'New Bookings' } })}
+            onClick={(e) => { e.stopPropagation(); navigate('/admin/new-bookings'); }}
             className="text-xs font-bold text-[#FFDE21] hover:underline text-left mt-4 cursor-pointer border-0 bg-transparent"
           >
             View All
@@ -268,7 +271,10 @@ export default function AdminDashboard() {
         </div>
 
         {/* Card 2: Total Booking */}
-        <div className="bg-white dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#1F2937] rounded-2xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between h-40 group relative overflow-hidden">
+        <div 
+          onClick={() => navigate('/admin/bookings')}
+          className="bg-white dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#1F2937] rounded-2xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between h-40 group relative overflow-hidden cursor-pointer"
+        >
           <div className="flex justify-between items-start">
             <div>
               <p className="text-4xl font-extrabold text-emerald-600 dark:text-emerald-400 tracking-tight">
@@ -281,7 +287,7 @@ export default function AdminDashboard() {
             </div>
           </div>
           <button 
-            onClick={() => navigate('/admin/bookings', { state: { defaultTab: 'Total Bookings' } })}
+            onClick={(e) => { e.stopPropagation(); navigate('/admin/bookings'); }}
             className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline text-left mt-4 cursor-pointer border-0 bg-transparent"
           >
             View All

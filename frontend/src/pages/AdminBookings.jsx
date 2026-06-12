@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { useBooking } from '../context/BookingContext';
 
-export default function AdminBookings() {
+export default function AdminBookings({ hideTabs = false, defaultTab: propDefaultTab }) {
   const { bookings: bookingList, addBooking, updateBooking, deleteBooking } = useBooking();
 
   // Search & filter states
@@ -16,15 +16,17 @@ export default function AdminBookings() {
   const [activeDropdownId, setActiveDropdownId] = useState(null);
   const [selectedBookingDetails, setSelectedBookingDetails] = useState(null);
   const location = useLocation();
-  const defaultTab = location.state?.defaultTab || 'Total Bookings';
+  const defaultTab = propDefaultTab || location.state?.defaultTab || 'Total Bookings';
   
   const [activeTab, setActiveTab] = useState(defaultTab);
 
   useEffect(() => {
-    if (location.state?.defaultTab) {
+    if (propDefaultTab) {
+      setActiveTab(propDefaultTab);
+    } else if (location.state?.defaultTab) {
       setActiveTab(location.state.defaultTab);
     }
-  }, [location.state]);
+  }, [location.state, propDefaultTab]);
 
   // New Appointment modal states
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -168,21 +170,23 @@ export default function AdminBookings() {
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
         
         {/* Tabs */}
-        <div className="flex overflow-x-auto border-b border-gray-100 bg-white">
-          {['Total Bookings', 'New Bookings', 'Completed Bookings', 'Rejected Bookings'].map(tab => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-6 py-4 text-sm font-bold whitespace-nowrap border-b-2 transition-colors border-0 bg-transparent cursor-pointer ${
-                activeTab === tab 
-                  ? 'border-[#FFDE21] text-[#0F172A]' 
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50/50'
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
+        {!hideTabs && (
+          <div className="flex overflow-x-auto border-b border-gray-100 bg-white">
+            {['Total Bookings', 'New Bookings', 'Completed Bookings', 'Rejected Bookings'].map(tab => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`px-6 py-4 text-sm font-bold whitespace-nowrap border-b-2 transition-colors border-0 bg-transparent cursor-pointer ${
+                  activeTab === tab 
+                    ? 'border-[#FFDE21] text-[#0F172A]' 
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50/50'
+                }`}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+        )}
 
         {/* Table Toolbar */}
         <div className="p-4 border-b border-gray-100 flex flex-col sm:flex-row gap-4 justify-between items-center bg-gray-50/50">

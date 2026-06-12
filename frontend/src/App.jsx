@@ -65,6 +65,7 @@ function App() {
             <Route path="services/categories" element={<AdminServices />} />
 
             <Route path="bookings" element={<AdminBookings />} />
+            <Route path="new-bookings" element={<AdminBookings hideTabs={true} defaultTab="New Bookings" />} />
             <Route path="calendar" element={<AdminCalendar />} />
             <Route path="customers" element={<AdminCustomers />} />
             <Route path="staff" element={<AdminStaff />} />
