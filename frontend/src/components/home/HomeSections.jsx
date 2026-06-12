@@ -68,9 +68,9 @@ export function ProcessSection() {
   ];
 
   return (
-    <section className="py-8 md:py-12 relative bg-white border-y border-[#E2E8F0] overflow-hidden" id="process">
+    <section className="py-16 md:py-24 relative bg-white border-y border-[#E2E8F0] overflow-hidden" id="process">
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 xl:px-12">
-        <div className="text-center mb-10 md:mb-12">
+        <div className="text-center mb-16 md:mb-20">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -90,9 +90,10 @@ export function ProcessSection() {
           </motion.p>
         </div>
         <div className="relative">
-          <div className="absolute top-0 bottom-0 left-10 md:left-0 md:top-10 md:bottom-auto md:w-full w-0.5 md:h-0.5 bg-gradient-to-b md:bg-gradient-to-r from-amber-100 via-amber-500 to-amber-100 z-0 opacity-20" />
+          {/* Desktop connecting line (Global) */}
+          <div className="hidden lg:block absolute top-10 left-[12.5%] w-[75%] h-0.5 bg-gradient-to-r from-amber-100 via-amber-400 to-amber-100 z-0 opacity-40" />
           
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 relative z-10 pl-20 md:pl-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 xl:gap-12 relative z-10">
             {steps.map((step, index) => (
               <motion.div
                 key={index}
@@ -100,13 +101,27 @@ export function ProcessSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="relative flex flex-col md:items-center md:text-center group"
+                className="relative flex flex-col items-center text-center group"
               >
-                <div className="absolute -left-20 md:relative md:-left-auto md:mx-auto w-16 h-16 md:w-20 md:h-20 bg-white border-4 border-[#F8FAFC] rounded-full flex items-center justify-center text-xl md:text-2xl font-black text-gray-300 mb-8 shadow-sm group-hover:border-[#FFDE21] group-hover:text-[#FFDE21] transition-all duration-500 group-hover:scale-110">
+                {/* Mobile vertical connecting line */}
+                {index < 3 && (
+                  <div className="md:hidden absolute top-8 left-1/2 -translate-x-1/2 w-0.5 h-[calc(100%+3rem)] bg-gradient-to-b from-amber-100 to-amber-400 z-0 opacity-40" />
+                )}
+                
+                {/* Tablet connecting line (Segmented for perfect horizontal alignment) */}
+                {(index === 0 || index === 2) && (
+                  <div className="hidden md:block lg:hidden absolute top-10 left-1/2 w-[calc(100%+3rem)] h-0.5 bg-gradient-to-r from-amber-100 to-amber-400 z-0 opacity-40" />
+                )}
+
+                <div className="relative z-10 mx-auto w-16 h-16 md:w-20 md:h-20 bg-white border-4 border-[#F8FAFC] rounded-full flex items-center justify-center text-xl md:text-2xl font-black text-gray-300 mb-4 md:mb-6 shadow-sm group-hover:border-[#FFDE21] group-hover:text-[#FFDE21] transition-all duration-500 group-hover:scale-110">
                   {step.num}
                 </div>
-                <h3 className="text-2xl font-bold text-[#0F172A] mb-3">{step.title}</h3>
-                <p className="text-[#64748B] font-medium">{step.desc}</p>
+                
+                {/* Text container wrapped with white bg to mask vertical lines behind it */}
+                <div className="relative z-10 bg-white px-2 w-full flex flex-col items-center">
+                  <h3 className="text-xl md:text-2xl font-bold text-[#0F172A] mb-2 md:mb-4">{step.title}</h3>
+                  <p className="text-sm md:text-base text-[#64748B] font-medium leading-relaxed max-w-sm">{step.desc}</p>
+                </div>
               </motion.div>
             ))}
           </div>

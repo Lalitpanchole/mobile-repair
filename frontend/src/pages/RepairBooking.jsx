@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Check, Star, ShieldCheck, Clock, MapPin, ChevronLeft, ChevronRight, Calendar as CalendarIcon, MessageSquare, Building2
@@ -228,7 +228,8 @@ export default function RepairBooking() {
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('Westfield Expert Kotara');
-  const [selectedDateDay, setSelectedDateDay] = useState(12); // June 12, 2026
+  const [selectedDate, setSelectedDate] = useState(() => new Date());
+  const [currentMonth, setCurrentMonth] = useState(() => new Date(new Date().getFullYear(), new Date().getMonth(), 1));
   const [selectedTimeSlot, setSelectedTimeSlot] = useState('10:30 AM');
   const [notes, setNotes] = useState('');
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
@@ -261,10 +262,96 @@ export default function RepairBooking() {
 
   const currentPrice = showOptions ? activeOption.price : adjustedRepairPrice;
 
-  // Generate calendar days for mock UI (June 2026 starting on Monday June 1st)
   const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-  const dates = Array.from({ length: 30 }, (_, i) => i + 1);
-  const timeSlots = ['09:00 AM', '10:30 AM', '12:00 PM', '01:30 PM', '03:00 PM', '04:30 PM'];
+
+  // Helper functions for date comparison
+  const isPastDate = (date) => {
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+    return date < todayStart;
+  };
+
+  const isSelected = (date) => {
+    return date.toDateString() === selectedDate.toDateString();
+  };
+
+  const isToday = (date) => {
+    return date.toDateString() === new Date().toDateString();
+  };
+
+  // Generate grid cells for the navigated month
+  const gridDays = useMemo(() => {
+    const year = currentMonth.getFullYear();
+    const month = currentMonth.getMonth();
+    const firstDayOfWeek = new Date(year, month, 1).getDay();
+    const totalDaysInMonth = new Date(year, month + 1, 0).getDate();
+    
+    const daysArray = [];
+    for (let i = 0; i < firstDayOfWeek; i++) {
+      daysArray.push({ day: null, key: `pad-${i}` });
+    }
+    for (let d = 1; d <= totalDaysInMonth; d++) {
+      daysArray.push({ day: d, key: `day-${d}`, date: new Date(year, month, d) });
+    }
+    return daysArray;
+  }, [currentMonth]);
+
+  // Helper to parse time slot string (e.g. "09:00 AM") into a Date on a given day
+  const parseTimeSlot = (slotStr, date) => {
+    const [time, modifier] = slotStr.split(' ');
+    let [hours, minutes] = time.split(':').map(Number);
+    if (modifier === 'PM' && hours < 12) {
+      hours += 12;
+    }
+    if (modifier === 'AM' && hours === 12) {
+      hours = 0;
+    }
+    const slotDate = new Date(date);
+    slotDate.setHours(hours, minutes, 0, 0);
+    return slotDate;
+  };
+
+  // Generate available time slots based on store hours and current time
+  const availableSlots = useMemo(() => {
+    const dayOfWeek = selectedDate.getDay(); // 0 = Sunday, 6 = Saturday, 1-5 = Weekdays
+    let slots = [];
+    if (dayOfWeek === 0) {
+      return []; // Closed on Sundays
+    } else if (dayOfWeek === 6) {
+      // Saturday - 9:00 AM to 3:00 PM
+      slots = ['09:00 AM', '10:30 AM', '12:00 PM', '01:30 PM'];
+    } else {
+      // Weekdays - 9:00 AM to 6:00 PM
+      slots = ['09:00 AM', '10:30 AM', '12:00 PM', '01:30 PM', '03:00 PM', '04:30 PM'];
+    }
+
+    const now = new Date();
+    const isTodayDate = selectedDate.toDateString() === now.toDateString();
+    if (isTodayDate) {
+      return slots.filter(slot => parseTimeSlot(slot, selectedDate) > now);
+    }
+    return slots;
+  }, [selectedDate]);
+
+  // Keep selectedTimeSlot in sync with available slots
+  useEffect(() => {
+    if (availableSlots.length > 0) {
+      if (!availableSlots.includes(selectedTimeSlot)) {
+        setSelectedTimeSlot(availableSlots[0]);
+      }
+    } else {
+      setSelectedTimeSlot('');
+    }
+  }, [availableSlots, selectedTimeSlot]);
+
+  // Navigation handlers
+  const handlePrevMonth = () => {
+    setCurrentMonth(prev => new Date(prev.getFullYear(), prev.getMonth() - 1, 1));
+  };
+
+  const handleNextMonth = () => {
+    setCurrentMonth(prev => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
+  };
 
   const handleConfirmBooking = (e) => {
     e.preventDefault();
@@ -273,7 +360,10 @@ export default function RepairBooking() {
       return;
     }
     setErrorMessage('');
-    const dStr = `2026-06-${selectedDateDay.toString().padStart(2, '0')}`;
+    const year = selectedDate.getFullYear();
+    const month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = selectedDate.getDate().toString().padStart(2, '0');
+    const dStr = `${year}-${month}-${day}`;
 
     addBooking({
       customer: fullName,
@@ -506,27 +596,49 @@ export default function RepairBooking() {
                     {/* Calendar grid widget */}
                     <div className="border border-[#E2E8F0] rounded-2xl p-4 bg-white shadow-sm mb-4">
                       <div className="flex items-center justify-between mb-4">
-                        <button type="button" className="p-1 hover:bg-gray-50 rounded-lg text-gray-450"><ChevronLeft className="w-5 h-5" /></button>
-                        <span className="font-extrabold text-sm text-[#0F172A]">June 2026</span>
-                        <button type="button" className="p-1 hover:bg-gray-50 rounded-lg text-[#FFDE21]"><ChevronRight className="w-5 h-5" /></button>
+                        <button
+                          type="button"
+                          onClick={handlePrevMonth}
+                          className="p-1 hover:bg-gray-50 rounded-lg text-gray-450 cursor-pointer border-0 bg-transparent"
+                        >
+                          <ChevronLeft className="w-5 h-5" />
+                        </button>
+                        <span className="font-extrabold text-sm text-[#0F172A]">
+                          {currentMonth.toLocaleString('default', { month: 'long', year: 'numeric' })}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={handleNextMonth}
+                          className="p-1 hover:bg-gray-50 rounded-lg text-[#FFDE21] cursor-pointer border-0 bg-transparent"
+                        >
+                          <ChevronRight className="w-5 h-5" />
+                        </button>
                       </div>
                       <div className="grid grid-cols-7 text-center gap-1 mb-2">
                         {days.map(d => <div key={d} className="text-[10px] font-extrabold text-[#64748B] uppercase">{d}</div>)}
                       </div>
                       <div className="grid grid-cols-7 text-center gap-1.5">
-                        {dates.slice(0, 14).map(d => (
-                          <button
-                            key={d}
-                            type="button"
-                            onClick={() => setSelectedDateDay(d)}
-                            className={`w-8 h-8 rounded-full text-xs font-bold flex items-center justify-center mx-auto transition-colors cursor-pointer border-0
-                              ${selectedDateDay === d
-                                ? 'bg-[#FFDE21] text-white shadow-md shadow-amber-500/20'
-                                : 'text-[#0F172A] hover:bg-gray-50 bg-transparent'}
-                            `}
-                          >
-                            {d}
-                          </button>
+                        {gridDays.map((item) => (
+                          item.day === null ? (
+                            <div key={item.key} className="w-8 h-8" />
+                          ) : (
+                            <button
+                              key={item.key}
+                              type="button"
+                              disabled={isPastDate(item.date)}
+                              onClick={() => setSelectedDate(item.date)}
+                              className={`w-8 h-8 rounded-full text-xs font-bold flex items-center justify-center mx-auto transition-colors border
+                                ${isSelected(item.date)
+                                  ? 'bg-[#FFDE21] text-white border-[#FFDE21] shadow-md shadow-amber-500/20'
+                                  : isToday(item.date)
+                                  ? 'border-[#FFDE21] text-[#0F172A] hover:bg-gray-50 bg-transparent'
+                                  : 'border-transparent text-[#0F172A] hover:bg-gray-50 bg-transparent'}
+                                ${isPastDate(item.date) ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'}
+                              `}
+                            >
+                              {item.day}
+                            </button>
+                          )
                         ))}
                       </div>
                     </div>
@@ -535,19 +647,25 @@ export default function RepairBooking() {
                     <div className="space-y-2">
                       <label className="block text-xs font-bold text-gray-500 mb-1.5">Available Time Slots</label>
                       <div className="grid grid-cols-3 gap-2">
-                        {timeSlots.map(slot => (
-                          <button
-                            key={slot}
-                            type="button"
-                            onClick={() => setSelectedTimeSlot(slot)}
-                            className={`py-2 px-1 text-xs font-extrabold rounded-xl border text-center transition-all cursor-pointer ${selectedTimeSlot === slot
-                              ? 'bg-[#FFDE21] text-white border-[#FFDE21] shadow-sm shadow-amber-500/10'
-                              : 'bg-white text-[#0F172A] border-[#E2E8F0] hover:bg-gray-50'
-                              }`}
-                          >
-                            {slot}
-                          </button>
-                        ))}
+                        {availableSlots.length > 0 ? (
+                          availableSlots.map(slot => (
+                            <button
+                              key={slot}
+                              type="button"
+                              onClick={() => setSelectedTimeSlot(slot)}
+                              className={`py-2 px-1 text-xs font-extrabold rounded-xl border text-center transition-all cursor-pointer ${selectedTimeSlot === slot
+                                ? 'bg-[#FFDE21] text-white border-[#FFDE21] shadow-sm shadow-amber-500/10'
+                                : 'bg-white text-[#0F172A] border-[#E2E8F0] hover:bg-gray-50'
+                                }`}
+                            >
+                              {slot}
+                            </button>
+                          ))
+                        ) : (
+                          <div className="col-span-3 py-3 text-center text-xs font-bold text-gray-400 bg-gray-50 rounded-xl border border-dashed border-gray-200">
+                            {selectedDate.getDay() === 0 ? 'Store is closed on Sundays' : 'No available slots for this date'}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -611,7 +729,7 @@ export default function RepairBooking() {
 
               <h3 className="text-2xl font-black text-[#0F172A] tracking-tight mb-2">Appointment Booked!</h3>
               <p className="text-gray-500 text-sm font-semibold mb-6">
-                Your booking for <strong>{displayModel} {repair.name}</strong> has been successfully registered. We will see you at <strong>{selectedLocation}</strong> on <strong>June {selectedDateDay}, 2026 at {selectedTimeSlot}</strong>.
+                Your booking for <strong>{displayModel} {repair.name}</strong> has been successfully registered. We will see you at <strong>{selectedLocation}</strong> on <strong>{selectedDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} at {selectedTimeSlot}</strong>.
               </p>
 
               <div className="space-y-3">
@@ -622,7 +740,8 @@ export default function RepairBooking() {
                     setFullName('');
                     setPhone('');
                     setEmail('');
-                    setSelectedDateDay(12);
+                    setSelectedDate(new Date());
+                    setCurrentMonth(new Date(new Date().getFullYear(), new Date().getMonth(), 1));
                     setSelectedTimeSlot('10:30 AM');
                     resetBookingData();
                     navigate('/', { replace: true });
