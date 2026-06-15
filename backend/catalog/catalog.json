@@ -1282,24 +1282,31 @@
         "iPhone 15 Plus": [
           {
             "name": "Screen Repair",
-            "price": "A$170",
+            "price": "A$169",
             "duration": "45 min",
             "warranty": "12 mo warranty",
             "popular": true,
             "options": [
               {
-                "id": "standard_glass",
-                "name": "Standard Quality",
-                "price": "A$170",
-                "description": "Standard quality back glass replacement designed for a precise fit and solid durability. budget-friendly.including support for wireless charging.",
+                "id": "incell",
+                "name": "Aftermarket In-Cell LCD",
+                "price": "A$169",
+                "description": "A budget-friendly in-cell LCD screen replacement that gives you smooth performance, with colour and resolution quality close to 90% of the original. Includes a 12-month warranty.",
                 "recommended": false
               },
               {
-                "id": "premium_glass",
-                "name": "Premium Quality",
-                "price": "A$220",
-                "description": "Premium quality back glass replacement with original camera glass, designed for a precise fit, high durability. it restores the original look while maintaining full functionality, including wireless charging",
+                "id": "soft_oled",
+                "name": "Aftermarket Soft OLED",
+                "price": "A$269",
+                "description": "Aftermarket Soft OLED screen, delivering rich display quality, sharp clarity, and a perfect fit.. A cost-effective solution with 12 Months Warranty with the Repair",
                 "recommended": true
+              },
+              {
+                "id": "genuine_oled",
+                "name": "Genuine Apple OLED",
+                "price": "A$419",
+                "description": "This Genuine Apple OLED Screen includes an original OLED display, glass—manufactured and assembled by Apple. It delivers factory-grade performance, perfect fit, and full compatibility for a seamless, like-new restoration and12 Months Warranty",
+                "recommended": false
               }
             ],
             "partOption": true
@@ -1337,7 +1344,24 @@
             "price": "A$170",
             "duration": "1 hour",
             "warranty": "12 mo warranty",
-            "popular": false
+            "popular": false,
+            "options": [
+              {
+                "id": "standard_glass",
+                "name": "Standard Quality",
+                "price": "A$170",
+                "description": "Standard quality back glass replacement designed for a precise fit and solid durability. budget-friendly.including support for wireless charging.",
+                "recommended": false
+              },
+              {
+                "id": "premium_glass",
+                "name": "Premium Quality",
+                "price": "A$220",
+                "description": "Premium quality back glass replacement with original camera glass, designed for a precise fit, high durability. it restores the original look while maintaining full functionality, including wireless charging",
+                "recommended": true
+              }
+            ],
+            "partOption": true
           },
           {
             "name": "Battery Replacement",
@@ -2260,7 +2284,7 @@
         "iPhone 13 Pro": [
           {
             "name": "Screen Repair",
-            "price": "A$189",
+            "price": "A$169",
             "duration": "1 hour",
             "warranty": "12 mo warranty",
             "popular": true,
@@ -2269,21 +2293,21 @@
               {
                 "id": "incell",
                 "name": "Aftermarket In-Cell LCD 120Hz",
-                "price": "A$189",
+                "price": "A$169",
                 "description": "A cost-effective screen replacement option, this in-cell LCD display delivers a smooth 120Hz refresh rate, with colour and resolution quality close to 90% of the original. Includes a 12-month warranty.",
                 "recommended": false
               },
               {
                 "id": "soft_oled",
                 "name": "Aftermarket Soft OLED 120Hz",
-                "price": "A$239",
+                "price": "A$219",
                 "description": "Aftermarket Soft OLED screen with original 120Hz smooth performance and high resolution, delivering rich display quality, sharp clarity, and a perfect fit. A cost-effective solution backed by a 12-month warranty",
                 "recommended": true
               },
               {
                 "id": "genuine",
                 "name": "Genuine Apple OLED",
-                "price": "A$339",
+                "price": "A$319",
                 "description": "This Genuine Apple OLED includes an original OLED display, glass—manufactured and assembled by Apple. It delivers factory-grade performance, perfect fit,12 Months Warranty with the Repair",
                 "recommended": false
               }
@@ -2391,7 +2415,7 @@
         "iPhone 13": [
           {
             "name": "Screen Repair",
-            "price": "A$169",
+            "price": "A$149",
             "duration": "1 hour",
             "warranty": "12 mo warranty",
             "popular": true,
@@ -2400,21 +2424,21 @@
               {
                 "id": "incell",
                 "name": "Aftermarket In-Cell LCD",
-                "price": "A$169",
+                "price": "A$149",
                 "description": "A budget-friendly in-cell LCD screen replacement that gives you smooth performance, with colour and resolution quality close to 90% of the original. Includes a 12-month warranty.",
                 "recommended": false
               },
               {
                 "id": "soft_oled",
                 "name": "Aftermarket Soft OLED",
-                "price": "A$239",
+                "price": "A$219",
                 "description": "Aftermarket Soft OLED screen, delivering rich display quality, sharp clarity, and a perfect fit.. A cost-effective solution with 12 Months Warranty.",
                 "recommended": true
               },
               {
                 "id": "genuine",
                 "name": "Genuine Apple OLED",
-                "price": "A$339",
+                "price": "A$319",
                 "description": "Aftermarket Soft OLED screen, delivering rich display quality, sharp clarity, and a perfect fit.. A cost-effective solution with 12 Months Warranty.",
                 "recommended": false
               }

@@ -176,18 +176,25 @@ export default function AdminDashboard() {
         todayBookings: 0
       });
       
-      const formatted = (calendarEvents || []).map(ev => ({
-        ...ev,
-        title: ev.title || `${ev.customerName} with ${ev.deviceModel}`,
-        time: ev.time || ev.timeSlot,
-        type: ev.type || 'In-Store',
-        desc: ev.desc || ev.notes || 'No description provided.',
-        tech: ev.tech || 'Unassigned',
-        customer: ev.customerName,
-        phone: ev.customerPhone,
-        email: ev.customerEmail,
-        brand: ev.deviceBrand,
-      }));
+      const formatted = (calendarEvents || []).map(ev => {
+        let cleanDateStr = ev.dateStr;
+        if (ev.dateStr && typeof ev.dateStr === 'string' && ev.dateStr.includes('T')) {
+          cleanDateStr = ev.dateStr.split('T')[0];
+        }
+        return {
+          ...ev,
+          dateStr: cleanDateStr,
+          title: ev.title || `${ev.customerName} with ${ev.deviceModel}`,
+          time: ev.time || ev.timeSlot,
+          type: ev.type || 'In-Store',
+          desc: ev.desc || ev.notes || 'No description provided.',
+          tech: ev.tech || 'Unassigned',
+          customer: ev.customerName,
+          phone: ev.customerPhone,
+          email: ev.customerEmail,
+          brand: ev.deviceBrand,
+        };
+      });
       setEvents(formatted);
     } catch (err) {
       console.error('Failed to load dashboard data:', err);
@@ -750,7 +757,7 @@ export default function AdminDashboard() {
                         <td className="p-4 text-xs font-bold text-gray-500 dark:text-gray-400">
                           {(() => {
                             const d = new Date(ev.dateStr);
-                            return `${monthsList[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+                            return `${monthsList[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
                           })()}
                         </td>
                         <td className="p-4 text-xs font-bold text-gray-500 dark:text-gray-400">{ev.time}</td>
@@ -914,7 +921,7 @@ export default function AdminDashboard() {
                         <span className="font-extrabold text-gray-900 dark:text-white text-right">
                           {activeEvent.dateStr ? (() => {
                             const d = new Date(activeEvent.dateStr);
-                            return `${monthsList[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+                            return `${monthsList[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
                           })() : 'N/A'}
                         </span>
                       </div>

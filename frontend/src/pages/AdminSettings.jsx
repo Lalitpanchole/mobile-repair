@@ -139,7 +139,7 @@ export default function AdminSettings() {
             Store Settings
           </h1>
           <p className="text-gray-500 dark:text-gray-400 font-medium mt-1">
-            Manage your store details, timezone configuration, currency, and credentials.
+            Manage your store details, booking slot duration, and credentials.
           </p>
         </div>
       </div>
@@ -209,43 +209,7 @@ export default function AdminSettings() {
                   />
                 </div>
 
-                {/* 5. Currency */}
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Currency</label>
-                  <select 
-                    value={currency}
-                    onChange={(e) => setCurrency(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-bold text-gray-900 dark:text-white bg-white dark:bg-[#111827] focus:outline-none select-custom"
-                  >
-                    <option value="AUD ($)">AUD ($)</option>
-                    <option value="USD ($)">USD ($)</option>
-                    <option value="EUR (€)">EUR (€)</option>
-                    <option value="GBP (£)">GBP (£)</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* 6. Timezone */}
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-1">
-                    <Globe className="w-4 h-4 text-amber-500" /> Timezone
-                  </label>
-                  <select 
-                    value={timezone}
-                    onChange={(e) => setTimezone(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-bold text-gray-900 dark:text-white bg-white dark:bg-[#111827] focus:outline-none select-custom"
-                  >
-                    <option value="Australia/Brisbane">Australia/Brisbane (AEST)</option>
-                    <option value="Australia/Sydney">Australia/Sydney (AEST/AEDT)</option>
-                    <option value="Asia/Kolkata">Asia/Kolkata (IST)</option>
-                    <option value="UTC">UTC / GMT</option>
-                    <option value="America/New_York">America/New_York (EST/EDT)</option>
-                    <option value="Europe/London">Europe/London (GMT/BST)</option>
-                  </select>
-                </div>
-
-                {/* 7. Booking Slot Duration */}
+                {/* 5. Booking Slot Duration */}
                 <div>
                   <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-1">
                     <Clock className="w-4 h-4 text-amber-500" /> Booking Slot Duration (Minutes)

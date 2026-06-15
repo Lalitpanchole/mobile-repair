@@ -42,7 +42,15 @@ export default function AdminBookings({ hideTabs = false, defaultTab: propDefaul
         customer: b.customerName,
         device: b.deviceModel,
         issue: b.partQuality ? `${b.repairName} (${b.partQuality})` : b.repairName,
-        date: b.dateStr,
+        date: b.dateStr ? (() => {
+          const d = new Date(b.dateStr);
+          if (isNaN(d.getTime())) return b.dateStr;
+          const monthsList = [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+          ];
+          return `${monthsList[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
+        })() : 'N/A',
         time: b.timeSlot,
         type: b.deviceType || 'In-Store',
         price: `A$${Number(b.finalPrice || 0).toFixed(2)}`,
@@ -139,7 +147,15 @@ export default function AdminBookings({ hideTabs = false, defaultTab: propDefaul
       (b.bookingNumber && String(b.bookingNumber).toLowerCase().includes(q)) ||
       (b.issue && String(b.issue).toLowerCase().includes(q));
       
-    const matchesToday = !filterToday || (b.date && String(b.date).toLowerCase().includes('today'));
+    let isToday = false;
+    if (b.dateStr) {
+      const bDate = new Date(b.dateStr);
+      const today = new Date();
+      isToday = bDate.getUTCFullYear() === today.getFullYear() &&
+                bDate.getUTCMonth() === today.getMonth() &&
+                bDate.getUTCDate() === today.getDate();
+    }
+    const matchesToday = !filterToday || isToday;
     
     return matchesSearch && matchesToday;
   });
@@ -366,14 +382,6 @@ export default function AdminBookings({ hideTabs = false, defaultTab: propDefaul
                       <span className={`inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border shadow-sm ${getStatusBadge(booking.status)}`}>
                         • {booking.status}
                       </span>
-                      <div className="flex items-center gap-2 mt-1">
-                        <div className="w-7 h-7 rounded-full bg-gray-50 flex items-center justify-center border border-gray-100 shadow-sm">
-                          <User className="w-3.5 h-3.5 text-gray-400" />
-                        </div>
-                        <span className={`text-xs font-bold ${booking.tech === 'Unassigned' ? 'text-red-400 italic' : 'text-gray-700'}`}>
-                          {booking.tech}
-                        </span>
-                      </div>
                     </div>
                   </div>
 
@@ -696,7 +704,7 @@ export default function AdminBookings({ hideTabs = false, defaultTab: propDefaul
                               'January', 'February', 'March', 'April', 'May', 'June',
                               'July', 'August', 'September', 'October', 'November', 'December'
                             ];
-                            return `${monthsList[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+                            return `${monthsList[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
                           })() : 'N/A'}
                         </span>
                       </div>

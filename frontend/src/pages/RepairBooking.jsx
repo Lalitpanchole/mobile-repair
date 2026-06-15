@@ -23,14 +23,17 @@ const getScreenOptions = (priceStr, modelName, brandName, repairName = '', repai
   let refIncell = Math.max(99, basePrice - 170);
   
   const modelLower = modelName.toLowerCase();
-  if (modelLower.startsWith('iphone 17') && !modelLower.startsWith('iphone 17e')) {
+  if (
+    (modelLower.startsWith('iphone 17') && !modelLower.startsWith('iphone 17e')) ||
+    modelLower.includes('mini')
+  ) {
     return [];
   }
   const repairLower = repairName ? repairName.toLowerCase() : '';
   const isScreen = repairLower.includes('screen') || repairLower.includes('display') || repairLower.includes('lcd') || repairLower.includes('oled') || repairLower.includes('front glass');
 
   if (repairLower.includes('back glass')) {
-    if (modelLower.includes('16 pro max') || modelLower.includes('16promax') || modelLower === 'iphone 16 pro' || modelLower === 'iphone 16pro' || modelLower.includes('16 plus') || modelLower.includes('16plus')) {
+    if (modelLower.includes('16 pro max') || modelLower.includes('16promax') || modelLower === 'iphone 16 pro' || modelLower === 'iphone 16pro' || modelLower.includes('16 plus') || modelLower.includes('16plus') || modelLower === 'iphone 16') {
       return [
         {
           id: 'standard_glass',
@@ -58,21 +61,6 @@ const getScreenOptions = (priceStr, modelName, brandName, repairName = '', repai
           name: 'Premium Quality',
           price: 'A$220.00',
           description: 'Premium back glass replacement with optimal durability.'
-        }
-      ];
-    } else if (modelLower === 'iphone 16') {
-      return [
-        {
-          id: 'standard_glass',
-          name: 'Standard Quality',
-          price: 'A$170.00',
-          description: 'Standard quality back glass replacement designed for a precise fit and solid durability. budget-friendly.including support for wireless charging.'
-        },
-        {
-          id: 'premium_glass',
-          name: 'Premium Quality',
-          price: 'A$220.00',
-          description: 'Premium quality back glass replacement with original camera glass, designed for a precise fit, high durability. it restores the original look while maintaining full functionality, including wireless charging'
         }
       ];
     } else if (modelLower === 'iphone 15') {
@@ -169,13 +157,13 @@ const getScreenOptions = (priceStr, modelName, brandName, repairName = '', repai
     refSoftOLED = 199 + 20; // 219
     refGenuine = 299 + 20; // 319
   } else if (modelLower.includes('13 pro') || modelLower.includes('13pro')) {
+    refIncell = 149 + 20; // 169
+    refSoftOLED = 199 + 20; // 219
+    refGenuine = 299 + 20; // 319
+  } else if (modelLower === 'iphone 13') {
     refIncell = 129 + 20; // 149
-    refSoftOLED = 179 + 20; // 199
-    refGenuine = 269 + 20; // 289
-  } else if (modelLower === 'iphone 13' || modelLower === 'iphone 13 mini') {
-    refIncell = 99 + 20; // 119
-    refSoftOLED = 139 + 20; // 159
-    refGenuine = 199 + 20; // 219
+    refSoftOLED = 199 + 20; // 219
+    refGenuine = 299 + 20; // 319
   } else if (modelLower.includes('12 pro max') || modelLower.includes('12promax')) {
     refIncell = 119 + 20; // 139
     refSoftOLED = 149 + 20; // 169
@@ -184,22 +172,10 @@ const getScreenOptions = (priceStr, modelName, brandName, repairName = '', repai
     refIncell = 109 + 20; // 129
     refSoftOLED = 139 + 20; // 159
     refGenuine = 199 + 20; // 219
-  } else if (modelLower === 'iphone 12' || modelLower === 'iphone 12 mini') {
+  } else if (modelLower === 'iphone 12') {
     refIncell = 119 + 20; // 139
     refSoftOLED = 199 + 20; // 219
     refGenuine = 179 + 20; // 199
-  } else if (modelLower.includes('11 pro max') || modelLower.includes('11promax')) {
-    refIncell = 89 + 20; // 109
-    refSoftOLED = 119 + 20; // 139
-    refGenuine = 169 + 20; // 189
-  } else if (modelLower.includes('11 pro') || modelLower.includes('11pro')) {
-    refIncell = 79 + 20; // 99
-    refSoftOLED = 109 + 20; // 129
-    refGenuine = 149 + 20; // 169
-  } else if (modelLower === 'iphone 11') {
-    refIncell = 69 + 20; // 89
-    refSoftOLED = 99 + 20; // 119
-    refGenuine = 129 + 20; // 149
   } else if (modelLower.includes('xs max') || modelLower.includes('xsmax')) {
     refIncell = 79 + 20; // 99
     refSoftOLED = 109 + 20; // 129

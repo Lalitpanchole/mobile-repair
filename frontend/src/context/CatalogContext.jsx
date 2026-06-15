@@ -12,7 +12,7 @@ export const CatalogProvider = ({ children }) => {
     try {
       setLoading(true);
       if (!forceRefresh) {
-        const cached = sessionStorage.getItem('mpc_catalog_v3');
+        const cached = sessionStorage.getItem('mpc_catalog_v8');
         if (cached) {
           setCatalog(JSON.parse(cached));
           setLoading(false);
@@ -23,7 +23,7 @@ export const CatalogProvider = ({ children }) => {
 
       const data = await fetchCatalog();
       setCatalog(data);
-      sessionStorage.setItem('mpc_catalog_v3', JSON.stringify(data));
+      sessionStorage.setItem('mpc_catalog_v8', JSON.stringify(data));
       setError(null);
     } catch (err) {
       console.error('Failed to fetch catalog:', err);
