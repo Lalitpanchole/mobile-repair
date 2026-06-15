@@ -1,10 +1,11 @@
 import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Check, Star, ShieldCheck, Clock, MapPin, ChevronLeft, ChevronRight, Calendar as CalendarIcon, MessageSquare, Building2
+  Check, Star, ShieldCheck, Clock, ChevronLeft, ChevronRight, Calendar as CalendarIcon, MessageSquare, Building2, Loader2
 } from 'lucide-react';
 import { useBooking } from '../context/BookingContext';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { fetchPublicSettings, fetchSlots, createBooking } from '../services/api';
 
 const getScreenOptions = (priceStr, modelName, brandName, repairName = '', repair = null) => {
   if (repair && repair.options && repair.options.length > 0) {
@@ -16,7 +17,7 @@ const getScreenOptions = (priceStr, modelName, brandName, repairName = '', repai
   const basePriceMatch = priceStr.match(/[\d.]+/);
   const basePrice = basePriceMatch ? Math.floor(parseFloat(basePriceMatch[0])) : 199;
   
-  // Default values relative to basePrice (which is the Genuine OLED price in our database)
+  // Default values relative to basePrice
   let refGenuine = basePrice;
   let refSoftOLED = Math.max(149, basePrice - 100);
   let refIncell = Math.max(99, basePrice - 170);
@@ -25,7 +26,22 @@ const getScreenOptions = (priceStr, modelName, brandName, repairName = '', repai
   const repairLower = repairName ? repairName.toLowerCase() : '';
 
   if (repairLower.includes('back glass')) {
-    if (modelLower.includes('16 pro max') || modelLower.includes('16promax') || modelLower === 'iphone 16 pro' || modelLower === 'iphone 16pro' || modelLower.includes('15 pro max') || modelLower.includes('15promax') || modelLower.includes('14 pro max') || modelLower.includes('14promax') || modelLower === 'iphone 14 pro' || modelLower === 'iphone 14pro' || modelLower.includes('14 plus') || modelLower.includes('14plus') || modelLower === 'iphone 14') {
+    if (modelLower.includes('16 pro max') || modelLower.includes('16promax') || modelLower === 'iphone 16 pro' || modelLower === 'iphone 16pro' || modelLower.includes('16 plus') || modelLower.includes('16plus')) {
+      return [
+        {
+          id: 'standard_glass',
+          name: 'Standard Quality',
+          price: 'A$170.00',
+          description: 'Standard quality back glass replacement designed for a precise fit and solid durability. budget-friendly.including support for wireless charging.'
+        },
+        {
+          id: 'premium_glass',
+          name: 'Premium Quality',
+          price: 'A$220.00',
+          description: 'Premium quality back glass replacement with original camera glass, designed for a precise fit, high durability. it restores the original look while maintaining full functionality, including wireless charging'
+        }
+      ];
+    } else if (modelLower.includes('15 pro max') || modelLower.includes('15promax') || modelLower.includes('14 pro max') || modelLower.includes('14promax') || modelLower === 'iphone 14 pro' || modelLower === 'iphone 14pro' || modelLower.includes('14 plus') || modelLower.includes('14plus') || modelLower === 'iphone 14' || modelLower.includes('15 plus') || modelLower.includes('15plus') || modelLower === 'iphone 15 pro' || modelLower === 'iphone 15pro' || modelLower === 'iphone 15') {
       return [
         {
           id: 'standard_glass',
@@ -40,22 +56,22 @@ const getScreenOptions = (priceStr, modelName, brandName, repairName = '', repai
           description: 'Premium back glass replacement with optimal durability.'
         }
       ];
-    } else if (modelLower.includes('16 plus') || modelLower.includes('16plus')) {
+    } else if (modelLower === 'iphone 16') {
       return [
         {
           id: 'standard_glass',
           name: 'Standard Quality',
-          price: 'A$169.00',
-          description: 'Standard back glass replacement.'
+          price: 'A$170.00',
+          description: 'Standard quality back glass replacement designed for a precise fit and solid durability. budget-friendly.including support for wireless charging.'
         },
         {
           id: 'premium_glass',
           name: 'Premium Quality',
           price: 'A$220.00',
-          description: 'Premium back glass replacement with optimal durability.'
+          description: 'Premium quality back glass replacement with original camera glass, designed for a precise fit, high durability. it restores the original look while maintaining full functionality, including wireless charging'
         }
       ];
-    } else if (modelLower === 'iphone 16' || modelLower === 'iphone 15') {
+    } else if (modelLower === 'iphone 15') {
       return [
         {
           id: 'standard_glass',
@@ -113,12 +129,12 @@ const getScreenOptions = (priceStr, modelName, brandName, repairName = '', repai
     refGenuine = 469 + 20; // 489
   } else if (modelLower.includes('15 pro') || modelLower.includes('15pro')) {
     refIncell = 149 + 20; // 169
-    refSoftOLED = 219 + 20; // 239
-    refGenuine = 369 + 20; // 389
+    refSoftOLED = 279 + 20; // 299
+    refGenuine = 549 + 20; // 569
   } else if (modelLower.includes('15 plus') || modelLower.includes('15plus')) {
-    refIncell = 129 + 20; // 149
-    refSoftOLED = 179 + 20; // 199
-    refGenuine = 299 + 20; // 319
+    refIncell = 149 + 20; // 169
+    refSoftOLED = 249 + 20; // 269
+    refGenuine = 399 + 20; // 419
   } else if (modelLower === 'iphone 15') {
     refIncell = 119 + 20; // 139
     refSoftOLED = 169 + 20; // 189
@@ -160,8 +176,8 @@ const getScreenOptions = (priceStr, modelName, brandName, repairName = '', repai
     refSoftOLED = 139 + 20; // 159
     refGenuine = 199 + 20; // 219
   } else if (modelLower === 'iphone 12' || modelLower === 'iphone 12 mini') {
-    refIncell = 99 + 20; // 119
-    refSoftOLED = 129 + 20; // 149
+    refIncell = 119 + 20; // 139
+    refSoftOLED = 199 + 20; // 219
     refGenuine = 179 + 20; // 199
   } else if (modelLower.includes('11 pro max') || modelLower.includes('11promax')) {
     refIncell = 89 + 20; // 109
@@ -220,17 +236,21 @@ const getScreenOptions = (priceStr, modelName, brandName, repairName = '', repai
 };
 
 export default function RepairBooking() {
-  const { bookingData, addBooking, openBookingModal, resetBookingData } = useBooking();
+  const { bookingData, openBookingModal, resetBookingData } = useBooking();
   const navigate = useNavigate();
 
   // Form states
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
-  const [selectedLocation, setSelectedLocation] = useState('Westfield Expert Kotara');
+  const [storeSettings, setStoreSettings] = useState(null);
+  const [settingsLoading, setSettingsLoading] = useState(true);
+
   const [selectedDate, setSelectedDate] = useState(() => new Date());
   const [currentMonth, setCurrentMonth] = useState(() => new Date(new Date().getFullYear(), new Date().getMonth(), 1));
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState('10:30 AM');
+  const [availableSlots, setAvailableSlots] = useState([]);
+  const [slotsLoading, setSlotsLoading] = useState(false);
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
   const [notes, setNotes] = useState('');
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -240,6 +260,50 @@ export default function RepairBooking() {
       openBookingModal();
     }
   }, [bookingData, openBookingModal]);
+
+  // Load public store settings
+  useEffect(() => {
+    const loadSettings = async () => {
+      try {
+        const settings = await fetchPublicSettings();
+        setStoreSettings(settings || null);
+      } catch (err) {
+        console.error('Failed to fetch store settings:', err);
+      } finally {
+        setSettingsLoading(false);
+      }
+    };
+    loadSettings();
+  }, []);
+
+  // Fetch slots for selected date
+  useEffect(() => {
+    const loadSlots = async () => {
+      setSlotsLoading(true);
+      try {
+        const year = selectedDate.getFullYear();
+        const month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
+        const day = selectedDate.getDate().toString().padStart(2, '0');
+        const dStr = `${year}-${month}-${day}`;
+        
+        const res = await fetchSlots(dStr);
+        setAvailableSlots(res.slots || []);
+      } catch (err) {
+        console.error('Failed to fetch slots:', err);
+        setAvailableSlots([]);
+      } finally {
+        setSlotsLoading(false);
+      }
+    };
+    loadSlots();
+  }, [selectedDate]);
+
+  // Scroll to top when the repair changes or on mount
+  useEffect(() => {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }, 10);
+  }, [bookingData?.repair?.name]);
 
   if (!bookingData?.model || !bookingData?.repair) {
     return <Navigate to="/" replace />;
@@ -251,16 +315,12 @@ export default function RepairBooking() {
   const repair = bookingData.repair;
   const selectedScreenOption = bookingData?.repair?.selectedQualityId || 'soft_oled';
 
-  const isScreenRepair = repair.name.toLowerCase().includes('screen') || repair.name.toLowerCase().includes('display') || repair.name.toLowerCase().includes('glass');
-  const isPhone = !bookingData?.deviceType || bookingData.deviceType.toLowerCase().includes('phone') || bookingData.deviceType.toLowerCase() === 'iphone' || model.toLowerCase().includes('iphone');
-  const showOptions = repair.partOption === true;
+  const screenOptions = getScreenOptions(repair.price, model, brand, repair.name, repair);
+  const showOptions = repair.partOption === true || screenOptions.length > 0;
 
-  const screenOptions = showOptions ? getScreenOptions(repair.price, model, brand, repair.name, repair) : [];
   const activeOption = showOptions ? screenOptions.find(opt => opt.id === selectedScreenOption) || screenOptions.find(opt => opt.recommended) || screenOptions[1] || screenOptions[0] : null;
 
-  const adjustedRepairPrice = repair.price;
-
-  const currentPrice = showOptions ? activeOption.price : adjustedRepairPrice;
+  const currentPrice = showOptions ? activeOption.price : repair.price;
 
   const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
@@ -296,43 +356,6 @@ export default function RepairBooking() {
     return daysArray;
   }, [currentMonth]);
 
-  // Helper to parse time slot string (e.g. "09:00 AM") into a Date on a given day
-  const parseTimeSlot = (slotStr, date) => {
-    const [time, modifier] = slotStr.split(' ');
-    let [hours, minutes] = time.split(':').map(Number);
-    if (modifier === 'PM' && hours < 12) {
-      hours += 12;
-    }
-    if (modifier === 'AM' && hours === 12) {
-      hours = 0;
-    }
-    const slotDate = new Date(date);
-    slotDate.setHours(hours, minutes, 0, 0);
-    return slotDate;
-  };
-
-  // Generate available time slots based on store hours and current time
-  const availableSlots = useMemo(() => {
-    const dayOfWeek = selectedDate.getDay(); // 0 = Sunday, 6 = Saturday, 1-5 = Weekdays
-    let slots = [];
-    if (dayOfWeek === 0) {
-      return []; // Closed on Sundays
-    } else if (dayOfWeek === 6) {
-      // Saturday - 9:00 AM to 3:00 PM
-      slots = ['09:00 AM', '10:30 AM', '12:00 PM', '01:30 PM'];
-    } else {
-      // Weekdays - 9:00 AM to 6:00 PM
-      slots = ['09:00 AM', '10:30 AM', '12:00 PM', '01:30 PM', '03:00 PM', '04:30 PM'];
-    }
-
-    const now = new Date();
-    const isTodayDate = selectedDate.toDateString() === now.toDateString();
-    if (isTodayDate) {
-      return slots.filter(slot => parseTimeSlot(slot, selectedDate) > now);
-    }
-    return slots;
-  }, [selectedDate]);
-
   // Keep selectedTimeSlot in sync with available slots
   useEffect(() => {
     if (availableSlots.length > 0) {
@@ -353,39 +376,79 @@ export default function RepairBooking() {
     setCurrentMonth(prev => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
   };
 
-  const handleConfirmBooking = (e) => {
+  const storeName = storeSettings?.storeName || 'MPC Repairs';
+
+  const handleConfirmBooking = async (e) => {
     e.preventDefault();
-    if (!fullName.trim() || !phone.trim() || !email.trim()) {
-      setErrorMessage('Please fill in all required fields.');
+    if (!fullName.trim() || !phone.trim() || !email.trim() || !selectedTimeSlot) {
+      setErrorMessage('Please fill in all required fields and choose a time slot.');
       return;
     }
+
+    const phoneRegex = /^[+]?[\d\s-]{8,20}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    const isPhoneValid = phoneRegex.test(phone.trim());
+    const isEmailValid = emailRegex.test(email.trim());
+    
+    if (!isPhoneValid && !isEmailValid) {
+      setErrorMessage('Invalid phone number and Invalid email');
+      return;
+    } else if (!isPhoneValid) {
+      setErrorMessage('Invalid phone number');
+      return;
+    } else if (!isEmailValid) {
+      setErrorMessage('Invalid email');
+      return;
+    }
+
     setErrorMessage('');
+    
     const year = selectedDate.getFullYear();
     const month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
     const day = selectedDate.getDate().toString().padStart(2, '0');
     const dStr = `${year}-${month}-${day}`;
 
-    addBooking({
-      customer: fullName,
-      phone,
-      email,
-      location: selectedLocation,
-      brand,
-      device: model,
-      issue: showOptions ? `${repair.name} (${activeOption.name})` : repair.name,
-      dateStr: dStr,
-      time: selectedTimeSlot,
-      type: 'In-Store',
-      price: currentPrice,
-      notes: notes,
-      desc: `Location: ${selectedLocation}. Device model: ${model}. Contact: ${phone} (${email})`
-    });
+    const priceNum = parseFloat(String(currentPrice).replace(/[^0-9.]/g, '')) || 0;
 
-    setIsSuccessOpen(true);
+    const snapshot = {
+      brand: brand,
+      deviceType: bookingData.deviceType || 'Phone',
+      model: model,
+      repair: repair.name,
+      quality: showOptions ? activeOption.name : 'Standard',
+      price: priceNum,
+      warranty: repair.warranty || '12-mo warranty'
+    };
+
+    try {
+      const payload = {
+        customerName: fullName,
+        customerPhone: phone,
+        customerEmail: email,
+        deviceBrand: brand,
+        deviceType: bookingData.deviceType || 'Phone',
+        deviceModel: model,
+        repairName: repair.name,
+        partQuality: showOptions ? activeOption.name : null,
+        finalPrice: priceNum,
+        repairSnapshot: snapshot,
+        dateStr: dStr,
+        timeSlot: selectedTimeSlot,
+        notes: notes,
+        createdSource: 'website'
+      };
+
+      await createBooking(payload);
+      setIsSuccessOpen(true);
+    } catch (err) {
+      console.error('Booking confirmation failed:', err);
+      setErrorMessage(err.message || 'Failed to confirm booking. Please try another slot.');
+    }
   };
 
   return (
-    <div className="bg-[#F8FAFC] min-h-screen pt-10 pb-24">
+    <div className="bg-[#F8FAFC] min-h-screen pt-10 pb-24 text-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Back Button Selection Link */}
@@ -514,7 +577,7 @@ export default function RepairBooking() {
                   Book Your Repair
                 </h3>
 
-                <form onSubmit={handleConfirmBooking} className="space-y-6">
+                <form onSubmit={handleConfirmBooking} className="space-y-6" noValidate>
                   {errorMessage && (
                     <div className="p-3 bg-red-50 text-red-600 rounded-xl text-xs font-bold border border-red-150">
                       {errorMessage}
@@ -523,7 +586,6 @@ export default function RepairBooking() {
 
                   {/* Details */}
                   <div>
-                    <p className="text-xs font-bold text-[#64748B] uppercase tracking-wider mb-3">Your Details</p>
                     <div className="grid grid-cols-2 gap-4 mb-4">
                       <div>
                         <label className="block text-xs font-bold text-[#0F172A] mb-1.5">Full Name *</label>
@@ -532,8 +594,8 @@ export default function RepairBooking() {
                           required
                           value={fullName}
                           onChange={(e) => setFullName(e.target.value)}
-                          className="floating-label-input py-2.5 text-sm w-full font-bold focus:border-[#FFDE21] focus:ring-1 focus:ring-[#FFDE21]"
-                          placeholder="John Smith"
+                          className="w-full px-4 py-3 bg-white border border-[#E2E8F0] rounded-xl text-sm font-semibold text-[#0F172A] placeholder-gray-400 focus:outline-none focus:border-[#FFDE21] focus:ring-2 focus:ring-[#FFDE21]/20 transition-all"
+                          placeholder="Enter your full name"
                         />
                       </div>
                       <div>
@@ -543,8 +605,8 @@ export default function RepairBooking() {
                           required
                           value={phone}
                           onChange={(e) => setPhone(e.target.value)}
-                          className="floating-label-input py-2.5 text-sm w-full font-bold focus:border-[#FFDE21] focus:ring-1 focus:ring-[#FFDE21]"
-                          placeholder="+61 412 345 678"
+                          className="w-full px-4 py-3 bg-white border border-[#E2E8F0] rounded-xl text-sm font-semibold text-[#0F172A] placeholder-gray-400 focus:outline-none focus:border-[#FFDE21] focus:ring-2 focus:ring-[#FFDE21]/20 transition-all"
+                          placeholder="Enter your phone number"
                         />
                       </div>
                     </div>
@@ -555,38 +617,32 @@ export default function RepairBooking() {
                         required
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="floating-label-input py-2.5 text-sm w-full font-bold focus:border-[#FFDE21] focus:ring-1 focus:ring-[#FFDE21]"
-                        placeholder="john@example.com"
+                        className="w-full px-4 py-3 bg-white border border-[#E2E8F0] rounded-xl text-sm font-semibold text-[#0F172A] placeholder-gray-400 focus:outline-none focus:border-[#FFDE21] focus:ring-2 focus:ring-[#FFDE21]/20 transition-all"
+                        placeholder="Enter your email address"
                       />
                     </div>
                   </div>
 
                   {/* Location */}
                   <div>
-                    <p className="text-xs font-bold text-[#64748B] uppercase tracking-wider mb-3">Select Location *</p>
-                    <div className="space-y-3">
-                      {[
-                        { name: 'Westfield Expert Kotara', address: 'K230, Level 2/89 Northcott Dr, Kotara NSW 2289' }
-                      ].map((loc, i) => (
-                        <label key={i} className={`flex items-center gap-4 p-4 rounded-xl border cursor-pointer transition-all hover:border-[#FFDE21] group ${selectedLocation === loc.name ? 'border-[#FFDE21] bg-amber-50/50' : 'border-[#E2E8F0]'
-                          }`}>
-                          <input
-                            type="radio"
-                            name="location"
-                            className="text-[#FFDE21] w-4 h-4 cursor-pointer"
-                            checked={selectedLocation === loc.name}
-                            onChange={() => setSelectedLocation(loc.name)}
-                          />
-                          <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center shrink-0">
-                            <Building2 className="w-5 h-5 text-gray-600" />
-                          </div>
-                          <div>
-                            <p className="text-base font-semibold text-[#0F172A]">{loc.name}</p>
-                            <p className="text-sm font-medium text-[#64748B] mt-0.5">{loc.address}</p>
-                          </div>
-                        </label>
-                      ))}
-                    </div>
+                    <p className="text-xs font-bold text-[#64748B] uppercase tracking-wider mb-3">Repair Location</p>
+                    {settingsLoading ? (
+                      <div className="flex items-center gap-2 p-4 text-sm font-semibold text-gray-500 bg-white border border-[#E2E8F0] rounded-xl">
+                        <Loader2 className="w-4 h-4 animate-spin text-amber-500" />
+                        Loading store location...
+                      </div>
+                    ) : (
+                      <div className="flex items-start gap-4 p-4 rounded-xl border border-[#FFDE21] bg-amber-50/50">
+                        <div className="w-10 h-10 rounded-full bg-amber-500 text-white flex items-center justify-center shrink-0 mt-0.5">
+                          <Building2 className="w-5 h-5 text-white" />
+                        </div>
+                        <div>
+                          <p className="text-base font-extrabold text-[#0F172A]">{storeSettings?.storeName || 'MPC Repairs'}</p>
+                          <p className="text-xs font-semibold text-[#64748B] mt-0.5">{storeSettings?.storeAddress || '168 Cavendish Road, Coorparoo, QLD 4151'}</p>
+                          <p className="text-xs font-bold text-gray-500 mt-1">Phone: {storeSettings?.storePhone}</p>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   {/* Date & Time */}
@@ -646,41 +702,48 @@ export default function RepairBooking() {
                     {/* Time slots widget */}
                     <div className="space-y-2">
                       <label className="block text-xs font-bold text-gray-500 mb-1.5">Available Time Slots</label>
-                      <div className="grid grid-cols-3 gap-2">
-                        {availableSlots.length > 0 ? (
-                          availableSlots.map(slot => (
-                            <button
-                              key={slot}
-                              type="button"
-                              onClick={() => setSelectedTimeSlot(slot)}
-                              className={`py-2 px-1 text-xs font-extrabold rounded-xl border text-center transition-all cursor-pointer ${selectedTimeSlot === slot
-                                ? 'bg-[#FFDE21] text-white border-[#FFDE21] shadow-sm shadow-amber-500/10'
-                                : 'bg-white text-[#0F172A] border-[#E2E8F0] hover:bg-gray-50'
-                                }`}
-                            >
-                              {slot}
-                            </button>
-                          ))
-                        ) : (
-                          <div className="col-span-3 py-3 text-center text-xs font-bold text-gray-400 bg-gray-50 rounded-xl border border-dashed border-gray-200">
-                            {selectedDate.getDay() === 0 ? 'Store is closed on Sundays' : 'No available slots for this date'}
-                          </div>
-                        )}
-                      </div>
+                      {slotsLoading ? (
+                        <div className="flex items-center justify-center py-4 text-xs font-bold text-gray-405 bg-gray-50 rounded-xl border border-dashed border-gray-200">
+                          <Loader2 className="w-4 h-4 animate-spin text-amber-500 mr-2" />
+                          Loading slots...
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-3 gap-2">
+                          {availableSlots.length > 0 ? (
+                            availableSlots.map(slot => (
+                              <button
+                                key={slot}
+                                type="button"
+                                onClick={() => setSelectedTimeSlot(slot)}
+                                className={`py-2 px-1 text-xs font-extrabold rounded-xl border text-center transition-all cursor-pointer ${selectedTimeSlot === slot
+                                  ? 'bg-[#FFDE21] text-white border-[#FFDE21] shadow-sm shadow-amber-500/10'
+                                  : 'bg-white text-[#0F172A] border-[#E2E8F0] hover:bg-gray-50'
+                                  }`}
+                              >
+                                {slot}
+                              </button>
+                            ))
+                          ) : (
+                            <div className="col-span-3 py-3 text-center text-xs font-bold text-gray-400 bg-gray-55/10 rounded-xl border border-dashed border-gray-200">
+                              {selectedDate.getDay() === 0 ? 'Store is closed on Sundays' : 'No available slots for this date'}
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
 
                   {/* Additional Notes */}
-                  <div className="bg-gray-50/50 rounded-2xl p-4 border border-[#E2E8F0] focus-within:border-[#FFDE21] focus-within:bg-amber-50/20 transition-all group">
-                    <label className="flex items-center gap-2 text-xs font-bold text-[#64748B] uppercase tracking-wider mb-2 group-focus-within:text-[#0F172A] transition-colors">
-                      <MessageSquare className="w-4 h-4 text-[#FFDE21]" /> Additional Notes (Optional)
+                  <div>
+                    <label className="flex items-center gap-2 text-xs font-bold text-[#0F172A] mb-1.5">
+                      <MessageSquare className="w-4 h-4 text-gray-400" /> Additional Notes (Optional)
                     </label>
                     <textarea
                       value={notes}
                       onChange={(e) => setNotes(e.target.value)}
                       rows="3"
-                      className="w-full bg-transparent border-0 focus:ring-0 p-0 text-sm font-medium text-[#0F172A] placeholder-gray-400 resize-none outline-none"
-                      placeholder="Share any specific details about the issue, passcodes if needed, or special requests..."
+                      className="w-full px-4 py-3 bg-white border border-[#E2E8F0] rounded-xl text-sm font-semibold text-[#0F172A] placeholder-gray-400 focus:outline-none focus:border-[#FFDE21] focus:ring-2 focus:ring-[#FFDE21]/20 transition-all resize-none"
+                      placeholder="Any specific details, passcodes, or special requests"
                     />
                   </div>
 
@@ -728,8 +791,8 @@ export default function RepairBooking() {
               </div>
 
               <h3 className="text-2xl font-black text-[#0F172A] tracking-tight mb-2">Appointment Booked!</h3>
-              <p className="text-gray-500 text-sm font-semibold mb-6">
-                Your booking for <strong>{displayModel} {repair.name}</strong> has been successfully registered. We will see you at <strong>{selectedLocation}</strong> on <strong>{selectedDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} at {selectedTimeSlot}</strong>.
+              <p className="text-gray-500 text-sm font-semibold mb-6 text-center">
+                Your booking for <strong>{displayModel} {repair.name}</strong> has been successfully registered. We will see you at <strong>{storeName}</strong> on <strong>{selectedDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} at {selectedTimeSlot}</strong>.
               </p>
 
               <div className="space-y-3">
@@ -750,12 +813,6 @@ export default function RepairBooking() {
                 >
                   Done
                 </button>
-                <a
-                  href="/admin"
-                  className="block text-xs font-bold text-[#FFDE21] hover:underline py-1"
-                >
-                  Go to Admin Dashboard to check calendar
-                </a>
               </div>
             </motion.div>
           </div>
@@ -764,13 +821,3 @@ export default function RepairBooking() {
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-

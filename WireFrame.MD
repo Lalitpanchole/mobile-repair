@@ -42,13 +42,24 @@ graph TD
 *   **Admin Layout (`/admin`)**
     *   `/admin` ➡️ [Admin Dashboard](file:///d:/KIAAN/mobile-repair/mobile-repair/frontend/src/pages/AdminDashboard.jsx) (Master interactive calendar view)
     *   `/admin/bookings` ➡️ [Bookings Table](file:///d:/KIAAN/mobile-repair/mobile-repair/frontend/src/pages/AdminBookings.jsx) (CRUD list & booking status manager)
+    *   `/admin/new-bookings` ➡️ [Bookings Table](file:///d:/KIAAN/mobile-repair/mobile-repair/frontend/src/pages/AdminBookings.jsx) (Direct route to Pending bookings with tab buttons hidden)
     *   `/admin/calendar` ➡️ [Admin Calendar View](file:///d:/KIAAN/mobile-repair/mobile-repair/frontend/src/pages/AdminCalendar.jsx) (Detailed scheduling grids)
-    *   `/admin/services` ➡️ [Services Catalog](file:///d:/KIAAN/mobile-repair/mobile-repair/frontend/src/pages/AdminServices.jsx) (Catalog prices editor)
+    *   `/admin/services` ➡️ [Services Catalog](file:///d:/KIAAN/mobile-repair/mobile-repair/frontend/src/pages/AdminServices.jsx) (Catalog prices and categories editor)
     *   `/admin/store` ➡️ [Branches Manager](file:///d:/KIAAN/mobile-repair/mobile-repair/frontend/src/pages/AdminStore.jsx) (Branch directories configuration)
     *   `/admin/hours` ➡️ [Hours Settings](file:///d:/KIAAN/mobile-repair/mobile-repair/frontend/src/pages/AdminHours.jsx) (Working hours & scheduling exceptions)
     *   `/admin/sliders` ➡️ [Sliders Manager](file:///d:/KIAAN/mobile-repair/mobile-repair/frontend/src/pages/AdminSliders.jsx) (Carousel slide items customizer)
     *   `/admin/video` ➡️ [Video Control](file:///d:/KIAAN/mobile-repair/mobile-repair/frontend/src/pages/AdminVideo.jsx) (Explainer video player customizer)
+    *   `/admin/pages` ➡️ [Admin Pages Editor](file:///d:/KIAAN/mobile-repair/mobile-repair/frontend/src/pages/AdminPages.jsx) (Static page layouts editor)
+    *   `/admin/testimonials` ➡️ [Testimonials Portal](file:///d:/KIAAN/mobile-repair/mobile-repair/frontend/src/pages/AdminTestimonials.jsx) (Customer reviews approval manager)
+    *   `/admin/customers` ➡️ [Customers Directory](file:///d:/KIAAN/mobile-repair/mobile-repair/frontend/src/pages/AdminCustomers.jsx) (Client list and logs history)
+    *   `/admin/staff` ➡️ [Staff Directory](file:///d:/KIAAN/mobile-repair/mobile-repair/frontend/src/pages/AdminStaff.jsx) (Technicians list & hours assignment)
+    *   `/admin/analytics` ➡️ [Analytics Console](file:///d:/KIAAN/mobile-repair/mobile-repair/frontend/src/pages/AdminAnalytics.jsx) (Dashboard chart widgets and performance statistics)
     *   `/admin/settings` ➡️ [Site Settings](file:///d:/KIAAN/mobile-repair/mobile-repair/frontend/src/pages/AdminSettings.jsx) (Store details & styling presets)
+    *   *Legacy Pages*:
+        *   `/admin/orders` ➡️ [Admin Orders Page](file:///d:/KIAAN/mobile-repair/mobile-repair/frontend/src/pages/AdminOrders.jsx)
+        *   `/admin/devices` ➡️ [Admin Devices Catalog](file:///d:/KIAAN/mobile-repair/mobile-repair/frontend/src/pages/AdminDevices.jsx)
+        *   `/admin/payments` ➡️ [Admin Payments Log](file:///d:/KIAAN/mobile-repair/mobile-repair/frontend/src/pages/AdminPayments.jsx)
+        *   `/admin/reviews` ➡️ [Admin Reviews Manager](file:///d:/KIAAN/mobile-repair/mobile-repair/frontend/src/pages/AdminReviews.jsx)
 
 ---
 
@@ -137,13 +148,17 @@ Custom video player component detailing the repair process.
 *   **Loop Playback**: Sequentially cycles across 3 high-quality repair clips.
 *   **Custom Control Overlay**: Fades in on hover. Features play/pause toggle, interactive progress seeker, audio mute/unmute control, and fullscreen command.
 
-#### E. Service Process Steps
-Step-by-step repair walkthrough:
+#### E. Service Process Steps (How It Works)
+Step-by-step repair walkthrough flow.
 ```
 +---------------------------------------------------------------------------------+
-|  01. Book Online  ===>  02. Free Diagnostic  ===>  03. Expert Repair  ===>  04. Return |
+|  01. Book Online  =======>  02. Free Diagnostic  =======>  03. Expert Repair  =======>  04. Return |
 +---------------------------------------------------------------------------------+
 ```
+*   **Aesthetic Connecting Lines**:
+    *   **Mobile Vertical Lines**: Renders a vertical connecting line (`w-0.5`) of gradient amber color between successive step blocks on small viewports.
+    *   **Tablet Horizontal Lines**: Segments horizontal connecting lines dynamically (`h-0.5`) for precise grid layouts.
+    *   **Overlapping Masking**: Step descriptors are enclosed in white-background containers to cleanly mask the connecting lines behind the texts.
 
 #### G. Customer Reviews Testimonial Carousel
 Draws mock review stars and Google profiles:
@@ -200,11 +215,10 @@ Processes the scheduling slot and stores user records.
 | |                                     |   | Email: [_______________________] |  |
 | | **What's Included:**                |   |                                  |  |
 | | [Check] Premium Parts               |   | Location: (o) Kotara Westfield   |  |
-| | [Check] 1-Hour Repair               |   |                                  |  |
-| | [Check] Free Diagnostic             |   | **Date:** [ June 2026 Calendar ] |  |
-| |                                     |   | **Time:** [9:00 AM] [10:30 AM].. |  |
-| | [ Why Choose MPC Repairs Badges ]   |   | Notes: [_______________________] |  |
-| |                                     |   |                                  |  |
+| | [Check] 1-Hour Repair               |   | **Date:** [ Dynamic Calendar Grid ] |  |
+| | [Check] Free Diagnostic             |   | **Time:** [9:00 AM] [10:30 AM].. |  |
+| |                                     |   | Notes: [_______________________] |  |
+| | [ Why Choose MPC Repairs Badges ]   |   |                                  |  |
 | |                                     |   | [ Confirm Appointment - A$369.00]|  |
 | +-------------------------------------+   +----------------------------------+  |
 +---------------------------------------------------------------------------------+
@@ -214,8 +228,8 @@ Processes the scheduling slot and stores user records.
 *   **Right Column (Appointment Forms)**:
     *   **Customer Fields**: Full Name, Phone, and Email address inputs (required).
     *   **Location Selection**: Radio list containing shop branch names (e.g. Westfield Expert Kotara).
-    *   **Interactive Calendar Widget**: Calendar grid displaying dates in the active booking month (June 2026). Selected dates are highlighted.
-    *   **Time Slots Selector**: Visual buttons mapping to available appointment times.
+    *   **Interactive Calendar Widget**: Fully interactive calendar component. Features Prev/Next navigation controls to navigate between different months. Disables past calendar days dynamically (`opacity-40 cursor-not-allowed`) to prevent booking retroactive appointments. Shows the currently selected date with an active highlight.
+    *   **Time Slots Selector**: Available appointment slots. If a Sunday is selected, the slot selectors are hidden and replaced with a descriptive warning label stating *"Store is closed on Sundays"*.
     *   **Notes Fields**: Message input box for diagnostics notes.
 *   **Success Dialog Overlay**: Activated upon booking. Outlines booking details (Device, Time slot, Reference ID) and handles redirect transitions.
 
@@ -243,9 +257,9 @@ Administrators can login via `/login` to view booking logs and configure operati
 ### 2. Admin Dashboard Workspace (`/admin`)
 
 #### A. Diagnostic Metrics Cards
-Renders 4 widgets tracking database activities:
-1.  **New Booking Count** (Amber theme): Unprocessed pending customer appointments.
-2.  **Total Booking Count** (Emerald theme): Total appointment logs.
+Renders 4 interactive widgets tracking database activities:
+1.  **New Booking Count** (Amber theme): Counts unprocessed pending customer appointments. Clicking this card navigates directly to `/admin/new-bookings`, loading the list of pending entries with action tabs hidden (`hideTabs={true}`).
+2.  **Total Booking Count** (Emerald theme): Sum of total appointment logs. Clicking this card navigates to `/admin/bookings`, displaying the complete list of bookings with active filtering tabs.
 3.  **New Enquiry Count** (Yellow theme): Tracked contact form entries.
 4.  **Quick Settings Shortcut** (Purple theme): Portal settings router.
 

@@ -2,9 +2,8 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  LayoutDashboard, Sliders, Video, FileText, 
-  MessageSquare, Store, Clock, Wrench, Settings, 
-  Maximize, Globe, LogOut, ChevronDown, ChevronRight, X
+  LayoutDashboard, Calendar, Clock, Settings, 
+  Maximize, Globe, LogOut, ChevronRight
 } from 'lucide-react';
 
 export default function AdminSidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed }) {
@@ -17,19 +16,7 @@ export default function AdminSidebar({ isOpen, setIsOpen, isCollapsed, setIsColl
 
   const menuItems = [
     { name: 'Dashboard', icon: LayoutDashboard, path: '/admin' },
-    { name: 'Slider Management', icon: Sliders, path: '/admin/sliders' },
-    { name: 'Home Video', icon: Video, path: '/admin/video' },
-    { name: 'Page Management', icon: FileText, path: '/admin/pages' },
-    { name: 'Testimonial', icon: MessageSquare, path: '/admin/testimonials' },
-    { 
-      name: 'Store Management', 
-      icon: Store, 
-      path: '#',
-      subItems: [
-        { name: 'Store Profiles', path: '/admin/store' },
-        { name: 'Branch Locations', path: '/admin/store/branches' }
-      ]
-    },
+    { name: 'Bookings', icon: Calendar, path: '/admin/bookings' },
     { 
       name: 'Working Hours', 
       icon: Clock, 
@@ -39,18 +26,11 @@ export default function AdminSidebar({ isOpen, setIsOpen, isCollapsed, setIsColl
         { name: 'Special Exclusions', path: '/admin/hours/exceptions' }
       ]
     },
-    { 
-      name: 'Services', 
-      icon: Wrench, 
-      path: '#',
-      subItems: [
-        { name: 'Services Directory', path: '/admin/services' },
-        { name: 'Service Categories', path: '/admin/services/categories' }
-      ]
-    },
+    { name: 'Settings', icon: Settings, path: '/admin/settings' }
   ];
 
   const handleLogout = () => {
+    sessionStorage.removeItem('adminToken');
     sessionStorage.removeItem('adminAuth');
     window.location.href = '/';
   };
@@ -76,9 +56,6 @@ export default function AdminSidebar({ isOpen, setIsOpen, isCollapsed, setIsColl
       
       {/* Brand & Admin Profile */}
       <div className={`px-5 py-6 border-b border-[#1e293b]/30 flex flex-col items-center gap-4 ${isCollapsed ? 'h-24 justify-center py-2' : ''}`}>
-        {/* Removed mobile close button as requested */}
-
-        {/* Circular Avatar and Welcome Message */}
         <div className="flex items-center gap-3 w-full overflow-hidden">
           <div className="w-11 h-11 min-w-[44px] rounded-full border-2 border-amber-500/50 p-0.5 shadow-md shadow-amber-500/10 overflow-hidden">
             <img src="https://ui-avatars.com/api/?name=Admin&background=FFDE21&color=ffffff&bold=true" alt="Admin" className="w-full h-full object-cover rounded-full" />
@@ -148,7 +125,6 @@ export default function AdminSidebar({ isOpen, setIsOpen, isCollapsed, setIsColl
             );
           }
 
-          // Single Link Menu Items (Dashboard, Home Video)
           const isItemActive = location.pathname === item.path;
           return (
             <Link
@@ -178,7 +154,7 @@ export default function AdminSidebar({ isOpen, setIsOpen, isCollapsed, setIsColl
         })}
       </div>
 
-      {/* Bottom Tool Actions (Redesigned matching screenshot buttons footer) */}
+      {/* Bottom Tool Actions */}
       <div className="p-3 border-t border-[#1e293b]/30 flex justify-between items-center gap-1 bg-[#03060c]">
         {/* Settings gear */}
         <Link 
@@ -220,5 +196,3 @@ export default function AdminSidebar({ isOpen, setIsOpen, isCollapsed, setIsColl
     </aside>
   );
 }
-
-

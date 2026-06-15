@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, Lock, Mail, ArrowLeft, ShieldCheck, Zap } from 'lucide-react';
 import Logo from '../components/Logo';
+import { loginAdmin } from '../services/api';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -10,13 +11,17 @@ export default function Login() {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (formData.email === 'admin@gmail.com' && formData.password === '123') {
+    setError('');
+    try {
+      const data = await loginAdmin(formData.email, formData.password);
+      sessionStorage.setItem('adminToken', data.token);
       sessionStorage.setItem('adminAuth', 'true');
       navigate('/admin');
-    } else {
-      setError('Invalid email or password. Please use demo credentials.');
+    } catch (err) {
+      console.error('Login error:', err);
+      setError(err.message || 'Invalid email or password. Please use correct credentials.');
     }
   };
 

@@ -11,12 +11,12 @@ export default function ScrollToTop() {
     }
 
     // Scroll window/viewport to top (for public layouts / login)
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
     // Scroll any scrollable main layouts or container elements (for admin layout)
     const mainContainers = document.querySelectorAll('main, .overflow-y-auto');
     mainContainers.forEach((container) => {
-      container.scrollTo(0, 0);
+      container.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     });
   }, [pathname]);
 

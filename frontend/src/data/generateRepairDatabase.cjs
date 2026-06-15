@@ -841,7 +841,7 @@ const parseIPhoneFile = (filePath) => {
         }
         
         const possibleRepairHeaders = ['Back Glass Replacement', 'Back Glass resh planed', 'Back Glass reshpland', 'Back glass reshplament', 'Back glass', 'Screen Repair', 'Screen repairs'];
-        const foundHeader = prevLines.find(pl => possibleRepairHeaders.some(h => pl.toLowerCase().includes(h.toLowerCase())));
+        const foundHeader = [...prevLines].reverse().find(pl => possibleRepairHeaders.some(h => pl.toLowerCase().includes(h.toLowerCase())));
         if (foundHeader) {
           if (foundHeader.toLowerCase().includes('back glass') || foundHeader.toLowerCase().includes('back grall') || foundHeader.toLowerCase().includes('back cover') || foundHeader.toLowerCase().includes('backglas') || foundHeader.toLowerCase().includes('back cover')) {
             repairName = 'Back Glass Replacement';

@@ -6,7 +6,13 @@ import {
   Clock, User, X, Wrench, Menu, MoreVertical
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useBooking } from '../context/BookingContext';
+import { 
+  fetchDashboardStats, 
+  fetchDashboardCalendar, 
+  createAdminBooking, 
+  rescheduleBooking,
+  updateBookingStatus
+} from '../services/api';
 
 // Animated Counter Component
 function AnimatedCounter({ value, duration = 1200 }) {
@@ -42,7 +48,16 @@ function AnimatedCounter({ value, duration = 1200 }) {
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
-  const { bookings: events, addBooking, updateBooking } = useBooking();
+  
+  const [events, setEvents] = useState([]);
+  const [stats, setStats] = useState({
+    newBookings: 0,
+    totalBookings: 0,
+    completedBookings: 0,
+    todayBookings: 0
+  });
+  const [loading, setLoading] = useState(true);
+
   const [view, setView] = useState('month'); // 'month' | 'week' | 'day' | 'list'
   const [currentYear, setCurrentYear] = useState(2026);
   const [currentMonth, setCurrentMonth] = useState(5); // 5 = June (0-indexed)
@@ -121,6 +136,14 @@ export default function AdminDashboard() {
 
   const gridDates = getGridDates();
 
+  const getStartAndEndDates = () => {
+    const grid = getGridDates();
+    if (grid.length === 0) return { start: '', end: '' };
+    const firstDateStr = getCellDateStr(grid[0]);
+    const lastDateStr = getCellDateStr(grid[grid.length - 1]);
+    return { start: firstDateStr, end: lastDateStr };
+  };
+
   const getWeekDates = (date) => {
     const sunday = new Date(date);
     const day = sunday.getDay();
@@ -137,6 +160,45 @@ export default function AdminDashboard() {
 
   const weekDates = getWeekDates(selectedDate);
   const todayDate = new Date();
+
+  const fetchDashboardData = async () => {
+    setLoading(true);
+    try {
+      const { start, end } = getStartAndEndDates();
+      const [statsData, calendarEvents] = await Promise.all([
+        fetchDashboardStats(),
+        fetchDashboardCalendar(start, end)
+      ]);
+      setStats(statsData || {
+        newBookings: 0,
+        totalBookings: 0,
+        completedBookings: 0,
+        todayBookings: 0
+      });
+      
+      const formatted = (calendarEvents || []).map(ev => ({
+        ...ev,
+        title: ev.title || `${ev.customerName} with ${ev.deviceModel}`,
+        time: ev.time || ev.timeSlot,
+        type: ev.type || 'In-Store',
+        desc: ev.desc || ev.notes || 'No description provided.',
+        tech: ev.tech || 'Unassigned',
+        customer: ev.customerName,
+        phone: ev.customerPhone,
+        email: ev.customerEmail,
+        brand: ev.deviceBrand,
+      }));
+      setEvents(formatted);
+    } catch (err) {
+      console.error('Failed to load dashboard data:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, [currentYear, currentMonth]);
 
   // Navigation handlers
   const handlePrevMonth = () => {
@@ -174,13 +236,22 @@ export default function AdminDashboard() {
     setDraggedOverDay(item.day);
   };
 
-  const handleDrop = (e, dayInfo) => {
+  const handleDrop = async (e, dayInfo) => {
     e.preventDefault();
     setDraggedOverDay(null);
-    const id = e.dataTransfer.getData('text/plain');
-    if (id) {
+    const idStr = e.dataTransfer.getData('text/plain');
+    if (idStr) {
+      const bookingId = parseInt(idStr, 10);
       const targetDateStr = getCellDateStr(dayInfo);
-      updateBooking(id, { dateStr: targetDateStr });
+      const booking = events.find(ev => ev.id === bookingId);
+      const timeSlot = booking ? booking.timeSlot : '10:00 AM';
+      try {
+        await rescheduleBooking(bookingId, targetDateStr, timeSlot);
+        fetchDashboardData();
+      } catch (err) {
+        console.error('Failed to reschedule:', err);
+        alert(err.message || 'Reschedule failed');
+      }
     }
   };
 
@@ -216,39 +287,68 @@ export default function AdminDashboard() {
     setIsAddModalOpen(true);
   };
 
-  const handleSaveBooking = (e) => {
+  const handleSaveBooking = async (e) => {
     e.preventDefault();
     if (!newBookingTitle.trim()) return;
     const newB = {
-      customer: newBookingTitle,
-      device: 'General Device',
-      issue: newBookingDesc || 'General Issue',
-      title: newBookingTitle,
+      customerName: newBookingTitle,
+      customerPhone: 'N/A',
+      customerEmail: 'admin@gmail.com',
+      deviceBrand: 'Apple',
+      deviceType: 'Phone',
+      deviceModel: 'General Device',
+      repairName: newBookingDesc || 'General Issue',
+      partQuality: null,
+      finalPrice: 0,
+      repairSnapshot: {
+        brand: 'Apple',
+        deviceType: 'Phone',
+        model: 'General Device',
+        repair: newBookingDesc || 'General Issue',
+        quality: 'Standard',
+        price: 0,
+        warranty: 'N/A'
+      },
       dateStr: newBookingDate,
-      time: newBookingTime,
-      type: newBookingType,
-      status: 'Pending',
-      desc: newBookingDesc || 'No description provided.',
-      tech: 'Unassigned'
+      timeSlot: newBookingTime,
+      branchId: 1,
+      notes: newBookingDesc || '',
+      createdSource: 'admin'
     };
-    addBooking(newB);
-    setIsAddModalOpen(false);
-    setNewBookingTitle('');
-    setNewBookingDesc('');
+    try {
+      await createAdminBooking(newB);
+      setIsAddModalOpen(false);
+      setNewBookingTitle('');
+      setNewBookingDesc('');
+      fetchDashboardData();
+    } catch (err) {
+      console.error(err);
+      alert(err.message || 'Failed to create booking');
+    }
   };
 
-  const pendingBookingsCount = events.filter(e => e.status === 'Pending').length;
-  const totalBookingsCount = events.length;
+  const handleUpdateStatus = async (id, status) => {
+    try {
+      await updateBookingStatus(id, status);
+      fetchDashboardData();
+    } catch (err) {
+      console.error(err);
+      alert(err.message || 'Failed to update status');
+    }
+  };
+
+  const pendingBookingsCount = stats.newBookings;
+  const totalBookingsCount = stats.totalBookings;
 
   return (
     <div className="max-w-7xl mx-auto w-full pb-10 space-y-8 animate-in fade-in duration-500 text-gray-900 dark:text-white">
       
-      {/* 4 Stats Cards Rows matching screenshot exactly */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* 3 Stats Cards Rows matching screenshot exactly */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         
         {/* Card 1: New Booking */}
         <div 
-          onClick={() => navigate('/admin/new-bookings')}
+          onClick={() => navigate('/admin/bookings')}
           className="bg-white dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#1F2937] rounded-2xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between h-40 group relative overflow-hidden cursor-pointer"
         >
           <div className="flex justify-between items-start">
@@ -263,7 +363,7 @@ export default function AdminDashboard() {
             </div>
           </div>
           <button 
-            onClick={(e) => { e.stopPropagation(); navigate('/admin/new-bookings'); }}
+            onClick={(e) => { e.stopPropagation(); navigate('/admin/bookings'); }}
             className="text-xs font-bold text-[#FFDE21] hover:underline text-left mt-4 cursor-pointer border-0 bg-transparent"
           >
             View All
@@ -294,28 +394,7 @@ export default function AdminDashboard() {
           </button>
         </div>
 
-        {/* Card 3: New Enquiry */}
-        <div className="bg-white dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#1F2937] rounded-2xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between h-40 group relative overflow-hidden">
-          <div className="flex justify-between items-start">
-            <div>
-              <p className="text-4xl font-extrabold text-yellow-600 dark:text-yellow-400 tracking-tight">
-                <AnimatedCounter value="0" />
-              </p>
-              <p className="text-base font-bold text-gray-600 dark:text-gray-200 mt-2">New Enquiry</p>
-            </div>
-            <div className="p-3 bg-yellow-50 dark:bg-yellow-900/10 text-yellow-600 rounded-xl group-hover:scale-110 transition-transform">
-              <HelpCircle className="w-6 h-6" />
-            </div>
-          </div>
-          <button 
-            onClick={() => alert('No active enquiries.')}
-            className="text-xs font-bold text-[#FFDE21] hover:underline text-left mt-4 cursor-pointer"
-          >
-            View All
-          </button>
-        </div>
-
-        {/* Card 4: Settings */}
+        {/* Card 3: Settings */}
         <div 
           onClick={() => navigate('/admin/settings')}
           className="bg-white dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#1F2937] rounded-2xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between h-40 group cursor-pointer relative overflow-hidden"
@@ -694,7 +773,7 @@ export default function AdminDashboard() {
                             {ev.status !== 'Completed' && ev.status !== 'Rejected' && (
                               <div className="flex items-center flex-wrap gap-2">
                                 <button 
-                                  onClick={(e) => { e.stopPropagation(); updateBooking(ev.id, { status: 'Pending' }); }} 
+                                  onClick={(e) => { e.stopPropagation(); handleUpdateStatus(ev.id, 'Pending'); }} 
                                   disabled={ev.status === 'Pending' || ev.status === 'Completed' || ev.status === 'Rejected'}
                                   className={`px-3 py-1.5 text-[11px] font-extrabold rounded-lg transition-all border shadow-sm ${
                                     ev.status === 'Pending' ? 'bg-amber-50/50 text-amber-400 border-amber-200/50 cursor-not-allowed hidden' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 cursor-pointer'
@@ -703,13 +782,13 @@ export default function AdminDashboard() {
                                   Pending
                                 </button>
                                 <button 
-                                  onClick={(e) => { e.stopPropagation(); updateBooking(ev.id, { status: 'Completed' }); }} 
+                                  onClick={(e) => { e.stopPropagation(); handleUpdateStatus(ev.id, 'Completed'); }} 
                                   className="px-3 py-1.5 text-[11px] font-extrabold rounded-lg transition-all border shadow-sm bg-white text-gray-700 border-gray-200 hover:border-emerald-500 hover:text-emerald-600 hover:bg-emerald-50 cursor-pointer"
                                 >
                                   Mark Complete
                                 </button>
                                 <button 
-                                  onClick={(e) => { e.stopPropagation(); updateBooking(ev.id, { status: 'Rejected' }); }} 
+                                  onClick={(e) => { e.stopPropagation(); handleUpdateStatus(ev.id, 'Rejected'); }} 
                                   className="px-3 py-1.5 text-[11px] font-extrabold rounded-lg transition-all border shadow-sm bg-white text-gray-700 border-gray-200 hover:border-red-500 hover:text-red-600 hover:bg-red-50 cursor-pointer"
                                 >
                                   Reject

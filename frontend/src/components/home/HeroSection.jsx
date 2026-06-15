@@ -56,14 +56,7 @@ export default function HeroSection() {
                 Start Repair
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform duration-300" />
               </motion.button>
-              <motion.button 
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={() => alert('Order tracking portal is coming soon!')}
-                className="premium-button bg-white text-[#0F172A] border border-gray-200 hover:bg-gray-50 flex items-center justify-center shadow-sm"
-              >
-                Track Order
-              </motion.button>
+
             </div>
 
             <div className="flex flex-col sm:flex-row sm:items-center gap-6 pt-8 border-t border-gray-200">
