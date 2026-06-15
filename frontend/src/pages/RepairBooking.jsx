@@ -23,7 +23,11 @@ const getScreenOptions = (priceStr, modelName, brandName, repairName = '', repai
   let refIncell = Math.max(99, basePrice - 170);
   
   const modelLower = modelName.toLowerCase();
+  if (modelLower.startsWith('iphone 17') && !modelLower.startsWith('iphone 17e')) {
+    return [];
+  }
   const repairLower = repairName ? repairName.toLowerCase() : '';
+  const isScreen = repairLower.includes('screen') || repairLower.includes('display') || repairLower.includes('lcd') || repairLower.includes('oled') || repairLower.includes('front glass');
 
   if (repairLower.includes('back glass')) {
     if (modelLower.includes('16 pro max') || modelLower.includes('16promax') || modelLower === 'iphone 16 pro' || modelLower === 'iphone 16pro' || modelLower.includes('16 plus') || modelLower.includes('16plus')) {
@@ -87,6 +91,11 @@ const getScreenOptions = (priceStr, modelName, brandName, repairName = '', repai
         }
       ];
     }
+    return []; // No options for other model back glasses
+  }
+
+  if (!isScreen) {
+    return [];
   }
 
   if (modelLower === 'iphone 17e' || modelLower === 'iphone 16e') {

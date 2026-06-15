@@ -1171,11 +1171,11 @@
                 "recommended": true
               },
               {
-                "id": "soft_oled",
-                "name": "Aftermarket Soft OLED 120Hz",
-                "price": "A$299",
-                "description": "Aftermarket Soft OLED screen with original 120Hz smooth performance and high resolution, delivering rich display quality, sharp clarity, and a perfect fit. A cost-effective solution backed by a 12-month warranty",
-                "recommended": true
+                "id": "genuine",
+                "name": "Genuine Apple OLED",
+                "price": "A$549",
+                "description": "This Genuine Apple OLED Screen includes an original OLED display, glass—manufactured and assembled by Apple. It delivers factory-grade performance, perfect fit, and full compatibility for a seamless, like-new restoration and12 Months Warranty",
+                "recommended": false
               }
             ],
             "partOption": true
@@ -2877,7 +2877,7 @@
         "iPhone 12": [
           {
             "name": "Screen Repair",
-            "price": "A$159",
+            "price": "A$139",
             "duration": "1 hour",
             "warranty": "12 mo warranty",
             "popular": true,
@@ -2886,14 +2886,14 @@
               {
                 "id": "incell",
                 "name": "Aftermarket In-Cell LCD",
-                "price": "A$159",
+                "price": "A$139",
                 "description": "A budget-friendly in-cell LCD screen replacement that gives you smooth everyday performance, with colour and resolution quality close to 90% of the original. Includes a 12-month warranty.",
                 "recommended": false
               },
               {
                 "id": "soft_oled",
                 "name": "Aftermarket Soft OLED",
-                "price": "A$239",
+                "price": "A$219",
                 "description": "Aftermarket Soft OLED screen replacement with rich display quality, sharp clarity, and a perfect fit. A cost-effective option for a premium display experience, backed by a 12-month warranty.",
                 "recommended": true
               }
