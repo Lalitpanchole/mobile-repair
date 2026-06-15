@@ -51,7 +51,7 @@ export default function AdminCalendar() {
       case 'In-Store': return 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-900/30';
       case 'Mail-In': return 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-200 dark:border-purple-900/30';
       case 'On-Site': return 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/30';
-      default: return 'bg-gray-500/10 text-gray-600 dark:text-gray-400 border-gray-200 dark:border-gray-800';
+      default: return 'bg-gray-500/10 text-gray-600 dark:text-gray-200 border-gray-200 dark:border-gray-800';
     }
   };
 
@@ -169,15 +169,15 @@ export default function AdminCalendar() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto w-full pb-10 space-y-8 animate-in fade-in duration-500 text-gray-900 dark:text-[#F3F4F6]">
+    <div className="max-w-7xl mx-auto w-full pb-10 space-y-8 animate-in fade-in duration-500 text-gray-900 dark:text-white">
       
       {/* Header Panel */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
+          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-gray-300 flex items-center gap-2">
             <CalendarIcon className="w-8 h-8 text-amber-500" /> Appointment Calendar
           </h1>
-          <p className="text-gray-500 dark:text-gray-400 font-medium mt-1">
+          <p className="text-gray-500 dark:text-gray-200 font-medium mt-1">
             Drag and drop appointments to reschedule dates instantly.
           </p>
         </div>
@@ -198,13 +198,13 @@ export default function AdminCalendar() {
       <div className="flex justify-between items-center bg-white dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#1F2937] px-6 py-4 rounded-2xl shadow-sm transition-colors duration-300">
         <div className="flex items-center gap-3">
           <button onClick={handlePrev} className="p-2 border border-[#E2E8F0] dark:border-[#1F2937] hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl transition-colors cursor-pointer bg-transparent">
-            <ChevronLeft className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+            <ChevronLeft className="w-5 h-5 text-gray-600 dark:text-gray-200" />
           </button>
           <span className="text-lg font-black text-gray-850 dark:text-white">
             {currentDate.toLocaleString('default', { month: 'long', year: 'numeric' })}
           </span>
           <button onClick={handleNext} className="p-2 border border-[#E2E8F0] dark:border-[#1F2937] hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl transition-colors cursor-pointer bg-transparent">
-            <ChevronRight className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+            <ChevronRight className="w-5 h-5 text-gray-600 dark:text-gray-200" />
           </button>
         </div>
 
@@ -224,7 +224,7 @@ export default function AdminCalendar() {
           <div className="overflow-x-auto">
             <div className="min-w-[760px]">
               {/* Weekday Headers */}
-              <div className="grid grid-cols-7 border-b border-[#E2E8F0] dark:border-[#1F2937] bg-gray-50/50 dark:bg-gray-800/20 text-center py-3 text-xs font-bold text-gray-405 dark:text-gray-500 uppercase tracking-wider">
+              <div className="grid grid-cols-7 border-b border-[#E2E8F0] dark:border-[#1F2937] bg-gray-50/50 dark:bg-gray-800/20 text-center py-3 text-xs font-bold text-gray-405 dark:text-gray-300 uppercase tracking-wider">
                 {weekdays.map(day => (
                   <span key={day}>{day}</span>
                 ))}
@@ -369,7 +369,7 @@ export default function AdminCalendar() {
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-6 text-xs font-bold text-gray-550 dark:text-gray-400 font-semibold">
+                  <div className="flex items-center gap-6 text-xs font-bold text-gray-550 dark:text-gray-200 font-semibold">
                     <span className="flex items-center gap-1.5"><Clock className="w-4 h-4 text-amber-500" /> {ev.time}</span>
                     <span className="flex items-center gap-1.5"><User className="w-4 h-4 text-purple-500" /> Tech: {ev.tech}</span>
                     <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold border ${
@@ -450,7 +450,7 @@ export default function AdminCalendar() {
                 <div className="flex gap-3 justify-end pt-2">
                   <button 
                     onClick={() => setActiveEvent(null)}
-                    className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl text-xs font-bold hover:bg-gray-200 transition-colors cursor-pointer border-0"
+                    className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-100 rounded-xl text-xs font-bold hover:bg-gray-200 transition-colors cursor-pointer border-0"
                   >
                     Close
                   </button>
@@ -585,7 +585,7 @@ export default function AdminCalendar() {
                   <button 
                     type="button"
                     onClick={() => setIsAddModalOpen(false)}
-                    className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl text-xs font-bold hover:bg-gray-200 transition-colors cursor-pointer border-0"
+                    className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-100 rounded-xl text-xs font-bold hover:bg-gray-200 transition-colors cursor-pointer border-0"
                   >
                     Cancel
                   </button>

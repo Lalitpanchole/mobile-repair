@@ -53,22 +53,22 @@ export default function AdminAnalytics() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto w-full pb-10 space-y-8 animate-in fade-in duration-500 text-gray-900 dark:text-[#F3F4F6]">
+    <div className="max-w-7xl mx-auto w-full pb-10 space-y-8 animate-in fade-in duration-500 text-gray-900 dark:text-white">
       
       {/* Header Panel */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
+          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-gray-300 flex items-center gap-2">
             <BarChart3 className="w-8 h-8 text-amber-500" /> Reports &amp; Analytics
           </h1>
-          <p className="text-gray-500 dark:text-gray-400 font-medium mt-1">
+          <p className="text-gray-500 dark:text-gray-200 font-medium mt-1">
             Analyze revenue margins, workload statistics, and store feedback indexes.
           </p>
         </div>
         <div className="flex gap-2.5 w-full sm:w-auto">
           <button 
             onClick={handlePrint}
-            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-white dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#1F2937] text-gray-750 dark:text-gray-300 rounded-xl font-bold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors shadow-sm cursor-pointer"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-white dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#1F2937] text-gray-750 dark:text-gray-100 rounded-xl font-bold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors shadow-sm cursor-pointer"
           >
             <Printer className="w-4 h-4" /> Print
           </button>
@@ -203,7 +203,7 @@ export default function AdminAnalytics() {
             ].map((ch, idx) => (
               <div key={idx} className="space-y-2">
                 <div className="flex justify-between items-baseline text-xs font-bold">
-                  <span className="text-gray-600 dark:text-gray-400">{ch.source}</span>
+                  <span className="text-gray-600 dark:text-gray-200">{ch.source}</span>
                   <span className="text-gray-950 dark:text-white">{ch.bookings} ({ch.percentage}%)</span>
                 </div>
                 <div className="w-full h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">

@@ -73,7 +73,7 @@ export default function AdminHeader({ onMenuClick, theme, toggleTheme }) {
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={() => setSearchFocused(true)}
             onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
-            className="w-full bg-[#F8FAFC] dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#1F2937] rounded-xl pl-12 pr-4 py-2.5 text-sm font-medium text-[#0F172A] dark:text-[#F3F4F6] focus:outline-none focus:ring-2 focus:ring-[#FFDE21]/20 focus:border-[#FFDE21] transition-all duration-300 placeholder:font-normal"
+            className="w-full bg-[#F8FAFC] dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#1F2937] rounded-xl pl-12 pr-4 py-2.5 text-sm font-medium text-[#0F172A] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FFDE21]/20 focus:border-[#FFDE21] transition-all duration-300 placeholder:font-normal"
           />
           
           {/* Mock Search Suggestions Dropdown */}
@@ -85,7 +85,7 @@ export default function AdminHeader({ onMenuClick, theme, toggleTheme }) {
                 exit={{ opacity: 0, y: 10 }}
                 className="absolute left-0 right-0 mt-2 bg-white dark:bg-[#111827] border border-gray-100 dark:border-[#1F2937] rounded-2xl shadow-[0_12px_30px_rgba(0,0,0,0.15)] p-4 z-50 overflow-hidden"
               >
-                <p className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">Suggested Searches</p>
+                <p className="text-xs font-bold text-gray-400 dark:text-gray-300 uppercase tracking-wider mb-2">Suggested Searches</p>
                 <div className="space-y-1.5">
                   <div className="flex items-center gap-2.5 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer text-sm font-semibold transition-colors">
                     <Search className="w-4 h-4 text-gray-400" />
@@ -112,7 +112,7 @@ export default function AdminHeader({ onMenuClick, theme, toggleTheme }) {
         {/* Dark/Light Toggle */}
         <button 
           onClick={toggleTheme}
-          className="p-2.5 text-gray-500 dark:text-gray-400 hover:text-[#FFDE21] hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl transition-all duration-300 relative overflow-hidden"
+          className="p-2.5 text-gray-500 dark:text-gray-200 hover:text-[#FFDE21] hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl transition-all duration-300 relative overflow-hidden"
           title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
         >
           <AnimatePresence mode="wait" initial={false}>
@@ -148,7 +148,7 @@ export default function AdminHeader({ onMenuClick, theme, toggleTheme }) {
               setIsNotificationsOpen(false);
               setIsProfileOpen(false);
             }}
-            className="p-2.5 text-gray-500 dark:text-gray-400 hover:text-[#FFDE21] hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl transition-all duration-300 relative"
+            className="p-2.5 text-gray-500 dark:text-gray-200 hover:text-[#FFDE21] hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl transition-all duration-300 relative"
           >
             <MessageSquare className="w-5 h-5 sm:w-5.5 sm:h-5.5" />
             <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-amber-500 rounded-full border-2 border-white dark:border-[#0B0F19] shadow-sm"></span>
@@ -173,9 +173,9 @@ export default function AdminHeader({ onMenuClick, theme, toggleTheme }) {
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between items-baseline mb-0.5">
                           <p className="text-sm font-bold text-gray-800 dark:text-gray-100">{msg.sender}</p>
-                          <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500">{msg.time}</span>
+                          <span className="text-[10px] font-bold text-gray-400 dark:text-gray-300">{msg.time}</span>
                         </div>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 truncate leading-relaxed">{msg.text}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-200 truncate leading-relaxed">{msg.text}</p>
                       </div>
                     </div>
                   ))}
@@ -193,7 +193,7 @@ export default function AdminHeader({ onMenuClick, theme, toggleTheme }) {
               setIsMessagesOpen(false);
               setIsProfileOpen(false);
             }}
-            className="p-2.5 text-gray-500 dark:text-gray-400 hover:text-[#FFDE21] hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl transition-all duration-300 relative"
+            className="p-2.5 text-gray-500 dark:text-gray-200 hover:text-[#FFDE21] hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl transition-all duration-300 relative"
           >
             <Bell className="w-5 h-5 sm:w-5.5 sm:h-5.5" />
             <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-white dark:border-[#0B0F19] shadow-sm"></span>
@@ -225,9 +225,9 @@ export default function AdminHeader({ onMenuClick, theme, toggleTheme }) {
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between items-baseline mb-0.5">
                           <p className="text-sm font-bold text-gray-800 dark:text-gray-100">{notif.title}</p>
-                          <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500">{notif.time}</span>
+                          <span className="text-[10px] font-bold text-gray-400 dark:text-gray-300">{notif.time}</span>
                         </div>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 leading-normal">{notif.desc}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-200 leading-normal">{notif.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -249,7 +249,7 @@ export default function AdminHeader({ onMenuClick, theme, toggleTheme }) {
           >
             <div className="text-right hidden md:block">
               <p className="text-sm font-bold text-[#0F172A] dark:text-white leading-tight">Admin User</p>
-              <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 mt-0.5">Super Admin</p>
+              <p className="text-xs font-semibold text-gray-400 dark:text-gray-300 mt-0.5">Super Admin</p>
             </div>
             <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#FFDE21] to-[#FFDE21] p-[2.5px] shadow-md group-hover:scale-105 transition-transform duration-300">
               <div className="w-full h-full bg-white dark:bg-[#111827] rounded-full flex items-center justify-center overflow-hidden">
@@ -276,7 +276,7 @@ export default function AdminHeader({ onMenuClick, theme, toggleTheme }) {
                     navigate('/admin/settings');
                     setIsProfileOpen(false);
                   }}
-                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-gray-600 dark:text-gray-300 hover:bg-amber-50 dark:hover:bg-amber-900/20 hover:text-[#FFDE21] dark:hover:text-[#FFDE21] transition-all"
+                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-gray-600 dark:text-gray-100 hover:bg-amber-50 dark:hover:bg-amber-900/20 hover:text-[#FFDE21] dark:hover:text-[#FFDE21] transition-all"
                 >
                   <Settings className="w-4 h-4" />
                   Settings
@@ -284,7 +284,7 @@ export default function AdminHeader({ onMenuClick, theme, toggleTheme }) {
                 <div className="h-px bg-gray-100 dark:bg-[#1F2937] my-1 mx-3" />
                 <button 
                   onClick={handleLogout}
-                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-gray-600 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-950/20 hover:text-red-600 dark:hover:text-red-400 transition-all"
+                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-gray-600 dark:text-gray-100 hover:bg-red-50 dark:hover:bg-red-950/20 hover:text-red-600 dark:hover:text-red-400 transition-all"
                 >
                   <LogOut className="w-4 h-4" />
                   Logout

@@ -536,21 +536,21 @@ export default function AdminBookings({ hideTabs = false, defaultTab: propDefaul
                     <h4 className="text-[10px] font-black uppercase tracking-widest text-amber-500 mb-3">Customer Details</h4>
                     <div className="space-y-3 text-sm">
                       <div className="flex justify-between items-start gap-4">
-                        <span className="text-gray-500 dark:text-gray-400 font-bold">Name</span>
+                        <span className="text-gray-500 dark:text-gray-200 font-bold">Name</span>
                         <span className="font-extrabold text-gray-900 dark:text-white text-right">{selectedBookingDetails.customer || 'Unknown'}</span>
                       </div>
                       <div className="flex justify-between items-start gap-4">
-                        <span className="text-gray-500 dark:text-gray-400 font-bold">Phone</span>
+                        <span className="text-gray-500 dark:text-gray-200 font-bold">Phone</span>
                         <span className="font-extrabold text-gray-900 dark:text-white text-right">{selectedBookingDetails.phone || 'N/A'}</span>
                       </div>
                       <div className="flex justify-between items-start gap-4">
-                        <span className="text-gray-500 dark:text-gray-400 font-bold">Email</span>
+                        <span className="text-gray-500 dark:text-gray-200 font-bold">Email</span>
                         <span className="font-extrabold text-gray-900 dark:text-white text-right break-all">{selectedBookingDetails.email || 'N/A'}</span>
                       </div>
                       {selectedBookingDetails.notes && (
                         <div className="pt-3 border-t border-[#E2E8F0] dark:border-[#1F2937] mt-3">
-                          <span className="text-xs text-gray-500 dark:text-gray-400 font-bold block mb-1">Message / Notes</span>
-                          <p className="text-sm font-semibold text-gray-700 dark:text-gray-300 bg-white dark:bg-[#111827] p-3 rounded-xl border border-[#E2E8F0] dark:border-[#1F2937]">
+                          <span className="text-xs text-gray-500 dark:text-gray-200 font-bold block mb-1">Message / Notes</span>
+                          <p className="text-sm font-semibold text-gray-700 dark:text-gray-100 bg-white dark:bg-[#111827] p-3 rounded-xl border border-[#E2E8F0] dark:border-[#1F2937]">
                             {selectedBookingDetails.notes}
                           </p>
                         </div>
@@ -563,19 +563,19 @@ export default function AdminBookings({ hideTabs = false, defaultTab: propDefaul
                     <h4 className="text-[10px] font-black uppercase tracking-widest text-amber-500 mb-3">Device & Repair</h4>
                     <div className="space-y-3 text-sm">
                       <div className="flex justify-between items-start gap-4">
-                        <span className="text-gray-500 dark:text-gray-400 font-bold">Brand</span>
+                        <span className="text-gray-500 dark:text-gray-200 font-bold">Brand</span>
                         <span className="font-extrabold text-gray-900 dark:text-white text-right">{selectedBookingDetails.brand || 'N/A'}</span>
                       </div>
                       <div className="flex justify-between items-start gap-4">
-                        <span className="text-gray-500 dark:text-gray-400 font-bold">Model</span>
+                        <span className="text-gray-500 dark:text-gray-200 font-bold">Model</span>
                         <span className="font-extrabold text-gray-900 dark:text-white text-right">{selectedBookingDetails.device ? selectedBookingDetails.device.replace(/\s*\(\d{4}\)/g, '') : 'N/A'}</span>
                       </div>
                       <div className="flex justify-between items-start gap-4">
-                        <span className="text-gray-500 dark:text-gray-400 font-bold">Selected Repair(s)</span>
+                        <span className="text-gray-500 dark:text-gray-200 font-bold">Selected Repair(s)</span>
                         <span className="font-extrabold text-gray-900 dark:text-white text-right">{selectedBookingDetails.issue || 'Diagnostics'}</span>
                       </div>
                       <div className="flex justify-between items-center pt-3 border-t border-[#E2E8F0] dark:border-[#1F2937] mt-3">
-                        <span className="text-gray-500 dark:text-gray-400 font-bold">Repair Price</span>
+                        <span className="text-gray-500 dark:text-gray-200 font-bold">Repair Price</span>
                         <span className="font-black text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200/60 dark:border-emerald-500/20 px-3 py-1 rounded-xl shadow-sm">
                           {selectedBookingDetails.price || 'Pending'}
                         </span>
@@ -588,7 +588,7 @@ export default function AdminBookings({ hideTabs = false, defaultTab: propDefaul
                     <h4 className="text-[10px] font-black uppercase tracking-widest text-amber-500 mb-3">Appointment Info</h4>
                     <div className="space-y-3 text-sm">
                       <div className="flex justify-between items-start gap-4">
-                        <span className="text-gray-500 dark:text-gray-400 font-bold">Status</span>
+                        <span className="text-gray-500 dark:text-gray-200 font-bold">Status</span>
                         <span className={`font-extrabold ${
                           selectedBookingDetails.status === 'Completed' ? 'text-emerald-600' :
                           selectedBookingDetails.status === 'Rejected' ? 'text-red-600' :
@@ -596,11 +596,11 @@ export default function AdminBookings({ hideTabs = false, defaultTab: propDefaul
                         }`}>{selectedBookingDetails.status || 'Pending'}</span>
                       </div>
                       <div className="flex justify-between items-start gap-4">
-                        <span className="text-gray-500 dark:text-gray-400 font-bold">Location</span>
+                        <span className="text-gray-500 dark:text-gray-200 font-bold">Location</span>
                         <span className="font-extrabold text-gray-900 dark:text-white text-right">{selectedBookingDetails.location || 'In-Store'}</span>
                       </div>
                       <div className="flex justify-between items-start gap-4">
-                        <span className="text-gray-500 dark:text-gray-400 font-bold">Date</span>
+                        <span className="text-gray-500 dark:text-gray-200 font-bold">Date</span>
                         <span className="font-extrabold text-gray-900 dark:text-white text-right">
                           {selectedBookingDetails.dateStr ? (() => {
                             const d = new Date(selectedBookingDetails.dateStr);
@@ -613,7 +613,7 @@ export default function AdminBookings({ hideTabs = false, defaultTab: propDefaul
                         </span>
                       </div>
                       <div className="flex justify-between items-start gap-4">
-                        <span className="text-gray-500 dark:text-gray-400 font-bold">Time Window</span>
+                        <span className="text-gray-500 dark:text-gray-200 font-bold">Time Window</span>
                         <span className="font-extrabold text-gray-900 dark:text-white text-right">{selectedBookingDetails.time || 'N/A'}</span>
                       </div>
                     </div>
@@ -623,7 +623,7 @@ export default function AdminBookings({ hideTabs = false, defaultTab: propDefaul
                 <div className="flex justify-end pt-2">
                   <button 
                     onClick={() => setSelectedBookingDetails(null)}
-                    className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl text-xs font-bold hover:bg-gray-200 transition-colors cursor-pointer border-0"
+                    className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-100 rounded-xl text-xs font-bold hover:bg-gray-200 transition-colors cursor-pointer border-0"
                   >
                     Close
                   </button>

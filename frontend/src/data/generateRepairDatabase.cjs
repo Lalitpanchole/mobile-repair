@@ -553,7 +553,7 @@ function calculatePrice(deviceType, repairName, brandName, modelTier) {
     price = snapped;
   }
   
-  return `A$${price}`;
+  return `A$${price.toFixed(2)}`;
 }
 
 const database = {};
@@ -767,7 +767,7 @@ const parseGenericFile = (filePath, brand, dbModels) => {
       
       if (price) {
         const priceVal = parseFloat(price.replace('$', ''));
-        const priceStr = priceVal === 0 ? 'Free' : `A$${Math.floor(priceVal)}`;
+        const priceStr = priceVal === 0 ? 'Free' : `A$${Math.floor(priceVal).toFixed(2)}`;
         const isScreen = line.toLowerCase().includes('screen') || line.toLowerCase().includes('display') || line.toLowerCase().includes('lcd') || line.toLowerCase().includes('oled');
         
         repairsByModel[currentModelName].push({
@@ -899,7 +899,7 @@ const parseIPhoneFile = (filePath) => {
             options.push({
               id,
               name,
-              price: price ? `A$${Math.floor(parseFloat(price.replace('$', '')))}` : 'A$0',
+              price: price ? `A$${Math.floor(parseFloat(price.replace('$', ''))).toFixed(2)}` : 'A$0.00',
               description,
               recommended
             });
@@ -939,7 +939,7 @@ const parseIPhoneFile = (filePath) => {
         if (!existingRepair) {
           existingRepair = {
             name: repairName,
-            price: options[0] ? options[0].price : 'A$0',
+            price: options[0] ? options[0].price : 'A$0.00',
             duration: repairName === 'Screen Repair' ? '1 hour' : '2 hours',
             warranty: '12 mo warranty',
             popular: repairName === 'Screen Repair',
@@ -972,7 +972,7 @@ const parseIPhoneFile = (filePath) => {
         priceLine = lines[nextIdx];
         if (priceLine && priceLine.startsWith('$')) {
           const priceVal = parseFloat(priceLine.replace('$', ''));
-          const priceStr = priceVal === 0 ? 'Free' : `A$${Math.floor(priceVal)}`;
+          const priceStr = priceVal === 0 ? 'Free' : `A$${Math.floor(priceVal).toFixed(2)}`;
           
           const repairName = line;
           const normName = repairName.toLowerCase();

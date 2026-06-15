@@ -86,16 +86,16 @@ export default function AdminHours() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto w-full pb-10 space-y-8 animate-in fade-in duration-500 text-gray-900 dark:text-[#F3F4F6]">
+    <div className="max-w-5xl mx-auto w-full pb-10 space-y-8 animate-in fade-in duration-500 text-gray-900 dark:text-white">
       
       {/* Header Panel */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
+          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-gray-300 flex items-center gap-2">
             {showExceptions ? <Calendar className="w-8 h-8 text-amber-500" /> : <Clock className="w-8 h-8 text-amber-500" />}
             {showExceptions ? 'Schedule Exceptions' : 'Working Hours'}
           </h1>
-          <p className="text-gray-500 dark:text-gray-400 font-medium mt-1">
+          <p className="text-gray-500 dark:text-gray-200 font-medium mt-1">
             {showExceptions 
               ? 'Configure holiday closures, staff retreat schedules, and emergency overrides.'
               : 'Define daily operating hours, lunch break slots, and custom day-off schedules.'}
@@ -125,7 +125,7 @@ export default function AdminHours() {
           <div className="space-y-4">
             
             {/* Day Rows Header */}
-            <div className="hidden lg:grid grid-cols-12 gap-6 pb-2 border-b border-gray-100 dark:border-[#1F2937] text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
+            <div className="hidden lg:grid grid-cols-12 gap-6 pb-2 border-b border-gray-100 dark:border-[#1F2937] text-xs font-bold text-gray-400 dark:text-gray-300 uppercase tracking-wider">
               <span className="col-span-2">Day of Week</span>
               <span className="col-span-4">Operating Shift</span>
               <span className="col-span-4">Lunch Break Slot</span>
@@ -225,7 +225,7 @@ export default function AdminHours() {
                   </div>
                   <div className="space-y-1 min-w-0">
                     <h3 className="font-extrabold text-base text-gray-900 dark:text-white">{exc.title}</h3>
-                    <div className="text-xs text-gray-400 dark:text-gray-500 font-semibold flex flex-wrap items-center gap-1.5">
+                    <div className="text-xs text-gray-400 dark:text-gray-300 font-semibold flex flex-wrap items-center gap-1.5">
                       <span className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-350 px-2 py-0.5 rounded text-[10px] font-bold">
                         {exc.date}
                       </span>
@@ -380,7 +380,7 @@ export default function AdminHours() {
                       setIsModalOpen(false);
                       setEditingException(null);
                     }}
-                    className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl text-xs font-bold hover:bg-gray-200 transition-colors cursor-pointer"
+                    className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-100 rounded-xl text-xs font-bold hover:bg-gray-200 transition-colors cursor-pointer"
                   >
                     Cancel
                   </button>

@@ -59,14 +59,14 @@ export default function AdminPages() {
   );
 
   return (
-    <div className="max-w-7xl mx-auto w-full pb-10 space-y-8 animate-in fade-in duration-500 text-gray-900 dark:text-[#F3F4F6]">
+    <div className="max-w-7xl mx-auto w-full pb-10 space-y-8 animate-in fade-in duration-500 text-gray-900 dark:text-white">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
+          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-gray-300 flex items-center gap-2">
             <FileText className="w-8 h-8 text-amber-500" /> Page Management
           </h1>
-          <p className="text-gray-500 dark:text-gray-400 font-medium mt-1">
+          <p className="text-gray-500 dark:text-gray-200 font-medium mt-1">
             Build website content pages, customize routing paths, and modify SEO tags.
           </p>
         </div>
@@ -97,7 +97,7 @@ export default function AdminPages() {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-[#E2E8F0] dark:border-[#1F2937] bg-gray-50/50 dark:bg-gray-800/10 text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
+              <tr className="border-b border-[#E2E8F0] dark:border-[#1F2937] bg-gray-50/50 dark:bg-gray-800/10 text-xs font-bold text-gray-400 dark:text-gray-300 uppercase tracking-wider">
                 <th className="p-4 pl-6">Page Details</th>
                 <th className="p-4">URL Routing slug</th>
                 <th className="p-4">SEO description preview</th>
@@ -116,7 +116,7 @@ export default function AdminPages() {
                   <td className="p-4 text-xs font-bold text-amber-600 dark:text-amber-400">
                     /{page.slug}
                   </td>
-                  <td className="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400 truncate max-w-xs">
+                  <td className="p-4 text-xs font-semibold text-gray-500 dark:text-gray-200 truncate max-w-xs">
                     {page.metaDesc}
                   </td>
                   <td className="p-4 text-right pr-6 flex items-center justify-end gap-6 h-[61px]">
@@ -238,7 +238,7 @@ export default function AdminPages() {
                   <button 
                     type="button"
                     onClick={handleCloseModal}
-                    className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl text-xs font-bold hover:bg-gray-200 transition-colors cursor-pointer"
+                    className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-100 rounded-xl text-xs font-bold hover:bg-gray-200 transition-colors cursor-pointer"
                   >
                     Cancel
                   </button>

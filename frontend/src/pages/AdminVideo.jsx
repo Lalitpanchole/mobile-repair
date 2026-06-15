@@ -42,17 +42,17 @@ export default function AdminVideo() {
     {
       id: 'ui-design',
       name: 'UI Design Workflow',
-      url: 'https://ak.picdn.net/shutterstock/videos/1068868616/preview/stock-footage-designer-working-on-ux-ui-design.mp4',
+      url: 'MIXED_SEQUENCE',
     },
     {
       id: 'software-dev',
       name: 'Software Development',
-      url: 'https://ak.picdn.net/shutterstock/videos/1027162622/preview/stock-footage-programming-code-running-down-a-computer-screen-terminal.mp4',
+      url: 'MIXED_SEQUENCE',
     },
     {
       id: 'laptop-work',
       name: 'UX Prototyping',
-      url: 'https://ak.picdn.net/shutterstock/videos/1054366601/preview/stock-footage-ux-designer-working-on-prototype.mp4',
+      url: 'MIXED_SEQUENCE',
     }
   ];
 
@@ -236,15 +236,15 @@ export default function AdminVideo() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto w-full pb-10 space-y-8 animate-in fade-in duration-500 text-gray-900 dark:text-[#F3F4F6]">
+    <div className="max-w-7xl mx-auto w-full pb-10 space-y-8 animate-in fade-in duration-500 text-gray-900 dark:text-white">
       
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
+          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-gray-300 flex items-center gap-2">
             <Video className="w-8 h-8 text-amber-500" /> Home Video Management
           </h1>
-          <p className="text-gray-500 dark:text-gray-400 font-medium mt-1">
+          <p className="text-gray-500 dark:text-gray-200 font-medium mt-1">
             Configure the promotional explainer video displayed on the homepage.
           </p>
         </div>
@@ -337,7 +337,7 @@ export default function AdminVideo() {
               <div className="flex justify-between items-center py-1">
                 <div className="flex items-center gap-2">
                   <Play className="w-4 h-4 text-gray-400" />
-                  <span className="text-xs text-gray-700 dark:text-gray-300">Autoplay video loops</span>
+                  <span className="text-xs text-gray-700 dark:text-gray-100">Autoplay video loops</span>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
                   <input 
@@ -353,7 +353,7 @@ export default function AdminVideo() {
               <div className="flex justify-between items-center py-1">
                 <div className="flex items-center gap-2">
                   <RefreshCw className="w-4 h-4 text-gray-400" />
-                  <span className="text-xs text-gray-700 dark:text-gray-300">Loop continuously</span>
+                  <span className="text-xs text-gray-700 dark:text-gray-100">Loop continuously</span>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
                   <input 
@@ -369,7 +369,7 @@ export default function AdminVideo() {
               <div className="flex justify-between items-center py-1">
                 <div className="flex items-center gap-2">
                   <VolumeX className="w-4 h-4 text-gray-400" />
-                  <span className="text-xs text-gray-700 dark:text-gray-300">Default Muted</span>
+                  <span className="text-xs text-gray-700 dark:text-gray-100">Default Muted</span>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
                   <input 

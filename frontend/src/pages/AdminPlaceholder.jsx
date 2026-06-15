@@ -44,16 +44,16 @@ export default function AdminPlaceholder({ title }) {
   };
 
   return (
-    <div className="max-w-7xl mx-auto w-full pb-10 space-y-8 animate-in fade-in duration-500 text-gray-900 dark:text-[#F3F4F6]">
+    <div className="max-w-7xl mx-auto w-full pb-10 space-y-8 animate-in fade-in duration-500 text-gray-900 dark:text-white">
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
+          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-gray-300 flex items-center gap-2">
             {title === 'Slider Management' && <Sliders className="w-8 h-8 text-amber-500" />}
             {title === 'Home Video' && <Image className="w-8 h-8 text-amber-500" />}
             <span>{title}</span>
           </h1>
-          <p className="text-gray-500 dark:text-gray-400 font-medium mt-1">
+          <p className="text-gray-500 dark:text-gray-200 font-medium mt-1">
             Configure dynamic contents, view parameters list, and toggle activation filters.
           </p>
         </div>
@@ -81,7 +81,7 @@ export default function AdminPlaceholder({ title }) {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-[#E2E8F0] dark:border-[#1F2937] bg-gray-50/50 dark:bg-gray-800/10 text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
+              <tr className="border-b border-[#E2E8F0] dark:border-[#1F2937] bg-gray-50/50 dark:bg-gray-800/10 text-xs font-bold text-gray-400 dark:text-gray-300 uppercase tracking-wider">
                 <th className="p-4 pl-6">Record Details</th>
                 <th className="p-4">Description Info</th>
                 <th className="p-4">Created Date</th>
@@ -96,8 +96,8 @@ export default function AdminPlaceholder({ title }) {
                     <td className="p-4 pl-6">
                       <span className="font-extrabold text-sm text-gray-900 dark:text-white">{item.name}</span>
                     </td>
-                    <td className="p-4 text-xs font-semibold text-gray-500 dark:text-gray-400">{item.detail}</td>
-                    <td className="p-4 text-xs font-bold text-gray-500 dark:text-gray-400">{item.date}</td>
+                    <td className="p-4 text-xs font-semibold text-gray-500 dark:text-gray-200">{item.detail}</td>
+                    <td className="p-4 text-xs font-bold text-gray-500 dark:text-gray-200">{item.date}</td>
                     <td className="p-4 text-right pr-6 flex items-center justify-end gap-6 h-[53px]">
                       {/* Active Status switch */}
                       <label className="relative inline-flex items-center cursor-pointer">

@@ -63,16 +63,16 @@ export default function AdminStore() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto w-full pb-10 space-y-8 animate-in fade-in duration-500 text-gray-900 dark:text-[#F3F4F6]">
+    <div className="max-w-7xl mx-auto w-full pb-10 space-y-8 animate-in fade-in duration-500 text-gray-900 dark:text-white">
       
       {/* Header section */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
+          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-gray-300 flex items-center gap-2">
             <Store className="w-8 h-8 text-amber-500" /> 
             {showOnlyBranches ? 'Branch Locations Directory' : 'Store Management'}
           </h1>
-          <p className="text-gray-500 dark:text-gray-400 font-medium mt-1">
+          <p className="text-gray-500 dark:text-gray-200 font-medium mt-1">
             {showOnlyBranches 
               ? 'Add, edit, and toggle active branch outlets for your repair operations.' 
               : 'Configure parameters, billing contacts, and brand descriptions.'}
@@ -168,7 +168,7 @@ export default function AdminStore() {
                   </div>
                   <div className="space-y-1 min-w-0">
                     <h3 className="font-extrabold text-base text-gray-900 dark:text-white">{b.name}</h3>
-                    <p className="text-xs text-gray-400 dark:text-gray-500 font-semibold flex items-center gap-1.5 truncate">
+                    <p className="text-xs text-gray-400 dark:text-gray-300 font-semibold flex items-center gap-1.5 truncate">
                       <MapPin className="w-3.5 h-3.5" /> {b.address}
                     </p>
                   </div>
@@ -308,7 +308,7 @@ export default function AdminStore() {
                       setIsModalOpen(false);
                       setEditingBranch(null);
                     }}
-                    className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl text-xs font-bold hover:bg-gray-200 transition-colors cursor-pointer"
+                    className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-100 rounded-xl text-xs font-bold hover:bg-gray-200 transition-colors cursor-pointer"
                   >
                     Cancel
                   </button>

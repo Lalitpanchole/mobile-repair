@@ -78,14 +78,14 @@ export default function AdminSliders() {
   );
 
   return (
-    <div className="max-w-7xl mx-auto w-full pb-10 space-y-8 animate-in fade-in duration-500 text-gray-900 dark:text-[#F3F4F6]">
+    <div className="max-w-7xl mx-auto w-full pb-10 space-y-8 animate-in fade-in duration-500 text-gray-900 dark:text-white">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
+          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-gray-300 flex items-center gap-2">
             <Sliders className="w-8 h-8 text-amber-500" /> Slider Management
           </h1>
-          <p className="text-gray-500 dark:text-gray-400 font-medium mt-1">
+          <p className="text-gray-500 dark:text-gray-200 font-medium mt-1">
             Configure homepage banners, redirects, button text, and displaying orders.
           </p>
         </div>
@@ -148,14 +148,14 @@ export default function AdminSliders() {
               <div className="p-5 flex-1 flex flex-col justify-between">
                 <div>
                   <h3 className="font-extrabold text-sm text-gray-900 dark:text-white line-clamp-1">{slide.title}</h3>
-                  <p className="text-xs text-gray-400 dark:text-gray-500 font-semibold mt-1.5 line-clamp-2 leading-relaxed">{slide.subtitle}</p>
+                  <p className="text-xs text-gray-400 dark:text-gray-300 font-semibold mt-1.5 line-clamp-2 leading-relaxed">{slide.subtitle}</p>
                 </div>
 
                 {/* Redirect preview details */}
-                <div className="border-t border-gray-100 dark:border-[#1F2937] pt-4 flex justify-between items-center text-[11px] font-bold text-gray-500 dark:text-gray-400">
+                <div className="border-t border-gray-100 dark:border-[#1F2937] pt-4 flex justify-between items-center text-[11px] font-bold text-gray-500 dark:text-gray-200">
                   <div className="flex flex-col">
                     <span className="text-[10px] text-gray-450 uppercase font-black">Button Redirect</span>
-                    <span className="text-gray-700 dark:text-gray-300 mt-0.5 truncate max-w-[120px]">{slide.btnText} ({slide.link})</span>
+                    <span className="text-gray-700 dark:text-gray-100 mt-0.5 truncate max-w-[120px]">{slide.btnText} ({slide.link})</span>
                   </div>
 
                   <div className="flex gap-1">
@@ -288,7 +288,7 @@ export default function AdminSliders() {
                   <button 
                     type="button"
                     onClick={handleCloseModal}
-                    className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl text-xs font-bold hover:bg-gray-200 transition-colors cursor-pointer"
+                    className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-100 rounded-xl text-xs font-bold hover:bg-gray-200 transition-colors cursor-pointer"
                   >
                     Cancel
                   </button>

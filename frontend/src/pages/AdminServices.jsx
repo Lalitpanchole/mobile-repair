@@ -125,16 +125,16 @@ export default function AdminServices() {
   });
 
   return (
-    <div className="max-w-7xl mx-auto w-full pb-10 space-y-8 animate-in fade-in duration-500 text-gray-900 dark:text-[#F3F4F6]">
+    <div className="max-w-7xl mx-auto w-full pb-10 space-y-8 animate-in fade-in duration-500 text-gray-900 dark:text-white">
       
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
+          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-gray-300 flex items-center gap-2">
             <Wrench className="w-8 h-8 text-amber-500" /> 
             {showOnlyCategories ? 'Service Categories' : 'Services Directory'}
           </h1>
-          <p className="text-gray-500 dark:text-gray-400 font-medium mt-1">
+          <p className="text-gray-500 dark:text-gray-200 font-medium mt-1">
             {showOnlyCategories 
               ? 'Manage device categories, active groupings, and service filters.' 
               : 'Configure catalog details, pricing structures, and active categories.'}
@@ -171,7 +171,7 @@ export default function AdminServices() {
                 className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                   activeCategoryFilter === 'All'
                     ? 'bg-amber-50 dark:bg-amber-900/20 text-[#FFDE21] dark:text-[#FFDE21] shadow-sm' 
-                    : 'text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800'
+                    : 'text-gray-500 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800'
                 }`}
               >
                 <Wrench className="w-4 h-4" />
@@ -187,7 +187,7 @@ export default function AdminServices() {
                     className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                       isSelected 
                         ? 'bg-amber-50 dark:bg-amber-900/20 text-[#FFDE21] dark:text-[#FFDE21] shadow-sm' 
-                        : 'text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800'
+                        : 'text-gray-500 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800'
                     }`}
                   >
                     <Icon className="w-4 h-4" />
@@ -226,7 +226,7 @@ export default function AdminServices() {
                 >
                   <div>
                     <div className="flex justify-between items-start mb-3">
-                      <span className="bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase">
+                      <span className="bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-200 text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase">
                         {service.category}
                       </span>
                       
@@ -245,13 +245,13 @@ export default function AdminServices() {
                     <h3 className="font-extrabold text-base text-gray-900 dark:text-white truncate">
                       {service.name}
                     </h3>
-                    <p className="text-xs text-gray-400 dark:text-gray-500 mt-2 font-medium line-clamp-2 leading-relaxed">
+                    <p className="text-xs text-gray-400 dark:text-gray-300 mt-2 font-medium line-clamp-2 leading-relaxed">
                       {service.desc}
                     </p>
                   </div>
 
                   <div className="flex justify-between items-center border-t border-gray-100 dark:border-[#1F2937] pt-4 mt-4">
-                    <div className="flex gap-4 text-xs font-bold text-gray-500 dark:text-gray-400">
+                    <div className="flex gap-4 text-xs font-bold text-gray-500 dark:text-gray-200">
                       <span className="flex items-center gap-1"><DollarSign className="w-4 h-4 text-emerald-500" /> {service.price}</span>
                       <span className="flex items-center gap-1"><Clock className="w-4 h-4 text-amber-500" /> {service.time}</span>
                     </div>
@@ -298,7 +298,7 @@ export default function AdminServices() {
                     </div>
                     <div className="space-y-1 min-w-0">
                       <h3 className="font-extrabold text-base text-gray-900 dark:text-white">{cat.name}</h3>
-                      <p className="text-xs text-gray-400 dark:text-gray-500 font-semibold">
+                      <p className="text-xs text-gray-400 dark:text-gray-300 font-semibold">
                         {services.filter(s => s.category === cat.name).length} services linked
                       </p>
                     </div>
@@ -451,7 +451,7 @@ export default function AdminServices() {
                   <button 
                     type="button"
                     onClick={() => setEditingService(null)}
-                    className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl text-xs font-bold hover:bg-gray-200 transition-colors cursor-pointer"
+                    className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-100 rounded-xl text-xs font-bold hover:bg-gray-200 transition-colors cursor-pointer"
                   >
                     Cancel
                   </button>
@@ -539,7 +539,7 @@ export default function AdminServices() {
                       setIsCatModalOpen(false);
                       setEditingCategoryRecord(null);
                     }}
-                    className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl text-xs font-bold hover:bg-gray-200 transition-colors cursor-pointer"
+                    className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-100 rounded-xl text-xs font-bold hover:bg-gray-200 transition-colors cursor-pointer"
                   >
                     Cancel
                   </button>

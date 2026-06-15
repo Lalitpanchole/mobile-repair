@@ -27,15 +27,15 @@ export default function AdminStaff() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto w-full pb-10 space-y-8 animate-in fade-in duration-500 text-gray-900 dark:text-[#F3F4F6]">
+    <div className="max-w-7xl mx-auto w-full pb-10 space-y-8 animate-in fade-in duration-500 text-gray-900 dark:text-white">
       
       {/* Header Panel */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
+          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-gray-300 flex items-center gap-2">
             <UserCheck className="w-8 h-8 text-amber-500" /> Staff Management
           </h1>
-          <p className="text-gray-500 dark:text-gray-400 font-medium mt-1">
+          <p className="text-gray-500 dark:text-gray-200 font-medium mt-1">
             Assign repair workloads, manage shifts, and monitor team metrics.
           </p>
         </div>
@@ -84,7 +84,7 @@ export default function AdminStaff() {
               <div className="space-y-1.5 pt-2">
                 <div className="flex justify-between text-[11px] font-bold text-gray-400">
                   <span>Today's Load</span>
-                  <span className="text-gray-700 dark:text-gray-300">{member.load} / {member.maxLoad} tasks</span>
+                  <span className="text-gray-700 dark:text-gray-100">{member.load} / {member.maxLoad} tasks</span>
                 </div>
                 <div className="w-full h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
                   <div 
@@ -97,7 +97,7 @@ export default function AdminStaff() {
 
             {/* Bottom Actions/Contacts */}
             <div className="border-t border-gray-100 dark:border-[#1F2937] pt-4 mt-4 space-y-3">
-              <div className="flex flex-col gap-1.5 text-xs text-gray-500 dark:text-gray-400 font-semibold">
+              <div className="flex flex-col gap-1.5 text-xs text-gray-500 dark:text-gray-200 font-semibold">
                 <span className="flex items-center gap-2"><Mail className="w-3.5 h-3.5" /> {member.email}</span>
                 <span className="flex items-center gap-2"><Phone className="w-3.5 h-3.5" /> {member.phone}</span>
               </div>
@@ -106,7 +106,7 @@ export default function AdminStaff() {
                 <span className="flex items-center gap-1"><Star className="w-4 h-4 fill-amber-400 text-amber-400" /> {member.rating.toFixed(1)}</span>
                 <button 
                   onClick={() => setSelectedStaff(member)}
-                  className="px-3.5 py-1.5 border border-[#E2E8F0] dark:border-[#1F2937] hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl transition-colors cursor-pointer"
+                  className="px-3.5 py-1.5 border border-[#E2E8F0] dark:border-[#1F2937] hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-100 rounded-xl transition-colors cursor-pointer"
                 >
                   Configure
                 </button>
@@ -175,7 +175,7 @@ export default function AdminStaff() {
                 <div className="flex justify-end gap-3 pt-2">
                   <button 
                     onClick={() => setSelectedStaff(null)}
-                    className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl text-xs font-bold hover:bg-gray-200 transition-colors cursor-pointer"
+                    className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-100 rounded-xl text-xs font-bold hover:bg-gray-200 transition-colors cursor-pointer"
                   >
                     Cancel
                   </button>
