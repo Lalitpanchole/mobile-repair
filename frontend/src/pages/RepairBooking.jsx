@@ -98,6 +98,10 @@ const getScreenOptions = (priceStr, modelName, brandName, repairName = '', repai
     return [];
   }
 
+  if (modelLower === 'iphone x' || modelLower === 'iphone xs' || modelLower === 'iphone xs max') {
+    return [];
+  }
+
   if (modelLower === 'iphone 17e' || modelLower === 'iphone 16e') {
     return [
       {

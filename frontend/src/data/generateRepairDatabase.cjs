@@ -1071,6 +1071,22 @@ for (const [brandName, brandData] of Object.entries(brandDeviceMapping)) {
   }
 }
 
+// Override for iPhone X, iPhone XS, and iPhone XS Max Screen Repairs
+const overrideModels = ['iPhone X', 'iPhone XS', 'iPhone XS Max'];
+if (database.Apple && database.Apple.Phone && database.Apple.Phone.repairs) {
+  overrideModels.forEach(m => {
+    if (database.Apple.Phone.repairs[m]) {
+      database.Apple.Phone.repairs[m].forEach(r => {
+        if (r.name === 'Screen Repair' || r.name.toLowerCase().includes('screen')) {
+          r.price = 'A$119.00';
+          r.partOption = false;
+          delete r.options;
+        }
+      });
+    }
+  });
+}
+
 const outPath = path.join(__dirname, 'repairDatabase.json');
 fs.writeFileSync(outPath, JSON.stringify(database, null, 2));
 
