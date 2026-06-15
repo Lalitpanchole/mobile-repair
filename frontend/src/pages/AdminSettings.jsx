@@ -10,21 +10,11 @@ import {
 } from '../services/api';
 
 export default function AdminSettings() {
-<<<<<<< HEAD
   // Store Details & Settings states
   const [storeName, setStoreName] = useState('');
   const [storeEmail, setStoreEmail] = useState('');
   const [storeAddress, setStoreAddress] = useState('');
   const [storePhone, setStorePhone] = useState('');
-=======
-  const [activeTab, setActiveTab] = useState('Store Details');
-  
-  // Store Details states
-  const [storeName, setStoreName] = useState('MPC Repairs');
-  const [contactEmail, setContactEmail] = useState('mpcrepairskotara@gmail.com');
-  const [storeAddress, setStoreAddress] = useState('168 Cavendish Road, Coorparoo, QLD 4151');
-  const [storePhone, setStorePhone] = useState('+61 426 186 212');
->>>>>>> 9e0503ff9e4ecbc6d9b25fcd1dd9bdde514ce9c4
   const [currency, setCurrency] = useState('AUD ($)');
   const [timezone, setTimezone] = useState('Australia/Brisbane');
   const [bookingSlotDuration, setBookingSlotDuration] = useState(90);
@@ -154,7 +144,6 @@ export default function AdminSettings() {
         </div>
       </div>
 
-<<<<<<< HEAD
       {loading ? (
         <div className="flex flex-col items-center justify-center py-20 bg-white dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#1F2937] rounded-3xl shadow-sm">
           <Loader2 className="w-10 h-10 text-amber-500 animate-spin mb-4" />
@@ -279,23 +268,6 @@ export default function AdminSettings() {
                 type="submit"
                 disabled={saving}
                 className="premium-button bg-[#FFDE21] text-white py-2.5 px-6 shadow-[0_4px_14px_0_rgba(37,99,235,0.39)] border-0 flex items-center gap-2 cursor-pointer font-bold rounded-xl disabled:opacity-50"
-=======
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
-        {/* Left Sidebar Navigation */}
-        <div className="lg:col-span-1 space-y-2">
-            {[
-              { name: 'Store Details', icon: Store },
-            ].map((item) => (
-              <button
-                key={item.name}
-                onClick={() => setActiveTab(item.name)}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 font-bold border-0 cursor-pointer text-left ${
-                  activeTab === item.name
-                    ? 'bg-amber-50 text-[#FFDE21] shadow-sm shadow-amber-500/5' 
-                    : 'text-gray-500 hover:bg-white hover:shadow-sm hover:text-[#0F172A] bg-transparent'
-                }`}
->>>>>>> 9e0503ff9e4ecbc6d9b25fcd1dd9bdde514ce9c4
               >
                 <Save className="w-5 h-5" />
                 {saving ? 'Saving...' : 'Save Settings'}
