@@ -348,7 +348,7 @@ export default function AdminDashboard() {
   const totalBookingsCount = stats.totalBookings;
 
   return (
-    <div className="max-w-7xl mx-auto w-full pb-10 space-y-8 animate-in fade-in duration-500 text-gray-900 dark:text-[#F3F4F6]">
+    <div className="max-w-7xl mx-auto w-full pb-10 space-y-8 animate-in fade-in duration-500 text-gray-900 dark:text-white">
       
       {/* 3 Stats Cards Rows matching screenshot exactly */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -363,7 +363,7 @@ export default function AdminDashboard() {
               <p className="text-4xl font-extrabold text-[#FFDE21] tracking-tight">
                 <AnimatedCounter value={pendingBookingsCount} />
               </p>
-              <p className="text-base font-bold text-gray-600 dark:text-gray-400 mt-2">New Booking</p>
+              <p className="text-base font-bold text-gray-600 dark:text-gray-200 mt-2">New Booking</p>
             </div>
             <div className="p-3 bg-amber-50 dark:bg-amber-900/10 text-amber-600 rounded-xl group-hover:scale-110 transition-transform">
               <CalendarIcon className="w-6 h-6" />
@@ -387,7 +387,7 @@ export default function AdminDashboard() {
               <p className="text-4xl font-extrabold text-emerald-600 dark:text-emerald-400 tracking-tight">
                 <AnimatedCounter value={totalBookingsCount} />
               </p>
-              <p className="text-base font-bold text-gray-600 dark:text-gray-400 mt-2">Total Booking</p>
+              <p className="text-base font-bold text-gray-600 dark:text-gray-200 mt-2">Total Booking</p>
             </div>
             <div className="p-3 bg-emerald-50 dark:bg-emerald-900/10 text-emerald-600 rounded-xl group-hover:scale-110 transition-transform">
               <List className="w-6 h-6" />
@@ -409,7 +409,7 @@ export default function AdminDashboard() {
           <div className="flex justify-between items-start">
             <div>
               <p className="text-4xl font-extrabold text-purple-600 dark:text-purple-400 tracking-tight">*</p>
-              <p className="text-base font-bold text-gray-600 dark:text-gray-400 mt-2">Settings</p>
+              <p className="text-base font-bold text-gray-600 dark:text-gray-200 mt-2">Settings</p>
             </div>
             <div className="p-3 bg-purple-50 dark:bg-purple-900/10 text-purple-600 rounded-xl group-hover:rotate-45 transition-transform duration-500">
               <Settings className="w-6 h-6" />
@@ -433,19 +433,19 @@ export default function AdminDashboard() {
             <div className="flex items-center gap-1.5 bg-white dark:bg-[#111827] p-1 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm">
               <button 
                 onClick={handlePrevMonth}
-                className="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg text-gray-550 dark:text-gray-400 transition-colors flex items-center justify-center cursor-pointer border-0"
+                className="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg text-gray-550 dark:text-gray-200 transition-colors flex items-center justify-center cursor-pointer border-0"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button 
                 onClick={handleToday}
-                className="px-3 py-1 text-xs font-bold text-gray-650 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors cursor-pointer border-0 bg-transparent"
+                className="px-3 py-1 text-xs font-bold text-gray-650 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors cursor-pointer border-0 bg-transparent"
               >
                 today
               </button>
               <button 
                 onClick={handleNextMonth}
-                className="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg text-gray-550 dark:text-gray-400 transition-colors flex items-center justify-center cursor-pointer border-0"
+                className="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg text-gray-550 dark:text-gray-200 transition-colors flex items-center justify-center cursor-pointer border-0"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
@@ -476,7 +476,7 @@ export default function AdminDashboard() {
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-bold capitalize transition-all cursor-pointer border-0 ${
                   view === v 
                     ? 'bg-[#FFDE21] text-white shadow-sm shadow-amber-500/10' 
-                    : 'text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 bg-transparent'
+                    : 'text-gray-500 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 bg-transparent'
                 }`}
               >
                 {v}
@@ -500,7 +500,7 @@ export default function AdminDashboard() {
             >
               <div className="min-w-full lg:min-w-[760px]">
                 {/* Weekday Labels Headers */}
-                <div className="grid grid-cols-7 border-b border-[#E2E8F0] dark:border-[#1F2937] bg-gray-50 dark:bg-gray-800/20 text-center py-3 text-xs font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                <div className="grid grid-cols-7 border-b border-[#E2E8F0] dark:border-[#1F2937] bg-gray-50 dark:bg-gray-800/20 text-center py-3 text-xs font-extrabold text-gray-500 dark:text-gray-200 uppercase tracking-wider">
                   {weekdays.map(day => (
                     <span key={day}>{day}</span>
                   ))}
@@ -694,7 +694,7 @@ export default function AdminDashboard() {
                           <p className="text-xs font-semibold text-gray-400 mt-0.5">{ev.desc}</p>
                         </div>
                       </div>
-                      <span className="flex items-center gap-1.5 text-xs font-bold text-gray-500 dark:text-gray-400"><Clock className="w-4 h-4 text-[#FFDE21]" /> {ev.time}</span>
+                      <span className="flex items-center gap-1.5 text-xs font-bold text-gray-500 dark:text-gray-200"><Clock className="w-4 h-4 text-[#FFDE21]" /> {ev.time}</span>
                     </div>
                   ));
                 })()}
@@ -743,7 +743,7 @@ export default function AdminDashboard() {
                               {ev.customer || (ev.title && ev.title.includes(' with ') ? ev.title.split(' with ')[0] : ev.title) || 'Unknown Customer'}
                             </div>
                             <div className="flex flex-wrap items-center gap-2">
-                              <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-[11px] font-bold border border-gray-200 dark:border-gray-700 shadow-sm">
+                              <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-100 text-[11px] font-bold border border-gray-200 dark:border-gray-700 shadow-sm">
                                 {(ev.device || (ev.title && ev.title.includes(' with ') ? ev.title.split(' with ')[1] : 'Unknown Device')).replace(/\s*\(\d{4}\)/g, '')}
                               </span>
                               {ev.price && (
@@ -754,14 +754,14 @@ export default function AdminDashboard() {
                             </div>
                           </div>
                         </td>
-                        <td className="p-4 text-xs font-bold text-gray-500 dark:text-gray-400">
+                        <td className="p-4 text-xs font-bold text-gray-500 dark:text-gray-200">
                           {(() => {
                             const d = new Date(ev.dateStr);
                             return `${monthsList[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
                           })()}
                         </td>
-                        <td className="p-4 text-xs font-bold text-gray-500 dark:text-gray-400">{ev.time}</td>
-                        <td className="p-4 text-xs font-bold text-gray-500 dark:text-gray-400">{ev.type || 'In-Store'}</td>
+                        <td className="p-4 text-xs font-bold text-gray-500 dark:text-gray-200">{ev.time}</td>
+                        <td className="p-4 text-xs font-bold text-gray-500 dark:text-gray-200">{ev.type || 'In-Store'}</td>
                         <td className="p-4">
                           <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                             <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border ${
@@ -853,21 +853,21 @@ export default function AdminDashboard() {
                     <h4 className="text-[10px] font-black uppercase tracking-widest text-amber-500 mb-3">Customer Details</h4>
                     <div className="space-y-3 text-sm">
                       <div className="flex justify-between items-start gap-4">
-                        <span className="text-gray-500 dark:text-gray-400 font-bold">Name</span>
+                        <span className="text-gray-500 dark:text-gray-200 font-bold">Name</span>
                         <span className="font-extrabold text-gray-900 dark:text-white text-right">{activeEvent.customer || 'Unknown'}</span>
                       </div>
                       <div className="flex justify-between items-start gap-4">
-                        <span className="text-gray-500 dark:text-gray-400 font-bold">Phone</span>
+                        <span className="text-gray-500 dark:text-gray-200 font-bold">Phone</span>
                         <span className="font-extrabold text-gray-900 dark:text-white text-right">{activeEvent.phone || 'N/A'}</span>
                       </div>
                       <div className="flex justify-between items-start gap-4">
-                        <span className="text-gray-500 dark:text-gray-400 font-bold">Email</span>
+                        <span className="text-gray-500 dark:text-gray-200 font-bold">Email</span>
                         <span className="font-extrabold text-gray-900 dark:text-white text-right break-all">{activeEvent.email || 'N/A'}</span>
                       </div>
                       {activeEvent.notes && (
                         <div className="pt-3 border-t border-[#E2E8F0] dark:border-[#1F2937] mt-3">
-                          <span className="text-xs text-gray-500 dark:text-gray-400 font-bold block mb-1">Message / Notes</span>
-                          <p className="text-sm font-semibold text-gray-700 dark:text-gray-300 bg-white dark:bg-[#111827] p-3 rounded-xl border border-[#E2E8F0] dark:border-[#1F2937]">
+                          <span className="text-xs text-gray-500 dark:text-gray-200 font-bold block mb-1">Message / Notes</span>
+                          <p className="text-sm font-semibold text-gray-700 dark:text-gray-100 bg-white dark:bg-[#111827] p-3 rounded-xl border border-[#E2E8F0] dark:border-[#1F2937]">
                             {activeEvent.notes}
                           </p>
                         </div>
@@ -880,19 +880,19 @@ export default function AdminDashboard() {
                     <h4 className="text-[10px] font-black uppercase tracking-widest text-amber-500 mb-3">Device & Repair</h4>
                     <div className="space-y-3 text-sm">
                       <div className="flex justify-between items-start gap-4">
-                        <span className="text-gray-500 dark:text-gray-400 font-bold">Brand</span>
+                        <span className="text-gray-500 dark:text-gray-200 font-bold">Brand</span>
                         <span className="font-extrabold text-gray-900 dark:text-white text-right">{activeEvent.brand || 'N/A'}</span>
                       </div>
                       <div className="flex justify-between items-start gap-4">
-                        <span className="text-gray-500 dark:text-gray-400 font-bold">Model</span>
+                        <span className="text-gray-500 dark:text-gray-200 font-bold">Model</span>
                         <span className="font-extrabold text-gray-900 dark:text-white text-right">{activeEvent.device ? activeEvent.device.replace(/\s*\(\d{4}\)/g, '') : 'N/A'}</span>
                       </div>
                       <div className="flex justify-between items-start gap-4">
-                        <span className="text-gray-500 dark:text-gray-400 font-bold">Selected Repair(s)</span>
+                        <span className="text-gray-500 dark:text-gray-200 font-bold">Selected Repair(s)</span>
                         <span className="font-extrabold text-gray-900 dark:text-white text-right">{activeEvent.issue || 'Diagnostics'}</span>
                       </div>
                       <div className="flex justify-between items-center pt-3 border-t border-[#E2E8F0] dark:border-[#1F2937] mt-3">
-                        <span className="text-gray-500 dark:text-gray-400 font-bold">Repair Price</span>
+                        <span className="text-gray-500 dark:text-gray-200 font-bold">Repair Price</span>
                         <span className="font-black text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200/60 dark:border-emerald-500/20 px-3 py-1 rounded-xl shadow-sm">
                           {activeEvent.price || 'Pending'}
                         </span>
@@ -905,7 +905,7 @@ export default function AdminDashboard() {
                     <h4 className="text-[10px] font-black uppercase tracking-widest text-amber-500 mb-3">Appointment Info</h4>
                     <div className="space-y-3 text-sm">
                       <div className="flex justify-between items-start gap-4">
-                        <span className="text-gray-500 dark:text-gray-400 font-bold">Status</span>
+                        <span className="text-gray-500 dark:text-gray-200 font-bold">Status</span>
                         <span className={`font-extrabold ${
                           activeEvent.status === 'Completed' ? 'text-emerald-600' :
                           activeEvent.status === 'Rejected' ? 'text-red-600' :
@@ -913,11 +913,11 @@ export default function AdminDashboard() {
                         }`}>{activeEvent.status || 'Pending'}</span>
                       </div>
                       <div className="flex justify-between items-start gap-4">
-                        <span className="text-gray-500 dark:text-gray-400 font-bold">Location</span>
+                        <span className="text-gray-500 dark:text-gray-200 font-bold">Location</span>
                         <span className="font-extrabold text-gray-900 dark:text-white text-right">{activeEvent.location || 'In-Store'}</span>
                       </div>
                       <div className="flex justify-between items-start gap-4">
-                        <span className="text-gray-500 dark:text-gray-400 font-bold">Date</span>
+                        <span className="text-gray-500 dark:text-gray-200 font-bold">Date</span>
                         <span className="font-extrabold text-gray-900 dark:text-white text-right">
                           {activeEvent.dateStr ? (() => {
                             const d = new Date(activeEvent.dateStr);
@@ -926,7 +926,7 @@ export default function AdminDashboard() {
                         </span>
                       </div>
                       <div className="flex justify-between items-start gap-4">
-                        <span className="text-gray-500 dark:text-gray-400 font-bold">Time Window</span>
+                        <span className="text-gray-500 dark:text-gray-200 font-bold">Time Window</span>
                         <span className="font-extrabold text-gray-900 dark:text-white text-right">{activeEvent.time || 'N/A'}</span>
                       </div>
                     </div>
@@ -936,7 +936,7 @@ export default function AdminDashboard() {
                 <div className="flex justify-end gap-3 pt-2">
                   <button 
                     onClick={() => setActiveEvent(null)}
-                    className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl text-xs font-bold hover:bg-gray-200 transition-colors cursor-pointer border-0"
+                    className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-100 rounded-xl text-xs font-bold hover:bg-gray-200 transition-colors cursor-pointer border-0"
                   >
                     Close
                   </button>
@@ -1056,7 +1056,7 @@ export default function AdminDashboard() {
                   <button 
                     type="button"
                     onClick={() => setIsAddModalOpen(false)}
-                    className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl text-xs font-bold hover:bg-gray-200 transition-colors cursor-pointer border-0"
+                    className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-100 rounded-xl text-xs font-bold hover:bg-gray-200 transition-colors cursor-pointer border-0"
                   >
                     Cancel
                   </button>

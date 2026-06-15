@@ -85,7 +85,7 @@ export default function AdminSidebar({ isOpen, setIsOpen, isCollapsed, setIsColl
                   className={`flex items-center justify-between w-full px-4 py-3 rounded-xl transition-all duration-300 group ${
                     isActive 
                       ? 'bg-slate-900 text-amber-400 font-bold' 
-                      : 'text-slate-400 hover:bg-slate-900/60 hover:text-white font-medium'
+                      : 'text-slate-400 dark:text-slate-300 hover:bg-slate-900/60 hover:text-white font-medium'
                   }`}
                 >
                   <div className="flex items-center gap-3">
@@ -112,7 +112,7 @@ export default function AdminSidebar({ isOpen, setIsOpen, isCollapsed, setIsColl
                           className={`block py-1.5 text-xs font-semibold rounded-lg transition-colors ${
                             isSubActive 
                               ? 'text-amber-400' 
-                              : 'text-slate-500 hover:text-white'
+                              : 'text-slate-500 dark:text-slate-300 hover:text-white'
                           }`}
                         >
                           {sub.name}
@@ -134,7 +134,7 @@ export default function AdminSidebar({ isOpen, setIsOpen, isCollapsed, setIsColl
               className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 group relative ${
                 isItemActive 
                   ? 'bg-amber-600 text-white font-bold shadow-md shadow-amber-500/15' 
-                  : 'text-slate-400 hover:bg-slate-900/60 hover:text-white font-medium'
+                  : 'text-slate-400 dark:text-slate-300 hover:bg-slate-900/60 hover:text-white font-medium'
               }`}
             >
               {isItemActive && (
