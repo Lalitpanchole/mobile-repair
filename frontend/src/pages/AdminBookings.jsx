@@ -3,12 +3,18 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 import { 
   Calendar as CalendarIcon, Clock, Search, MoreVertical, 
-  CalendarCheck, MapPin, User, Package, Truck, X, Plus 
+  CalendarCheck, MapPin, User, Package, Truck, X, Plus, Loader2 
 } from 'lucide-react';
-import { useBooking } from '../context/BookingContext';
+import { 
+  fetchAdminBookings, 
+  updateBookingStatus, 
+  deleteAdminBooking, 
+  createAdminBooking 
+} from '../services/api';
 
 export default function AdminBookings({ hideTabs = false, defaultTab: propDefaultTab }) {
-  const { bookings: bookingList, addBooking, updateBooking, deleteBooking } = useBooking();
+  const [bookingList, setBookingList] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // Search & filter states
   const [searchQuery, setSearchQuery] = useState('');
@@ -16,9 +22,53 @@ export default function AdminBookings({ hideTabs = false, defaultTab: propDefaul
   const [activeDropdownId, setActiveDropdownId] = useState(null);
   const [selectedBookingDetails, setSelectedBookingDetails] = useState(null);
   const location = useLocation();
-  const defaultTab = propDefaultTab || location.state?.defaultTab || 'Total Bookings';
   
+  // URL Search query support (e.g. for header search navigation: /admin/bookings?search=BKG-0002)
+  const queryParams = new URLSearchParams(location.search);
+  const searchParam = queryParams.get('search');
+
+  const defaultTab = propDefaultTab || location.state?.defaultTab || 'Total Bookings';
   const [activeTab, setActiveTab] = useState(defaultTab);
+
+  const loadBookings = async () => {
+    setLoading(true);
+    try {
+      const data = await fetchAdminBookings();
+      const list = data.bookings || data || [];
+      const formatted = list.map(b => ({
+        ...b,
+        id: b.id,
+        bookingNumber: b.bookingNumber || `BKG-${b.id}`,
+        customer: b.customerName,
+        device: b.deviceModel,
+        issue: b.partQuality ? `${b.repairName} (${b.partQuality})` : b.repairName,
+        date: b.dateStr,
+        time: b.timeSlot,
+        type: b.deviceType || 'In-Store',
+        price: `A$${Number(b.finalPrice || 0).toFixed(2)}`,
+        desc: b.notes || 'No description provided.',
+        phone: b.customerPhone,
+        email: b.customerEmail,
+        brand: b.deviceBrand,
+      }));
+      setBookingList(formatted);
+    } catch (err) {
+      console.error('Failed to load bookings:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadBookings();
+  }, []);
+
+  // Update searchQuery if query param 'search' exists
+  useEffect(() => {
+    if (searchParam) {
+      setSearchQuery(searchParam);
+    }
+  }, [searchParam]);
 
   useEffect(() => {
     if (propDefaultTab) {
@@ -86,6 +136,7 @@ export default function AdminBookings({ hideTabs = false, defaultTab: propDefaul
       (b.customer && String(b.customer).toLowerCase().includes(q)) ||
       (b.device && String(b.device).toLowerCase().includes(q)) ||
       (b.id && String(b.id).toLowerCase().includes(q)) ||
+      (b.bookingNumber && String(b.bookingNumber).toLowerCase().includes(q)) ||
       (b.issue && String(b.issue).toLowerCase().includes(q));
       
     const matchesToday = !filterToday || (b.date && String(b.date).toLowerCase().includes('today'));
@@ -93,17 +144,29 @@ export default function AdminBookings({ hideTabs = false, defaultTab: propDefaul
     return matchesSearch && matchesToday;
   });
 
-  const handleUpdateStatus = (id, status) => {
-    updateBooking(id, { status });
+  const handleUpdateStatus = async (id, status) => {
+    try {
+      await updateBookingStatus(id, status);
+      loadBookings();
+    } catch (err) {
+      console.error(err);
+    }
     setActiveDropdownId(null);
   };
 
-  const handleDelete = (id) => {
-    deleteBooking(id);
+  const handleDelete = async (id) => {
+    if (window.confirm('Are you sure you want to delete this booking?')) {
+      try {
+        await deleteAdminBooking(id);
+        loadBookings();
+      } catch (err) {
+        console.error(err);
+      }
+    }
     setActiveDropdownId(null);
   };
 
-  const handleSaveAppointment = (e) => {
+  const handleSaveAppointment = async (e) => {
     e.preventDefault();
     if (!newCustomer.trim() || !newDevice.trim()) return;
 
@@ -116,32 +179,52 @@ export default function AdminBookings({ hideTabs = false, defaultTab: propDefaul
       tomorrow.setDate(tomorrow.getDate() + 1);
       dateStr = `${tomorrow.getFullYear()}-${(tomorrow.getMonth() + 1).toString().padStart(2, '0')}-${tomorrow.getDate().toString().padStart(2, '0')}`;
     } else {
-      dateStr = newDate; // Assume custom date is input
+      dateStr = newDate;
     }
 
     const newBooking = {
-      customer: newCustomer,
-      device: newDevice,
-      issue: newIssue || 'Diagnostics',
+      customerName: newCustomer,
+      customerPhone: 'N/A',
+      customerEmail: 'admin@gmail.com',
+      deviceBrand: 'Apple',
+      deviceType: newType || 'In-Store',
+      deviceModel: newDevice,
+      repairName: newIssue || 'Diagnostics',
+      partQuality: null,
+      finalPrice: 0,
+      repairSnapshot: {
+        brand: 'Apple',
+        deviceType: newType || 'In-Store',
+        model: newDevice,
+        repair: newIssue || 'Diagnostics',
+        quality: 'Standard',
+        price: 0,
+        warranty: 'N/A'
+      },
       dateStr: dateStr,
-      time: newTime,
-      type: newType,
-      status: newStatus,
-      tech: newTech
+      timeSlot: newTime,
+      branchId: 1,
+      notes: '',
+      createdSource: 'admin'
     };
 
-    addBooking(newBooking);
-    setIsModalOpen(false);
-
-    // Reset Form
-    setNewCustomer('');
-    setNewDevice('');
-    setNewIssue('');
-    setNewTime('10:00 AM');
-    setNewDate('Today');
-    setNewType('In-Store');
-    setNewTech('Unassigned');
-    setNewStatus('Pending');
+    try {
+      await createAdminBooking(newBooking);
+      setIsModalOpen(false);
+      // Reset Form
+      setNewCustomer('');
+      setNewDevice('');
+      setNewIssue('');
+      setNewTime('10:00 AM');
+      setNewDate('Today');
+      setNewType('In-Store');
+      setNewTech('Unassigned');
+      setNewStatus('Pending');
+      loadBookings();
+    } catch (err) {
+      console.error(err);
+      alert(err.message || 'Failed to create booking');
+    }
   };
 
   return (
@@ -218,7 +301,12 @@ export default function AdminBookings({ hideTabs = false, defaultTab: propDefaul
         {/* Responsive Card Layout */}
         <div className="p-4 sm:p-6 bg-gray-50/30">
           <div className="space-y-4">
-            {filteredBookings.length === 0 ? (
+            {loading ? (
+              <div className="flex flex-col items-center justify-center py-20 bg-white rounded-2xl border border-gray-100">
+                <Loader2 className="w-10 h-10 text-[#FFDE21] animate-spin mb-4" />
+                <p className="text-sm text-gray-500 font-semibold">Loading bookings...</p>
+              </div>
+            ) : filteredBookings.length === 0 ? (
               <div className="text-center py-12 text-gray-400 font-bold bg-white rounded-2xl border border-gray-100">
                 No bookings found.
               </div>
@@ -235,7 +323,7 @@ export default function AdminBookings({ hideTabs = false, defaultTab: propDefaul
                     {/* Customer Info */}
                     <div className="flex-[1.5]">
                       <div className="flex justify-between items-start md:block">
-                        <span className="text-[11px] font-black tracking-widest text-gray-400 mb-1 block">{booking.id}</span>
+                        <span className="text-[11px] font-black tracking-widest text-gray-400 mb-1 block">{booking.bookingNumber || booking.id}</span>
                         <h3 className="font-extrabold text-gray-900 text-lg sm:text-xl">{booking.customer}</h3>
                       </div>
                       <div className="flex items-center gap-2 mt-2 flex-wrap">

@@ -1,22 +1,48 @@
 import { 
   Search, Bell, Menu, Settings, LogOut, ChevronDown, 
-  Sun, Moon, MessageSquare, AlertCircle, CalendarCheck, Check
+  Sun, Moon, AlertCircle, CalendarCheck, Check,
+  RefreshCw, Loader2
 } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  fetchNotifications, 
+  markNotificationRead, 
+  clearNotifications, 
+  logoutAdmin, 
+  globalSearch 
+} from '../../services/api';
 
 export default function AdminHeader({ onMenuClick, theme, toggleTheme }) {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
-  const [isMessagesOpen, setIsMessagesOpen] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  
+  const [notifications, setNotifications] = useState([]);
+  const [unreadCount, setUnreadCount] = useState(0);
+  
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchLoading, setSearchLoading] = useState(false);
 
   const profileRef = useRef(null);
   const notifRef = useRef(null);
-  const msgRef = useRef(null);
   const navigate = useNavigate();
+
+  const loadNotifications = async () => {
+    try {
+      const data = await fetchNotifications();
+      setNotifications(data || []);
+      setUnreadCount((data || []).filter(n => !n.isRead).length);
+    } catch (err) {
+      console.error('Failed to load notifications:', err);
+    }
+  };
+
+  useEffect(() => {
+    loadNotifications();
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -26,30 +52,62 @@ export default function AdminHeader({ onMenuClick, theme, toggleTheme }) {
       if (notifRef.current && !notifRef.current.contains(event.target)) {
         setIsNotificationsOpen(false);
       }
-      if (msgRef.current && !msgRef.current.contains(event.target)) {
-        setIsMessagesOpen(false);
-      }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleLogout = () => {
+  // 500ms Debounce Search Logic
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setSearchResults([]);
+      return;
+    }
+    setSearchLoading(true);
+    const handler = setTimeout(async () => {
+      try {
+        const res = await globalSearch(searchQuery);
+        setSearchResults(res.bookings || []);
+      } catch (err) {
+        console.error('Search error:', err);
+      } finally {
+        setSearchLoading(false);
+      }
+    }, 500);
+
+    return () => clearTimeout(handler);
+  }, [searchQuery]);
+
+  const handleLogout = async () => {
+    try {
+      await logoutAdmin();
+    } catch (err) {
+      console.error('Logout error:', err);
+    }
     sessionStorage.removeItem('adminAuth');
+    sessionStorage.removeItem('adminToken');
     window.location.href = '/';
   };
 
-  const notifications = [
-    { id: 1, title: 'New Booking #BKG-5092', desc: 'Alice Johnson for Screen Replacement', time: '5m ago', unread: true, type: 'booking' },
-    { id: 2, title: 'Low Stock Alert', desc: 'iPhone 13 screen inventory is less than 5', time: '1h ago', unread: true, type: 'alert' },
-    { id: 3, title: 'Technician Assigned', desc: 'Sarah was assigned to Macbook repair', time: '3h ago', unread: false, type: 'assignment' },
-  ];
+  const handleMarkAsRead = async (id, e) => {
+    e.stopPropagation();
+    try {
+      await markNotificationRead(id);
+      loadNotifications();
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-  const messages = [
-    { id: 1, sender: 'Michael Chen', text: 'Is my MacBook repair finished yet? Need it by tomorrow.', time: '10m ago', avatar: 'https://ui-avatars.com/api/?name=Michael+Chen&background=eff6ff&color=2563eb' },
-    { id: 2, sender: 'Emma Thompson', text: 'Thanks for the quick diagnostic, I approved the quote!', time: '2h ago', avatar: 'https://ui-avatars.com/api/?name=Emma+Thompson&background=eff6ff&color=2563eb' },
-    { id: 3, sender: 'David Martinez', text: 'Do you open on weekends?', time: '1d ago', avatar: 'https://ui-avatars.com/api/?name=David+Martinez&background=eff6ff&color=2563eb' },
-  ];
+  const handleClearNotifications = async (e) => {
+    e.stopPropagation();
+    try {
+      await clearNotifications();
+      loadNotifications();
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <header className="bg-white dark:bg-[#0B0F19] border-b border-[#E2E8F0] dark:border-[#1F2937] h-20 px-4 sm:px-6 lg:px-8 flex items-center justify-between sticky top-0 z-30 transition-colors duration-300">
@@ -76,29 +134,48 @@ export default function AdminHeader({ onMenuClick, theme, toggleTheme }) {
             className="w-full bg-[#F8FAFC] dark:bg-[#111827] border border-[#E2E8F0] dark:border-[#1F2937] rounded-xl pl-12 pr-4 py-2.5 text-sm font-medium text-[#0F172A] dark:text-[#F3F4F6] focus:outline-none focus:ring-2 focus:ring-[#FFDE21]/20 focus:border-[#FFDE21] transition-all duration-300 placeholder:font-normal"
           />
           
-          {/* Mock Search Suggestions Dropdown */}
+          {/* Debounced Search Suggestions Dropdown */}
           <AnimatePresence>
             {searchFocused && (
               <motion.div 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
-                className="absolute left-0 right-0 mt-2 bg-white dark:bg-[#111827] border border-gray-100 dark:border-[#1F2937] rounded-2xl shadow-[0_12px_30px_rgba(0,0,0,0.15)] p-4 z-50 overflow-hidden"
+                className="absolute left-0 right-0 mt-2 bg-white dark:bg-[#111827] border border-gray-100 dark:border-[#1F2937] rounded-2xl shadow-[0_12px_30px_rgba(0,0,0,0.15)] p-4 z-50 overflow-hidden max-h-80 overflow-y-auto"
               >
-                <p className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">Suggested Searches</p>
+                <div className="flex justify-between items-center mb-2 pb-1 border-b border-gray-100 dark:border-[#1F2937]">
+                  <p className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Search Results</p>
+                  {searchLoading && <Loader2 className="w-3.5 h-3.5 text-amber-500 animate-spin" />}
+                </div>
+                
                 <div className="space-y-1.5">
-                  <div className="flex items-center gap-2.5 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer text-sm font-semibold transition-colors">
-                    <Search className="w-4 h-4 text-gray-400" />
-                    <span>Alice Johnson <span className="text-xs text-gray-400 font-medium">Customer</span></span>
-                  </div>
-                  <div className="flex items-center gap-2.5 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer text-sm font-semibold transition-colors">
-                    <Search className="w-4 h-4 text-gray-400" />
-                    <span>Screen Replacement <span className="text-xs text-gray-400 font-medium">Service</span></span>
-                  </div>
-                  <div className="flex items-center gap-2.5 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer text-sm font-semibold transition-colors">
-                    <Search className="w-4 h-4 text-gray-400" />
-                    <span>Booking #BKG-5092 <span className="text-xs text-gray-400 font-medium">Booking ID</span></span>
-                  </div>
+                  {searchQuery.trim() === '' ? (
+                    <p className="text-xs text-gray-400 text-center py-2">Type to search bookings...</p>
+                  ) : searchLoading && searchResults.length === 0 ? (
+                    <p className="text-xs text-gray-400 text-center py-2">Searching...</p>
+                  ) : searchResults.length === 0 ? (
+                    <p className="text-xs text-gray-400 text-center py-2">No bookings found for "{searchQuery}"</p>
+                  ) : (
+                    searchResults.map((booking) => (
+                      <div 
+                        key={booking.id} 
+                        onClick={() => {
+                          navigate(`/admin/bookings?search=${booking.bookingNumber}`);
+                          setSearchFocused(false);
+                        }}
+                        className="flex flex-col p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer text-sm font-semibold transition-colors"
+                      >
+                        <div className="flex justify-between items-baseline mb-0.5">
+                          <span className="text-[#0F172A] dark:text-gray-100 font-bold">{booking.customerName}</span>
+                          <span className="text-xs text-amber-500 font-bold">{booking.bookingNumber}</span>
+                        </div>
+                        <div className="flex justify-between text-xs text-gray-400 font-medium">
+                          <span>{booking.deviceModel} - {booking.repairName}</span>
+                          <span className="text-gray-500">{booking.dateStr}</span>
+                        </div>
+                      </div>
+                    ))
+                  )}
                 </div>
               </motion.div>
             )}
@@ -140,63 +217,19 @@ export default function AdminHeader({ onMenuClick, theme, toggleTheme }) {
           </AnimatePresence>
         </button>
 
-        {/* Messages Dropdown */}
-        <div className="relative" ref={msgRef}>
-          <button 
-            onClick={() => {
-              setIsMessagesOpen(!isMessagesOpen);
-              setIsNotificationsOpen(false);
-              setIsProfileOpen(false);
-            }}
-            className="p-2.5 text-gray-500 dark:text-gray-400 hover:text-[#FFDE21] hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl transition-all duration-300 relative"
-          >
-            <MessageSquare className="w-5 h-5 sm:w-5.5 sm:h-5.5" />
-            <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-amber-500 rounded-full border-2 border-white dark:border-[#0B0F19] shadow-sm"></span>
-          </button>
-          
-          <AnimatePresence>
-            {isMessagesOpen && (
-              <motion.div 
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 15 }}
-                className="absolute right-[-80px] sm:right-0 mt-3 w-[300px] sm:w-96 bg-white dark:bg-[#111827] rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.15)] border border-gray-100 dark:border-[#1F2937] py-2 z-50 overflow-hidden"
-              >
-                <div className="px-4 py-2 border-b border-gray-100 dark:border-[#1F2937] flex justify-between items-center bg-gray-50/50 dark:bg-[#1f2937]/35">
-                  <span className="font-bold text-sm text-[#0F172A] dark:text-white">Messages</span>
-                  <button className="text-xs text-[#FFDE21] font-bold hover:underline">Mark all read</button>
-                </div>
-                <div className="max-h-80 overflow-y-auto divide-y divide-gray-50 dark:divide-[#1F2937]">
-                  {messages.map((msg) => (
-                    <div key={msg.id} className="p-3.5 flex gap-3 hover:bg-gray-50 dark:hover:bg-gray-800/50 cursor-pointer transition-colors">
-                      <img src={msg.avatar} alt="avatar" className="w-10 h-10 rounded-full object-cover shadow-sm" />
-                      <div className="flex-1 min-w-0">
-                        <div className="flex justify-between items-baseline mb-0.5">
-                          <p className="text-sm font-bold text-gray-800 dark:text-gray-100">{msg.sender}</p>
-                          <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500">{msg.time}</span>
-                        </div>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 truncate leading-relaxed">{msg.text}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
         {/* Notifications Dropdown */}
         <div className="relative" ref={notifRef}>
           <button 
             onClick={() => {
               setIsNotificationsOpen(!isNotificationsOpen);
-              setIsMessagesOpen(false);
               setIsProfileOpen(false);
             }}
             className="p-2.5 text-gray-500 dark:text-gray-400 hover:text-[#FFDE21] hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl transition-all duration-300 relative"
           >
             <Bell className="w-5 h-5 sm:w-5.5 sm:h-5.5" />
-            <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-white dark:border-[#0B0F19] shadow-sm"></span>
+            {unreadCount > 0 && (
+              <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-white dark:border-[#0B0F19] shadow-sm"></span>
+            )}
           </button>
 
           <AnimatePresence>
@@ -208,29 +241,54 @@ export default function AdminHeader({ onMenuClick, theme, toggleTheme }) {
                 className="absolute right-[-40px] sm:right-0 mt-3 w-[300px] sm:w-96 bg-white dark:bg-[#111827] rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.15)] border border-gray-100 dark:border-[#1F2937] py-2 z-50 overflow-hidden"
               >
                 <div className="px-4 py-2 border-b border-gray-100 dark:border-[#1F2937] flex justify-between items-center bg-gray-50/50 dark:bg-[#1f2937]/35">
-                  <span className="font-bold text-sm text-[#0F172A] dark:text-white">Notifications</span>
-                  <button className="text-xs text-[#FFDE21] font-bold hover:underline">Clear all</button>
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-sm text-[#0F172A] dark:text-white">Notifications ({unreadCount})</span>
+                    <button 
+                      onClick={(e) => { e.stopPropagation(); loadNotifications(); }}
+                      className="p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded transition-colors"
+                      title="Refresh Notifications"
+                    >
+                      <RefreshCw className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" />
+                    </button>
+                  </div>
+                  <button 
+                    onClick={handleClearNotifications}
+                    className="text-xs text-[#FFDE21] font-bold hover:underline"
+                  >
+                    Clear Read
+                  </button>
                 </div>
                 <div className="max-h-80 overflow-y-auto divide-y divide-gray-50 dark:divide-[#1F2937]">
                   {notifications.map((notif) => (
-                    <div key={notif.id} className={`p-4 flex gap-3 hover:bg-gray-50 dark:hover:bg-gray-800/50 cursor-pointer transition-colors ${notif.unread ? 'bg-[#FFDE21]/5' : ''}`}>
+                    <div 
+                      key={notif.id} 
+                      onClick={(e) => handleMarkAsRead(notif.id, e)}
+                      className={`p-4 flex gap-3 hover:bg-gray-50 dark:hover:bg-gray-800/50 cursor-pointer transition-colors ${!notif.isRead ? 'bg-[#FFDE21]/5' : ''}`}
+                    >
                       <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
                         notif.type === 'booking' ? 'bg-amber-50 text-amber-500' :
                         notif.type === 'alert' ? 'bg-red-50 text-red-500' : 'bg-green-50 text-green-500'
                       } dark:bg-opacity-10`}>
                         {notif.type === 'booking' && <CalendarCheck className="w-4 h-4" />}
                         {notif.type === 'alert' && <AlertCircle className="w-4 h-4" />}
-                        {notif.type === 'assignment' && <Check className="w-4 h-4" />}
+                        {(notif.type === 'system' || notif.type === 'assignment') && <Check className="w-4 h-4" />}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between items-baseline mb-0.5">
                           <p className="text-sm font-bold text-gray-800 dark:text-gray-100">{notif.title}</p>
-                          <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500">{notif.time}</span>
+                          <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500">
+                            {new Date(notif.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                          </span>
                         </div>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 leading-normal">{notif.desc}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 leading-normal">{notif.description}</p>
                       </div>
                     </div>
                   ))}
+                  {notifications.length === 0 && (
+                    <div className="p-8 text-center text-sm text-gray-500 dark:text-gray-400">
+                      No notifications
+                    </div>
+                  )}
                 </div>
               </motion.div>
             )}
@@ -243,7 +301,6 @@ export default function AdminHeader({ onMenuClick, theme, toggleTheme }) {
             onClick={() => {
               setIsProfileOpen(!isProfileOpen);
               setIsNotificationsOpen(false);
-              setIsMessagesOpen(false);
             }}
             className="flex items-center gap-3 cursor-pointer group"
           >
@@ -298,13 +355,3 @@ export default function AdminHeader({ onMenuClick, theme, toggleTheme }) {
     </header>
   );
 }
-
-
-
-
-
-
-
-
-
-

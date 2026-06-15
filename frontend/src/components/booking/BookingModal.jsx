@@ -5,9 +5,10 @@ import {
   X, Search, Smartphone, Laptop, Watch, Tablet,
   ArrowRight, ShieldCheck, Clock, Check,
   Battery, Camera, Droplet, Cpu, PowerOff, Activity, Plug, Speaker, Wrench, MonitorSmartphone, Monitor,
-  Keyboard, MousePointer2, Mic
+  Keyboard, MousePointer2, Mic, Loader2
 } from 'lucide-react';
 import { useBooking } from '../../context/BookingContext';
+import { useCatalog } from '../../context/CatalogContext';
 import repairDatabase from '../../data/repairDatabase.json';
 
 const getScreenOptions = (priceStr, modelName, brandName, repairName = '', repair = null) => {
@@ -29,7 +30,22 @@ const getScreenOptions = (priceStr, modelName, brandName, repairName = '', repai
   const repairLower = repairName ? repairName.toLowerCase() : '';
 
   if (repairLower.includes('back glass')) {
-    if (modelLower.includes('16 pro max') || modelLower.includes('16promax') || modelLower === 'iphone 16 pro' || modelLower === 'iphone 16pro' || modelLower.includes('15 pro max') || modelLower.includes('15promax') || modelLower.includes('14 pro max') || modelLower.includes('14promax') || modelLower === 'iphone 14 pro' || modelLower === 'iphone 14pro' || modelLower.includes('14 plus') || modelLower.includes('14plus') || modelLower === 'iphone 14') {
+    if (modelLower.includes('16 pro max') || modelLower.includes('16promax') || modelLower === 'iphone 16 pro' || modelLower === 'iphone 16pro' || modelLower.includes('16 plus') || modelLower.includes('16plus') || modelLower === 'iphone 16') {
+      return [
+        {
+          id: 'standard_glass',
+          name: 'Standard Quality',
+          price: 'A$170.00',
+          description: 'Standard quality back glass replacement designed for a precise fit and solid durability. budget-friendly.including support for wireless charging.'
+        },
+        {
+          id: 'premium_glass',
+          name: 'Premium Quality',
+          price: 'A$220.00',
+          description: 'Premium quality back glass replacement with original camera glass, designed for a precise fit, high durability. it restores the original look while maintaining full functionality, including wireless charging'
+        }
+      ];
+    } else if (modelLower.includes('15 pro max') || modelLower.includes('15promax') || modelLower.includes('14 pro max') || modelLower.includes('14promax') || modelLower === 'iphone 14 pro' || modelLower === 'iphone 14pro' || modelLower.includes('14 plus') || modelLower.includes('14plus') || modelLower === 'iphone 14' || modelLower.includes('15 plus') || modelLower.includes('15plus') || modelLower === 'iphone 15 pro' || modelLower === 'iphone 15pro' || modelLower === 'iphone 15') {
       return [
         {
           id: 'standard_glass',
@@ -44,22 +60,7 @@ const getScreenOptions = (priceStr, modelName, brandName, repairName = '', repai
           description: 'Premium back glass replacement with optimal durability.'
         }
       ];
-    } else if (modelLower.includes('16 plus') || modelLower.includes('16plus')) {
-      return [
-        {
-          id: 'standard_glass',
-          name: 'Standard Quality',
-          price: 'A$169.00',
-          description: 'Standard back glass replacement.'
-        },
-        {
-          id: 'premium_glass',
-          name: 'Premium Quality',
-          price: 'A$220.00',
-          description: 'Premium back glass replacement with optimal durability.'
-        }
-      ];
-    } else if (modelLower === 'iphone 16' || modelLower === 'iphone 15') {
+    } else if (modelLower === 'iphone 15') {
       return [
         {
           id: 'standard_glass',
@@ -117,12 +118,12 @@ const getScreenOptions = (priceStr, modelName, brandName, repairName = '', repai
     refGenuine = 469 + 20; // 489
   } else if (modelLower.includes('15 pro') || modelLower.includes('15pro')) {
     refIncell = 149 + 20; // 169
-    refSoftOLED = 219 + 20; // 239
-    refGenuine = 369 + 20; // 389
+    refSoftOLED = 279 + 20; // 299
+    refGenuine = 549 + 20; // 569
   } else if (modelLower.includes('15 plus') || modelLower.includes('15plus')) {
-    refIncell = 129 + 20; // 149
-    refSoftOLED = 179 + 20; // 199
-    refGenuine = 299 + 20; // 319
+    refIncell = 149 + 20; // 169
+    refSoftOLED = 249 + 20; // 269
+    refGenuine = 399 + 20; // 419
   } else if (modelLower === 'iphone 15') {
     refIncell = 119 + 20; // 139
     refSoftOLED = 169 + 20; // 189
@@ -164,8 +165,8 @@ const getScreenOptions = (priceStr, modelName, brandName, repairName = '', repai
     refSoftOLED = 139 + 20; // 159
     refGenuine = 199 + 20; // 219
   } else if (modelLower === 'iphone 12' || modelLower === 'iphone 12 mini') {
-    refIncell = 99 + 20; // 119
-    refSoftOLED = 129 + 20; // 149
+    refIncell = 119 + 20; // 139
+    refSoftOLED = 199 + 20; // 219
     refGenuine = 179 + 20; // 199
   } else if (modelLower.includes('11 pro max') || modelLower.includes('11promax')) {
     refIncell = 89 + 20; // 109
@@ -225,6 +226,9 @@ const getScreenOptions = (priceStr, modelName, brandName, repairName = '', repai
 
 export default function BookingModal() {
   const { isBookingModalOpen, closeBookingModal, updateBookingData, resetBookingData, bookingData } = useBooking();
+  const { catalog, loading: catalogLoading } = useCatalog();
+  const db = catalog || repairDatabase;
+
   const navigate = useNavigate();
   const location = useLocation();
   // Force HMR refresh
@@ -270,7 +274,7 @@ export default function BookingModal() {
     'Huawei': Smartphone, 'Dell': Laptop, 'HP': Laptop, 'Lenovo': Laptop, 'Asus': Laptop, 'Acer': Laptop
   };
 
-  const brands = Object.keys(repairDatabase).map(name => ({ name, icon: brandIcons[name] || Smartphone }));
+  const brands = Object.keys(db).map(name => ({ name, icon: brandIcons[name] || Smartphone }));
 
   const handleBrandSelect = (brand) => {
     updateBookingData({ brand: brand.name });
@@ -292,11 +296,11 @@ export default function BookingModal() {
     const isScreenRepair = repair.name.toLowerCase().includes('screen') || repair.name.toLowerCase().includes('display') || repair.name.toLowerCase().includes('glass');
     const isPhone = !bookingData?.deviceType || bookingData.deviceType.toLowerCase().includes('phone') || bookingData.deviceType.toLowerCase() === 'iphone' || bookingData.model?.toLowerCase().includes('iphone');
 
-    const shouldGoToStep5 = repair.partOption === true;
+    const opts = getScreenOptions(repair.price, bookingData.model, bookingData.brand, repair.name, repair);
+    const shouldGoToStep5 = repair.partOption === true || opts.length > 0;
 
     if (shouldGoToStep5) {
       setSelectedBaseRepair(repair);
-      const opts = getScreenOptions(repair.price, bookingData.model, bookingData.brand, repair.name, repair);
       const recommendedOpt = opts.find(o => o.recommended) || opts.find(o => o.id === 'soft_oled') || opts[1] || opts[0];
       setSelectedQualityOption(recommendedOpt ? recommendedOpt.id : 'soft_oled');
       setStep(5);
@@ -320,8 +324,8 @@ export default function BookingModal() {
   };
 
   const getAvailableTypes = () => {
-    if (!bookingData?.brand || !repairDatabase[bookingData.brand]) return [];
-    return Object.keys(repairDatabase[bookingData.brand]);
+    if (!bookingData?.brand || !db[bookingData.brand]) return [];
+    return Object.keys(db[bookingData.brand]);
   };
 
   const getTypeIcon = (type) => {
@@ -339,15 +343,15 @@ export default function BookingModal() {
   const availableTypes = getAvailableTypes();
 
   // Filter models by both brand and the selected deviceType
-  const modelsForType = bookingData?.brand && bookingData?.deviceType && repairDatabase[bookingData.brand]?.[bookingData.deviceType]
-    ? repairDatabase[bookingData.brand][bookingData.deviceType].models
+  const modelsForType = bookingData?.brand && bookingData?.deviceType && db[bookingData.brand]?.[bookingData.deviceType]
+    ? db[bookingData.brand][bookingData.deviceType].models
     : [];
 
   const filteredModels = modelsForType.filter(m => m.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
   // Get repairs for selected model
-  const repairsForModel = bookingData?.brand && bookingData?.deviceType && bookingData?.model && repairDatabase[bookingData.brand]?.[bookingData.deviceType]
-    ? repairDatabase[bookingData.brand][bookingData.deviceType].repairs[bookingData.model] || []
+  const repairsForModel = bookingData?.brand && bookingData?.deviceType && bookingData?.model && db[bookingData.brand]?.[bookingData.deviceType]
+    ? db[bookingData.brand][bookingData.deviceType].repairs[bookingData.model] || []
     : [];
 
   const stepTitles = {
@@ -417,8 +421,14 @@ export default function BookingModal() {
 
           {/* Content Area */}
           <div ref={contentRef} className="flex-1 overflow-y-auto px-6 sm:px-10 pb-10 custom-scrollbar">
-
-            {/* Step 1: Brand */}
+            {catalogLoading ? (
+              <div className="flex flex-col items-center justify-center py-20">
+                <Loader2 className="w-10 h-10 text-amber-500 animate-spin mb-4" />
+                <p className="text-sm font-semibold text-gray-500">Loading repair options...</p>
+              </div>
+            ) : (
+              <>
+                {/* Step 1: Brand */}
             {step === 1 && (
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
@@ -666,6 +676,8 @@ export default function BookingModal() {
               </motion.div>
             )}
 
+              </>
+            )}
           </div>
         </motion.div>
       </motion.div>

@@ -10,8 +10,8 @@ export default function AdminLayout() {
     return localStorage.getItem('admin-theme') || 'light';
   });
   
-  // Mock authentication check
-  const isAuthenticated = sessionStorage.getItem('adminAuth') === 'true';
+  // Authentication check (must have both auth flag and token)
+  const isAuthenticated = sessionStorage.getItem('adminAuth') === 'true' && !!sessionStorage.getItem('adminToken');
 
   useEffect(() => {
     const root = window.document.documentElement;
